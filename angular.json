@@ -132,5 +132,10 @@
       }
     }
   },
-  "defaultProject": "SeniorityLevels"
+  "defaultProject": "SeniorityLevels",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
