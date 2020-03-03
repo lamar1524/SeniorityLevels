@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="login__container">
+    <div class="login__header">
+      <h2>{{ title }}</h2>
+    </div>
+    <form (ngSubmit)="sendCredentials()" class="login__form" [formGroup]="loginForm">
+      <mat-form-field class="form__control form__input">
+        <input placeholder="Email" formControlName="email" type="text" matInput />
+      </mat-form-field>
+      <mat-form-field class="form__control form__input">
+        <input placeholder="Password" formControlName="password" type="password" matInput />
+      </mat-form-field>
+      <button [disabled]="!loginForm.valid" type="submit" class="form__control form__button" mat-raised-button color="primary">Zaloguj</button>
+    </form>
+    <div class="login__caption">
+      <span [routerLink]="['register']" color="primary" class="mat-body"> {{ caption }}</span>
+    </div>
+  </div>
+</div>

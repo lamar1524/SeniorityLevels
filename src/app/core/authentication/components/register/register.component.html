@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="register__container">
+    <div class="register__header">
+      <h2>{{ title }}</h2>
+    </div>
+    <form class="register__form" [formGroup]="registerForm" (ngSubmit)="sendCredentials()">
+      <mat-form-field class="form__control form__input">
+        <input placeholder="Email" type="email" matInput formControlName="email" />
+      </mat-form-field>
+      <mat-form-field class="form__control form__input">
+        <input placeholder="Password" type="password" matInput formControlName="password"/>
+      </mat-form-field>
+      <mat-form-field>
+        <input placeholder="Repeat password" type="password" matInput formControlName="repeatPassword"/>
+      </mat-form-field>
+      <button [disabled]="!registerForm.valid" class="form__control form__button" mat-raised-button color="primary">Zarejestruj</button>
+    </form>
+    <div class="register__caption"><span [routerLink]="['']" class="mat-body caption__text">{{caption}}</span></div>
+  </div>
+</div>
