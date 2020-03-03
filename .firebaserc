@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "senioritylevels-82ee8": {
+      "hosting": {
+        "SeniorityLevels": [
+          "senioritylevels-82ee8"
+        ]
+      }
+    }
+  }
+}
