@@ -1,0 +1,19 @@
+// Colors
+$primary: red!default;
+$link: #402F5A!default;
+$gray:  #F2F2F2!default;
+$warn: red !default;
+$boxBorderRadius: 10px;
+
+// Breakpoints
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+// todo: what is default 
+// Seems like it's "Assign if not assasigned before"
+

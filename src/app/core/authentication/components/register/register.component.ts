@@ -1,6 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { auth } from 'firebase';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { AuthenticationService } from '../../services/authentication.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -11,9 +14,8 @@ export class RegisterComponent {
   title: string;
   caption: string;
   registerForm: FormGroup;
-  equal;
-  constructor() {
-    this.equal = this.validateEquality;
+  message: string;
+  constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
     this.caption = 'Homepage';
     this.title = 'Join us';
     this.registerForm = new FormGroup({
@@ -21,6 +23,7 @@ export class RegisterComponent {
       password: new FormControl('', Validators.required),
     });
     this.registerForm.addControl('repeatPassword', new FormControl('', [Validators.required, this.validateEquality.bind(this)]));
+    this.message = '';
   }
   private validateEquality(fieldControl: FormControl) {
     return fieldControl.value === this.registerForm.get('password').value
@@ -40,6 +43,14 @@ export class RegisterComponent {
   }
 
   sendCredentials = () => {
-    auth().createUserWithEmailAndPassword(this.email.value, this.password.value);
-  }
+    this.authService.registerUser(this.email.value, this.password.value).subscribe(
+      () => {
+        this.router.navigate(['']);
+      },
+      (error) => {
+        this.message = error.message;
+        this.chRef.markForCheck();
+      },
+    );
+  };
 }

@@ -1,0 +1,11 @@
+// todo: add u-
+.u-text--link{
+    color:$link;
+}
+.u-text--link:hover{
+    cursor:pointer;
+}
+
+.u-text--error{
+    color: $warn;
+}

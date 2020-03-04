@@ -10,10 +10,17 @@
       <mat-form-field class="form__control form__input">
         <input placeholder="Password" formControlName="password" type="password" matInput />
       </mat-form-field>
-      <button [disabled]="!loginForm.valid" type="submit" class="form__control form__button" mat-raised-button color="primary">Log in</button>
+      <button [disabled]="!loginForm.valid" type="submit" class="form__control form__button" mat-raised-button color="primary">
+        Log in
+      </button>
     </form>
-    <div class="login__caption">
-      <span [routerLink]="['register']" color="primary" class="mat-body text--link"> {{ caption }}</span>
+    <div class="login__messages">
+      <div class="login__error">
+        <span class="u-text--error mat-body">{{ errorMessage }}</span>
+      </div>
+      <div class="login__caption">
+        <span [routerLink]="['register']" color="primary" class="mat-body text--link"> {{ caption }}</span>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,12 @@
+@mixin absoluteCenteredVertivally {
+    position:absolute;
+    top:50%;
+    transform: translateY(-50%);
+}
+@mixin break($breakpoint, $parentElementClass) {
+    @media only screen and (min-width: $breakpoint) {
+        #{$parentElementClass} {
+            @content
+        }
+    }
+}
