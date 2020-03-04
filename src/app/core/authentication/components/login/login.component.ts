@@ -13,6 +13,7 @@ export class LoginComponent {
   readonly title: string;
   readonly caption: string;
   readonly loginForm: FormGroup;
+  errorMessage: string;
 
   constructor(private router: Router, private cdRef: ChangeDetectorRef) {
     this.loginForm = new FormGroup({
@@ -21,6 +22,7 @@ export class LoginComponent {
     });
 
     this.title = 'Login';
+    this.errorMessage = '';
     this.caption = 'No account yet? Register here';
   }
 
@@ -28,11 +30,10 @@ export class LoginComponent {
     firebaseAuth()
       .signInWithEmailAndPassword(this.email.value, this.password.value)
       .then((result) => {
-        console.log(result);
+        console.log(result.user);
       })
       .catch((error) => {
-        console.log(error);
-        this.router.navigate(['/register']);
+        
       });
   }
   get email() {
