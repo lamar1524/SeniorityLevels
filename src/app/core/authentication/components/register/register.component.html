@@ -26,7 +26,7 @@
       <mat-form-field class="form__control form__input">
         <input placeholder="Repeat password" type="password" matInput formControlName="repeatPassword" />
       </mat-form-field>
-      <div *ngIf="repeatPassword.invalid && (repeatPassword.dirty || repeatPassword.touched)" class="form__error u-text--error mat-body">
+      <div *ngIf="invalidRepeatPassword" class="form__error u-text--error mat-body">
         <div *ngIf="repeatPassword.errors.required">
           Repeating password is required.
         </div>

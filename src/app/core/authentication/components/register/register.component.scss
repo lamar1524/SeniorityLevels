@@ -54,10 +54,10 @@
             }
         }
     }
-}
 
-@include break(map-get($breakpoints, md), '.container') {
-    .register__container {
-        width: 350px;
+    @include break(map-get($breakpoints, md)) {
+        .register__container {
+            width: 350px;
+        }
     }
 }

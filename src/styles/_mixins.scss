@@ -3,10 +3,8 @@
     top:50%;
     transform: translateY(-50%);
 }
-@mixin break($breakpoint, $parentElementClass) {
+@mixin break($breakpoint) {
     @media only screen and (min-width: $breakpoint) {
-        #{$parentElementClass} {
-            @content
-        }
+        @content
     }
 }

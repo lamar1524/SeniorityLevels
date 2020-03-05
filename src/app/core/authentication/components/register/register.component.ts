@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { equalityValidator } from '../../../../shared/equality.validator';
+import { equalityValidator } from '../../../../shared';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
@@ -23,11 +23,8 @@ export class RegisterComponent {
     this.registerForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
+      repeatPassword: new FormControl('', [Validators.required, equalityValidator('password')]),
     });
-    this.registerForm.addControl(
-      'repeatPassword',
-      new FormControl('', [Validators.required, equalityValidator(this.password)]),
-    );
     this.message = '';
   }
 
@@ -41,6 +38,18 @@ export class RegisterComponent {
 
   get repeatPassword() {
     return this.registerForm.get('repeatPassword');
+  }
+
+  get invalidEmail() {
+    return this.email.invalid && (this.repeatPassword.dirty || this.repeatPassword.touched);
+  }
+
+  get invalidPassword() {
+    return this.password.invalid && (this.repeatPassword.dirty || this.repeatPassword.touched);
+  }
+
+  get invalidRepeatPassword() {
+    return this.repeatPassword.invalid && (this.repeatPassword.dirty || this.repeatPassword.touched);
   }
 
   sendCredentials = () => {

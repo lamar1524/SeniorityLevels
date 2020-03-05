@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { MaterialModule } from '../../../material/material.module';
+import { AuthenticationService } from '../../services/authentication.service';
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {
@@ -21,7 +22,6 @@ describe('RegisterComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

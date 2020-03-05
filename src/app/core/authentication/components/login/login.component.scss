@@ -49,12 +49,12 @@
             text-align: center;
         }
     }
-}
 
-@include break(map-get($breakpoints, md), '.container') {
+    @include break(map-get($breakpoints, md)) {
 
-    .login__container {
-        width: 350px;
+        .login__container {
+            width: 350px;
+        }
+
     }
-
 }

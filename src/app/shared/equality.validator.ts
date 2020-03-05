@@ -1,8 +1,14 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-export function equalityValidator(password: AbstractControl): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
-    const equal = password.value === control.value;
+export function equalityValidator(firstControlName: string | string[]): ValidatorFn {
+  return (secondControl: AbstractControl): { [key: string]: any } | null => {
+    console.log(secondControl);
+
+    if (!secondControl.parent) {
+      return null;
+    }
+    const firstControl = secondControl.parent.get(firstControlName);
+    const equal = firstControl.value === secondControl.value;
     return !equal ? { equal: true } : null;
   };
 }
