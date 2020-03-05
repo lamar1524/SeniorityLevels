@@ -2,62 +2,61 @@
 @import '../../../../../styles/mixins';
 
 .container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
+  .register__container {
+    background-color: $gray;
+    width: 70%;
+    border-radius: $boxBorderRadius;
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;
+
+    .register__header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .register__form {
+      .form__control,
+      .form__error {
+        display: block;
+        margin: 5px auto 5px auto;
+      }
+
+      .form__input {
+        width: $inputWidth;
+      }
+
+      .form__error {
+        width: $inputWidth;
+      }
+    }
+
+    .register__messages {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .register__caption,
+      .register__error {
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+
+  @include break(map-get($breakpoints, md)) {
     .register__container {
-        background-color: $gray;
-        width: 70%;
-        border-radius: $boxBorderRadius;
-        display: grid;
-        grid-template-rows: 1fr 3fr 1fr;
-
-        .register__header {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .register__form {
-
-            .form__control,
-            .form__error {
-                display: block;
-                margin: 5px auto 5px auto;
-            }
-
-            .form__input {
-                width: $inputWidth;
-            }
-
-            .form__error {
-                width: $inputWidth;
-            }
-        }
-
-        .register__messages {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            .register__caption,
-            .register__error {
-                text-align: center;
-                width: 100%;
-            }
-        }
+      width: 350px;
     }
-
-    @include break(map-get($breakpoints, md)) {
-        .register__container {
-            width: 350px;
-        }
-    }
+  }
 }

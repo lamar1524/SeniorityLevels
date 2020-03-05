@@ -9,14 +9,7 @@ import { AuthenticationService } from './services/authentication.service';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
-  imports: [
-    CommonModule,
-    AuthenticationRoutingModule,
-    MaterialModule,
-    ReactiveFormsModule
-  ],
-  providers: [
-    AuthenticationService
-  ]
+  imports: [CommonModule, AuthenticationRoutingModule, MaterialModule, ReactiveFormsModule],
+  providers: [AuthenticationService],
 })
-export class AuthenticationModule { }
+export class AuthenticationModule {}

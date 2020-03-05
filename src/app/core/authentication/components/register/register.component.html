@@ -1,13 +1,13 @@
 <div class="container">
   <div class="register__container">
     <div class="register__header">
-      <h2>{{ title }}</h2>
+      <h2>Join us</h2>
     </div>
     <form class="register__form" [formGroup]="registerForm" (ngSubmit)="sendCredentials()">
       <mat-form-field class="form__control form__input">
         <input placeholder="Email" type="email" matInput formControlName="email" />
       </mat-form-field>
-      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="form__error u-text--error mat-body">
+      <div *ngIf="getValidity('email')" class="form__error u-text--error mat-body">
         <div *ngIf="email.errors.required">
           Email is required.
         </div>
@@ -18,7 +18,7 @@
       <mat-form-field class="form__control form__input">
         <input placeholder="Password" type="password" matInput formControlName="password" />
       </mat-form-field>
-      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="form__error u-text--error mat-body">
+      <div *ngIf="getValidity('password')" class="form__error u-text--error mat-body">
         <div *ngIf="password.errors.required">
           Password is required.
         </div>
@@ -26,7 +26,7 @@
       <mat-form-field class="form__control form__input">
         <input placeholder="Repeat password" type="password" matInput formControlName="repeatPassword" />
       </mat-form-field>
-      <div *ngIf="invalidRepeatPassword" class="form__error u-text--error mat-body">
+      <div *ngIf="getValidity('repeatPassword')" class="form__error u-text--error mat-body">
         <div *ngIf="repeatPassword.errors.required">
           Repeating password is required.
         </div>
@@ -34,14 +34,14 @@
           Passwords are not the same
         </div>
       </div>
-      <button [disabled]="!registerForm.valid" class="form__control form__button" mat-raised-button color="primary">Register</button>
+      <button [disabled]="registerForm.invalid" class="form__control form__button" mat-raised-button color="primary">Register</button>
     </form>
     <div class="register__messages">
       <div class="register__error">
         <span class="u-text--error mat-body"> {{ message }}</span>
       </div>
       <div class="register__caption">
-        <span [routerLink]="['']" class="mat-body u-text--link">{{ caption }}</span>
+        <span [routerLink]="[routes.home]" class="mat-body u-text--link">Homepage</span>
       </div>
     </div>
   </div>

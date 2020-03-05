@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { from, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 
 import { ROUTES } from '../../../../../constants/routes.constants';
+import { RoutesConst } from '../../../interfaces/routes';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
@@ -13,23 +14,18 @@ import { AuthenticationService } from '../../services/authentication.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  readonly title: string;
-  readonly caption: string;
   readonly loginForm: FormGroup;
+  readonly routes: RoutesConst;
   errorMessage: string;
-  routes: any;
 
   constructor(private router: Router, private cdRef: ChangeDetectorRef, private authService: AuthenticationService) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
-    this.title = 'Login';
     this.errorMessage = '';
-    this.caption = 'No account yet? Register here';
     this.routes = ROUTES;
   }
-
   get email() {
     return this.loginForm.get('email');
   }
@@ -38,12 +34,9 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
-  get emailInvalid() {
-    return this.email.invalid && (this.email.dirty || this.email.touched);
-  }
-
-  get passwordInvalid() {
-    return this.password.invalid && (this.password.dirty || this.password.touched);
+  getValidity(controlName: string) {
+    const control = this.loginForm.get(controlName);
+    return control.invalid && (control.dirty || control.touched);
   }
 
   sendCredentials = (): void => {

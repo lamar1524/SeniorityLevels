@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { ROUTES } from '../../../../../constants/routes.constants';
 import { equalityValidator } from '../../../../shared';
+import { RoutesConst } from '../../../interfaces/routes';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
@@ -13,15 +14,11 @@ import { AuthenticationService } from '../../services/authentication.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
-  title: string;
-  caption: string;
   registerForm: FormGroup;
   message: string;
-  routes: any;
+  routes: RoutesConst;
 
   constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
-    this.caption = 'Homepage';
-    this.title = 'Join us';
     this.registerForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
@@ -43,16 +40,9 @@ export class RegisterComponent {
     return this.registerForm.get('repeatPassword');
   }
 
-  get invalidEmail() {
-    return this.email.invalid && (this.repeatPassword.dirty || this.repeatPassword.touched);
-  }
-
-  get invalidPassword() {
-    return this.password.invalid && (this.repeatPassword.dirty || this.repeatPassword.touched);
-  }
-
-  get invalidRepeatPassword() {
-    return this.repeatPassword.invalid && (this.repeatPassword.dirty || this.repeatPassword.touched);
+  getValidity(controlName: string) {
+    const control = this.registerForm.get(controlName);
+    return control.invalid && (control.dirty || control.touched);
   }
 
   sendCredentials = (): void => {

@@ -8,6 +8,6 @@ const materialModules = [MatInputModule, MatButtonModule, MatFormFieldModule];
 @NgModule({
   declarations: [],
   imports: materialModules,
-  exports: materialModules
+  exports: materialModules,
 })
-export class MaterialModule { }
+export class MaterialModule {}

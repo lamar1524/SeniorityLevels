@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { ROUTES } from '../../../../../constants/routes.constants';
+import { RoutesConst } from '../../../../core/interfaces/routes';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -10,13 +11,10 @@ import { UsersService } from '../../services/users.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserComponent {
-  userDetails: object;
-  routes: any;
-
+  readonly userDetails: object;
+  readonly routes: RoutesConst;
   constructor(private usersService: UsersService) {
     this.userDetails = this.usersService.getCurrentUser();
-    this.routes = {
-      usersList: `/${ROUTES.home}/${ROUTES.users}/${ROUTES.usersList}`
-    };
+    this.routes = ROUTES;
   }
 }

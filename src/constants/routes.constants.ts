@@ -1,4 +1,6 @@
-export const ROUTES = {
+import { RoutesConst } from 'src/app/core/interfaces/routes';
+
+export const ROUTES: RoutesConst = {
   home: '',
   register: 'register',
   users: 'users',

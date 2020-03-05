@@ -1,10 +1,11 @@
-.u-text--link{
-    color:$link;
-    &:hover{
-        cursor:pointer;
-    }
+.u-text--link {
+  color: $link;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.u-text--error{
-    color: $warn;
+.u-text--error {
+  color: $warn;
 }
