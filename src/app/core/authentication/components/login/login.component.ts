@@ -49,7 +49,7 @@ export class LoginComponent {
   sendCredentials = (): void => {
     this.authService.signIn(this.email.value, this.password.value).subscribe(
       () => {
-        from(this.authService.getTokenRemotely()).subscribe(
+        this.authService.getTokenRemotely().subscribe(
           (token) => {
             this.authService.putTokenInSessionStorage(token);
             this.router.navigate([`/${this.routes.users}`]);

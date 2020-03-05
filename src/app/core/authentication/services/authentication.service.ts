@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { auth as firebaseAuth } from 'firebase';
 import { from, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +13,10 @@ export class AuthenticationService {
     this.TOKEN_KEY = 'Bearer';
   }
 
-  signIn = (email: string, password: string): Observable<any> => from(firebaseAuth().signInWithEmailAndPassword(email, password));
+  signIn = (email: string, password: string): Observable<any> =>
+    from(firebaseAuth().signInWithEmailAndPassword(email, password)).pipe(first());
 
-  getTokenRemotely = (): Promise<any> => firebaseAuth().currentUser.getIdToken(true);
+  getTokenRemotely = (): Observable<any> => from(firebaseAuth().currentUser.getIdToken(true)).pipe(first());
 
   putTokenInSessionStorage = (token): void => {
     sessionStorage.setItem(this.TOKEN_KEY, token);
@@ -33,5 +35,6 @@ export class AuthenticationService {
 
   isLoggedIn = (): boolean => !!this.getTokenFromSessionStorage() && !!firebaseAuth().currentUser;
 
-  registerUser = (email: string, password: string): Observable<any> => from(firebaseAuth().createUserWithEmailAndPassword(email, password));
+  registerUser = (email: string, password: string): Observable<any> =>
+    from(firebaseAuth().createUserWithEmailAndPassword(email, password)).pipe(first());
 }
