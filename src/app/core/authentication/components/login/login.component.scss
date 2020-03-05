@@ -28,13 +28,15 @@
             width: 100%;
             @include absoluteCenteredVertivally;
 
-            .form__control {
+            .form__control,
+            .form__error {
                 display: block;
                 margin: 5px auto 5px auto;
             }
 
-            .form__input {
-                width: 75%;
+            .form__input,
+            .form__error {
+                width: $inputWidth;
             }
         }
 

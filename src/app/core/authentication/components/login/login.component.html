@@ -7,9 +7,19 @@
       <mat-form-field class="form__control form__input">
         <input placeholder="Email" formControlName="email" type="text" matInput />
       </mat-form-field>
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="form__error u-text--error mat-body">
+        <div *ngIf="email.errors.required">
+          Email is required.
+        </div>
+      </div>
       <mat-form-field class="form__control form__input">
         <input placeholder="Password" formControlName="password" type="password" matInput />
       </mat-form-field>
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="form__error u-text--error mat-body">
+        <div *ngIf="password.errors.required">
+          Password is required.
+        </div>
+      </div>
       <button [disabled]="!loginForm.valid" type="submit" class="form__control form__button" mat-raised-button color="primary">
         Log in
       </button>
@@ -19,7 +29,7 @@
         <span class="u-text--error mat-body">{{ errorMessage }}</span>
       </div>
       <div class="login__caption">
-        <span [routerLink]="['register']" color="primary" class="mat-body text--link"> {{ caption }}</span>
+        <span [routerLink]="['register']" color="primary" class="mat-body u-text--link"> {{ caption }}</span>
       </div>
     </div>
   </div>

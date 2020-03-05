@@ -1,9 +1,8 @@
 .u-text--link{
     color:$link;
-}
-
-.u-text--link:hover{
-    cursor:pointer;
+    &:hover{
+        cursor:pointer;
+    }
 }
 
 .u-text--error{
