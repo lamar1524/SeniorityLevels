@@ -1,5 +1,6 @@
 @import '../../../../../styles/variables';
 @import '../../../../../styles/mixins';
+
 .container {
     width: 100vw;
     height: 100vh;
@@ -48,10 +49,10 @@
     }
 }
 
+@include break(map-get($breakpoints, md), '.container') {
 
-
-@include break(map-get($breakpoints, md), '.container'){
-    .login__container{
-        width:350px;
+    .login__container {
+        width: 350px;
     }
+
 }

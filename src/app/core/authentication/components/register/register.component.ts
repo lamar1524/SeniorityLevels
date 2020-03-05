@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { equalityValidator } from '../../../../shared/equality.validator';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class RegisterComponent {
   caption: string;
   registerForm: FormGroup;
   message: string;
+
   constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
     this.caption = 'Homepage';
     this.title = 'Join us';
@@ -22,31 +24,28 @@ export class RegisterComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
     });
-    this.registerForm.addControl('repeatPassword', new FormControl('', [Validators.required, this.validateEquality.bind(this)]));
+    this.registerForm.addControl(
+      'repeatPassword',
+      new FormControl('', [Validators.required, equalityValidator(this.password)]),
+    );
     this.message = '';
   }
-  private validateEquality(fieldControl: FormControl) {
-    return fieldControl.value === this.registerForm.get('password').value
-      ? null
-      : {
-          NotEqual: true,
-        };
-  }
+
   get email() {
     return this.registerForm.get('email');
   }
+
   get password() {
     return this.registerForm.get('password');
   }
+
   get repeatPassword() {
     return this.registerForm.get('repeatPassword');
   }
 
   sendCredentials = () => {
     this.authService.registerUser(this.email.value, this.password.value).subscribe(
-      () => {
-        this.router.navigate(['']);
-      },
+      () => this.router.navigate(['']),
       (error) => {
         this.message = error.message;
         this.chRef.markForCheck();

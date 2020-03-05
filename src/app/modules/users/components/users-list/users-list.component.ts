@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from 'src/app/core/authentication/services/authentication.service';
@@ -9,10 +9,9 @@ import { AuthenticationService } from 'src/app/core/authentication/services/auth
   styleUrls: ['./users-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersListComponent implements OnInit {
+export class UsersListComponent {
   constructor(private authService: AuthenticationService, private router: Router, private cdRef: ChangeDetectorRef) {}
 
-  ngOnInit() {}
   logout = () => {
     this.authService.logout();
     this.router.navigate(['/']);

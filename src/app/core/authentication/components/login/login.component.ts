@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { from, throwError } from 'rxjs';
+
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
@@ -27,9 +27,11 @@ export class LoginComponent {
     this.errorMessage = '';
     this.caption = 'No account yet? Register here';
   }
+
   get email() {
     return this.loginForm.get('email');
   }
+
   get password() {
     return this.loginForm.get('password');
   }
