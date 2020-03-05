@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { ROUTES } from '../../../../../constants/routes.constants';
-import { equalityValidator } from '../../../../shared';
-import { RoutesConst } from '../../../interfaces/routes';
-import { AuthenticationService } from '../../services/authentication.service';
+import { ROUTES } from '@constants/routes.constants';
+import { AuthenticationService } from '@core/authentication/services/authentication.service';
+import { RoutesConst } from '@core/interfaces/routes';
+import { equalityValidator } from '@shared/equality.validator';
 
 @Component({
   selector: 'app-register',

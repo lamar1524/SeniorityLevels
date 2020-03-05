@@ -1,4 +1,4 @@
-import { RoutesConst } from 'src/app/core/interfaces/routes';
+import { RoutesConst } from '@core/interfaces/routes';
 
 export const ROUTES: RoutesConst = {
   home: '',

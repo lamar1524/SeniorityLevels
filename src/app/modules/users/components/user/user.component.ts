@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ROUTES } from '../../../../../constants/routes.constants';
-import { RoutesConst } from '../../../../core/interfaces/routes';
-import { UsersService } from '../../services/users.service';
+import { ROUTES } from '@constants/routes.constants';
+import { RoutesConst } from '@core/interfaces/routes';
+import { UsersService } from '@modules/users/services/users.service';
 
 @Component({
   selector: 'app-user',

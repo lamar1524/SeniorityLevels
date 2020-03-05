@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { ROUTES } from '../../../constants/routes.constants';
-import { AuthenticationService } from '../authentication/services/authentication.service';
+import { ROUTES } from '@constants/routes.constants';
+import { AuthenticationService } from '@core/authentication/services/authentication.service';
 
 @Injectable({
   providedIn: 'root',
