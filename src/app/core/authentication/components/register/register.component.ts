@@ -18,6 +18,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
   message: string;
   routes: any;
+
   constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
     this.caption = 'Homepage';
     this.title = 'Join us';
@@ -54,7 +55,7 @@ export class RegisterComponent {
     return this.repeatPassword.invalid && (this.repeatPassword.dirty || this.repeatPassword.touched);
   }
 
-  sendCredentials = () => {
+  sendCredentials = (): void => {
     this.authService.registerUser(this.email.value, this.password.value).subscribe(
       () => this.router.navigate([this.routes.home]),
       (error) => {

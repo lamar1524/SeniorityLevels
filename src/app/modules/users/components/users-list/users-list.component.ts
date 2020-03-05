@@ -12,7 +12,7 @@ import { AuthenticationService } from '../../../../core/authentication/services/
 export class UsersListComponent {
   constructor(private authService: AuthenticationService, private router: Router, private cdRef: ChangeDetectorRef) {}
 
-  logout = () => {
+  logout = (): void => {
     this.authService.logout();
     this.router.navigate(['/']);
     this.cdRef.markForCheck();

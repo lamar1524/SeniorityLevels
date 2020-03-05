@@ -18,6 +18,7 @@ export class LoginComponent {
   readonly loginForm: FormGroup;
   errorMessage: string;
   routes: any;
+
   constructor(private router: Router, private cdRef: ChangeDetectorRef, private authService: AuthenticationService) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -45,7 +46,7 @@ export class LoginComponent {
     return this.password.invalid && (this.password.dirty || this.password.touched);
   }
 
-  sendCredentials = async () => {
+  sendCredentials = (): void => {
     this.authService.signIn(this.email.value, this.password.value).subscribe(
       () => {
         from(this.authService.getTokenRemotely()).subscribe(

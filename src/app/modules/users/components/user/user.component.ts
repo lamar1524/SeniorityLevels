@@ -11,7 +11,7 @@ import { UsersService } from '../../services/users.service';
 })
 export class UserComponent {
   userDetails: object;
-  private routes: any;
+  routes: any;
 
   constructor(private usersService: UsersService) {
     this.userDetails = this.usersService.getCurrentUser();
