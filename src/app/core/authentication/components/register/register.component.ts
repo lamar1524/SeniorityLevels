@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { ROUTES } from '../../../../../constants/routes.constants';
 import { equalityValidator } from '../../../../shared';
 import { AuthenticationService } from '../../services/authentication.service';
 
@@ -16,7 +17,7 @@ export class RegisterComponent {
   caption: string;
   registerForm: FormGroup;
   message: string;
-
+  routes: any;
   constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
     this.caption = 'Homepage';
     this.title = 'Join us';
@@ -26,6 +27,7 @@ export class RegisterComponent {
       repeatPassword: new FormControl('', [Validators.required, equalityValidator('password')]),
     });
     this.message = '';
+    this.routes = ROUTES;
   }
 
   get email() {
@@ -54,7 +56,7 @@ export class RegisterComponent {
 
   sendCredentials = () => {
     this.authService.registerUser(this.email.value, this.password.value).subscribe(
-      () => this.router.navigate(['']),
+      () => this.router.navigate([this.routes.home]),
       (error) => {
         this.message = error.message;
         this.chRef.markForCheck();

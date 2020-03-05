@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+import { ROUTES } from '../../../constants/routes.constants';
 import { AuthenticationService } from '../authentication/services/authentication.service';
 
 @Injectable({
@@ -37,7 +39,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   handle401Error = (request: HttpRequest<any>, next: HttpHandler) => {
     this.authService.logout();
-    this.router.navigate(['']);
+    this.router.navigate([`/${ROUTES.home}`]);
     return next.handle(request);
   };
 

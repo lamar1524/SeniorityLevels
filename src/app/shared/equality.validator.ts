@@ -2,8 +2,6 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export function equalityValidator(firstControlName: string | string[]): ValidatorFn {
   return (secondControl: AbstractControl): { [key: string]: any } | null => {
-    console.log(secondControl);
-
     if (!secondControl.parent) {
       return null;
     }
