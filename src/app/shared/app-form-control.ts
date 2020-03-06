@@ -1,17 +1,14 @@
-import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
+import { AbstractControlOptions, AsyncValidatorFn, FormControl, ValidatorFn } from '@angular/forms';
 
-export class AppFormGroup extends FormGroup {
+export class AppFormControl extends FormControl {
   constructor(
-    controls: {
-      [key: string]: AbstractControl;
-    },
+    formState?: any,
     validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
     asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null,
   ) {
-    super(controls, validatorOrOpts, asyncValidator);
+    super(formState, validatorOrOpts, asyncValidator);
   }
-  getValidityOfField(controlName: string) {
-    const control = this.get(controlName);
-    return control.invalid && (control.dirty || control.touched);
+  get invalidControl(): boolean {
+    return this.invalid && (this.dirty || this.touched);
   }
 }

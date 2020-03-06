@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ROUTES } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
 import { RoutesConst } from '@core/interfaces/routes';
-import { AppFormGroup } from '@shared/app-form-control';
+import { AppFormControl } from '@shared/app-form-control';
+import { AppFormGroup } from '@shared/app-form-group';
 import { equalityValidator } from '@shared/equality.validator';
 
 @Component({
@@ -21,9 +22,9 @@ export class RegisterComponent {
 
   constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
     this.registerForm = new AppFormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
-      repeatPassword: new FormControl('', [Validators.required, equalityValidator('password')]),
+      email: new AppFormControl('', [Validators.required, Validators.email]),
+      password: new AppFormControl('', Validators.required),
+      repeatPassword: new AppFormControl('', [Validators.required, equalityValidator('password')]),
     });
     this.message = '';
     this.routes = ROUTES;

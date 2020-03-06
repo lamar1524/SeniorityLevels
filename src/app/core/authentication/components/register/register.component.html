@@ -7,7 +7,7 @@
       <mat-form-field class="form__control form__input">
         <input placeholder="Email" type="email" matInput formControlName="email" />
       </mat-form-field>
-      <div *ngIf="registerForm.getValidityOfField('email')" class="form__error u-text--error mat-body">
+      <div *ngIf="email.invalidControl" class="form__error u-text--error mat-body">
         <div *ngIf="email.errors.required">
           Email is required.
         </div>
@@ -18,7 +18,7 @@
       <mat-form-field class="form__control form__input">
         <input placeholder="Password" type="password" matInput formControlName="password" />
       </mat-form-field>
-      <div *ngIf="registerForm.getValidityOfField('password')" class="form__error u-text--error mat-body">
+      <div *ngIf="password.invalidControl" class="form__error u-text--error mat-body">
         <div *ngIf="password.errors.required">
           Password is required.
         </div>
@@ -26,7 +26,7 @@
       <mat-form-field class="form__control form__input">
         <input placeholder="Repeat password" type="password" matInput formControlName="repeatPassword" />
       </mat-form-field>
-      <div *ngIf="registerForm.getValidityOfField('repeatPassword')" class="form__error u-text--error mat-body">
+      <div *ngIf="repeatPassword.invalidControl" class="form__error u-text--error mat-body">
         <div *ngIf="repeatPassword.errors.required">
           Repeating password is required.
         </div>

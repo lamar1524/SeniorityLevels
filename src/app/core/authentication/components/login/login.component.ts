@@ -6,7 +6,8 @@ import { throwError } from 'rxjs';
 import { ROUTES } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
 import { RoutesConst } from '@core/interfaces/routes';
-import { AppFormGroup } from '@shared/app-form-control';
+import { AppFormControl } from '@shared/app-form-control';
+import { AppFormGroup } from '@shared/app-form-group';
 
 @Component({
   selector: 'app-login',
@@ -21,8 +22,8 @@ export class LoginComponent {
 
   constructor(private router: Router, private cdRef: ChangeDetectorRef, private authService: AuthenticationService) {
     this.loginForm = new AppFormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
+      email: new AppFormControl('', [Validators.required, Validators.email]),
+      password: new AppFormControl('', [Validators.required]),
     });
     this.errorMessage = '';
     this.routes = ROUTES;
