@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { environment } from 'environments/environment';
 import { initializeApp } from 'firebase';
-import { environment } from 'src/environments/environment';
 import { UserComponent } from './user.component';
 
 describe('UserComponent', () => {
