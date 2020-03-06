@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 
 import { ROUTES } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
 import { RoutesConst } from '@core/interfaces/routes';
-import { AppFormControl } from '@shared/app-form-control';
-import { AppFormGroup } from '@shared/app-form-group';
+import { AppFormControl, AppFormGroup } from '@shared/forms';
 
 @Component({
   selector: 'app-login',

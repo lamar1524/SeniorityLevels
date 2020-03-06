@@ -5,9 +5,8 @@ import { Router } from '@angular/router';
 import { ROUTES } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
 import { RoutesConst } from '@core/interfaces/routes';
-import { AppFormControl } from '@shared/app-form-control';
-import { AppFormGroup } from '@shared/app-form-group';
 import { equalityValidator } from '@shared/equality.validator';
+import { AppFormControl, AppFormGroup } from '@shared/forms';
 
 @Component({
   selector: 'app-register',

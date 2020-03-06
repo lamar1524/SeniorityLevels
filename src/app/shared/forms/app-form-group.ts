@@ -10,8 +10,4 @@ export class AppFormGroup extends FormGroup {
   ) {
     super(controls, validatorOrOpts, asyncValidator);
   }
-  getValidityOfField(controlName: string) {
-    const control = this.get(controlName);
-    return control.invalid && (control.dirty || control.touched);
-  }
 }
