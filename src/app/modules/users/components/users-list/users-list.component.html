@@ -1,5 +1,12 @@
 <div class="container">
-  <h1>Hello, users list</h1>
-  <p [routerLink]="['../' + routes.userProfile]" class="u-text--link">Your profile</p>
-  <button (click)="logout()" color="primary" mat-raised-button>Logout</button>
+  <h2 class="users__header">Currently signed in users</h2>
+  <div class="users__list">
+    <div class="users__result" *ngFor="let user of users; index as i">{{ i + 1 }}. {{ user.email }}</div>
+  </div>
+  <div class="users__nav">
+    <span [routerLink]="['../' + routes.userProfile]" class="u-text--link nav__link">Your profile</span>
+    <div class="button__wrapper">
+      <button (click)="logout()" color="primary" class="nav__button" mat-raised-button>Logout</button>
+    </div>
+  </div>
 </div>

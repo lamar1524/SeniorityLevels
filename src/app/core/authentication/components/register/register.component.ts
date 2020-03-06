@@ -7,6 +7,7 @@ import { AuthenticationService } from '@core/authentication/services/authenticat
 import { RoutesConst } from '@core/interfaces/routes';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -43,7 +44,13 @@ export class RegisterComponent {
 
   sendCredentials = (): void => {
     this.authService.registerUser(this.email.value, this.password.value).subscribe(
-      () => this.router.navigate([this.routes.home]),
+      (response) =>
+        this.authService.provideAdditionalUserData(response).subscribe(
+          () => this.router.navigate([ROUTES.users]),
+          (error) => {
+            throwError(error);
+          },
+        ),
       (error) => {
         this.message = error.message;
         this.chRef.markForCheck();

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { auth as firebaseAuth } from 'firebase';
+import { auth as firebaseAuth, database } from 'firebase';
 import { from, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -8,9 +8,10 @@ import { first } from 'rxjs/operators';
 })
 export class AuthenticationService {
   private readonly TOKEN_KEY: string;
-
+  private db: firebase.database.Database;
   constructor() {
     this.TOKEN_KEY = 'Bearer';
+    this.db = database();
   }
 
   signIn = (email: string, password: string): Observable<any> =>
@@ -37,4 +38,11 @@ export class AuthenticationService {
 
   registerUser = (email: string, password: string): Observable<any> =>
     from(firebaseAuth().createUserWithEmailAndPassword(email, password)).pipe(first());
+
+  provideAdditionalUserData = (response) => {
+    const user = {
+      email: response.user.email,
+    };
+    return from(this.db.ref('users').push(user)).pipe(first());
+  };
 }

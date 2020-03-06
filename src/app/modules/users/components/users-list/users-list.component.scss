@@ -1,7 +1,18 @@
 .container {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+  .users__header,
+  .users__list,
+  .users__nav {
+    width: 80%;
+    margin: 10px auto 10px auto;
+  }
+
+  .users__nav {
+
+    .nav__link {
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+  }
 }
