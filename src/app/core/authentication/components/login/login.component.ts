@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 
 import { ROUTES } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
 import { RoutesConst } from '@core/interfaces/routes';
+import { AppFormGroup } from '@shared/app-form-control';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +15,12 @@ import { RoutesConst } from '@core/interfaces/routes';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  readonly loginForm: FormGroup;
+  readonly loginForm: AppFormGroup;
   readonly routes: RoutesConst;
   errorMessage: string;
 
   constructor(private router: Router, private cdRef: ChangeDetectorRef, private authService: AuthenticationService) {
-    this.loginForm = new FormGroup({
+    this.loginForm = new AppFormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
@@ -32,11 +33,6 @@ export class LoginComponent {
 
   get password() {
     return this.loginForm.get('password');
-  }
-
-  getValidity(controlName: string) {
-    const control = this.loginForm.get(controlName);
-    return control.invalid && (control.dirty || control.touched);
   }
 
   sendCredentials = (): void => {

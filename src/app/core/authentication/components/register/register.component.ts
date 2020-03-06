@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ROUTES } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
 import { RoutesConst } from '@core/interfaces/routes';
+import { AppFormGroup } from '@shared/app-form-control';
 import { equalityValidator } from '@shared/equality.validator';
 
 @Component({
@@ -14,12 +15,12 @@ import { equalityValidator } from '@shared/equality.validator';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
-  registerForm: FormGroup;
+  registerForm: AppFormGroup;
   message: string;
   routes: RoutesConst;
 
   constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
-    this.registerForm = new FormGroup({
+    this.registerForm = new AppFormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
       repeatPassword: new FormControl('', [Validators.required, equalityValidator('password')]),
@@ -38,11 +39,6 @@ export class RegisterComponent {
 
   get repeatPassword() {
     return this.registerForm.get('repeatPassword');
-  }
-
-  getValidity(controlName: string) {
-    const control = this.registerForm.get(controlName);
-    return control.invalid && (control.dirty || control.touched);
   }
 
   sendCredentials = (): void => {
