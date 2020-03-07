@@ -1,0 +1,6 @@
+@import '../../../../../styles/mixins';
+
+.container {
+  min-height: 100vh;
+  @include center-one-element(column);
+}

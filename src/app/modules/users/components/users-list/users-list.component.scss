@@ -9,34 +9,20 @@
   }
 
   .users__list {
-    width: 90%;
+    width: 75%;
     margin: auto;
-    display: flex;
-    justify-content: center;
+    @include center-one-element();
 
     .users__table {
       width: 100%;
-      overflow-x: auto;
-      border: 1px solid $secondary;
-      border-radius: 10px;
-
-      .table__labels,
-      .table__row {
-        display: grid;
-        grid-template-columns: repeat(4, 200px);
-
-        .table__label {
-          padding: 5px;
-          background-color: #59879085;
+      .mat-header-row {
+        background-color: $secondary;
+        .mat-header-cell {
+          color: black;
         }
       }
-
-      .table__row {
-        .table__cell {
-          padding: 5px;
-          background-color: $gray;
-          border-top: 1px solid $accent;
-        }
+      .mat-row {
+        background-color: $primary;
       }
     }
   }
@@ -49,9 +35,7 @@
   }
 
   .users__nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include center-one-element(column);
 
     .nav__link {
       display: inline-block;

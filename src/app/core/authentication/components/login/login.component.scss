@@ -12,9 +12,10 @@
   .login__container {
     width: 70%;
     height: 400px;
-    background-color: $gray;
+    background-color: $primary;
     position: relative;
     border-radius: $boxBorderRadius;
+    @include form-shadow($blur-color);
 
     .login__header {
       display: flex;

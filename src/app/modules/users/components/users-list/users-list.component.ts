@@ -16,6 +16,7 @@ import { UsersService } from '@modules/users/services/users.service';
 export class UsersListComponent {
   routes: RoutesConst;
   users: Array<AppUser>;
+  displayedColumns: string[];
 
   constructor(
     private authService: AuthenticationService,
@@ -28,6 +29,7 @@ export class UsersListComponent {
       this.users = this.getLinks(response);
       this.cdRef.markForCheck();
     });
+    this.displayedColumns = ['email', 'firstName', 'lastName', 'seniority'];
   }
   getLinks(tab) {
     return tab.map((element) => {

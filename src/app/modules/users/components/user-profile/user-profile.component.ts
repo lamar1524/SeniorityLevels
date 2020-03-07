@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { ROUTES } from '@constants/routes.constants';
 import { AppUser } from '@core/interfaces';
 import { UsersService } from '@modules/users/services/users.service';
 
@@ -13,6 +14,7 @@ import { UsersService } from '@modules/users/services/users.service';
 export class UserProfileComponent implements OnInit {
   userKey: string;
   userDetails: AppUser;
+  goBackLink: string[];
 
   constructor(private route: ActivatedRoute, private usersService: UsersService, private cdRef: ChangeDetectorRef) {
     this.userKey = this.route.snapshot.paramMap.get('key');
@@ -23,6 +25,7 @@ export class UserProfileComponent implements OnInit {
       };
       this.cdRef.markForCheck();
     });
+    this.goBackLink = [`/${ROUTES.home}/${ROUTES.users}/${ROUTES.usersList}`];
   }
 
   ngOnInit() {}

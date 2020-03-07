@@ -9,3 +9,14 @@
     @content;
   }
 }
+
+@mixin form-shadow($color) {
+  box-shadow: 15px 15px 25px 0px $color;
+}
+
+@mixin center-one-element($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+}

@@ -11,11 +11,12 @@
   padding: 25px 0 25px 0;
 
   .register__container {
-    background-color: $gray;
+    background-color: $primary;
     width: 70%;
     border-radius: $boxBorderRadius;
     display: grid;
     grid-template-rows: 0.5fr 3fr 0.5fr;
+    @include form-shadow($blur-color);
 
     .register__header {
       display: flex;

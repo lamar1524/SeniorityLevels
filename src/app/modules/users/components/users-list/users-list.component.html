@@ -1,36 +1,32 @@
 <div class="container">
   <h2 class="users__header">Currently signed in users</h2>
   <div class="users__list">
-    <div class="users__table">
-      <div class="table__labels">
-        <div class="table__label">
-          Email
-        </div>
-        <div class="table__label">
-          First name
-        </div>
-        <div class="table__label">
-          Last name
-        </div>
-        <div class="table__label">
-          Seniorities
-        </div>
-      </div>
-      <div class="table__row" *ngFor="let user of users">
-        <div class="table__cell">
-          {{ user.values.email }}
-        </div>
-        <div class="table__cell">
-          {{ user.values.firstName }}
-        </div>
-        <div class="table__cell">
-          {{ user.values.lastName }}
-        </div>
-        <div class="table__cell">
-          <span class="u-text--link" [routerLink]="[user.profileLink]">Check seniorities</span>
-        </div>
-      </div>
-    </div>
+    <table mat-table [dataSource]="users" class="mat-elevation-z8 users__table">
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.values.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.values.firstName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Last name</th>
+        <td mat-cell *matCellDef="let element">{{ element.values.lastName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="seniority">
+        <th mat-header-cell *matHeaderCellDef>Seniority</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="u-text--link" [routerLink]="element.profileLink">Check</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
   </div>
   <div class="users__nav">
     <span [routerLink]="['../' + routes.userProfile]" class="u-text--link nav__link">Your profile</span>

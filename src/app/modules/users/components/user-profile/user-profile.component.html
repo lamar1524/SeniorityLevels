@@ -1,5 +1,8 @@
 <div class="container" *ngIf="userDetails">
-  <p>{{ userDetails.values.email }}</p>
-  <p>{{ userDetails.values.firstName }}</p>
-  <p>{{ userDetails.values.lastName }}</p>
+  <div class="profile__credentials">
+    <p>Email: {{ userDetails.values.email }}</p>
+    <p>First name: {{ userDetails.values.firstName }}</p>
+    <p>Last name: {{ userDetails.values.lastName }}</p>
+  </div>
+  <span class="nav u-text--link" [routerLink]="goBackLink">Go back</span>
 </div>
