@@ -3,6 +3,8 @@ import { auth as firebaseAuth, database } from 'firebase';
 import { from, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
+import { AppUser } from '@core/interfaces';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -39,7 +41,7 @@ export class AuthenticationService {
   registerUser = (email: string, password: string): Observable<any> =>
     from(firebaseAuth().createUserWithEmailAndPassword(email, password)).pipe(first());
 
-  provideAdditionalUserData = (userData) => {
+  provideAdditionalUserData = (userData: AppUser) => {
     return from(this.db.ref('users').push(userData)).pipe(first());
   };
 }

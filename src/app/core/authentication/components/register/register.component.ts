@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
 
 import { ROUTES } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
-import { RoutesConst } from '@core/interfaces/routes';
+import { RoutesConst } from '@core/interfaces';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-register',

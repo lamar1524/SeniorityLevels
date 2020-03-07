@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 
 import { ROUTES } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
-import { RoutesConst } from '@core/interfaces/routes';
+import { AppUser } from '@core/interfaces';
+import { RoutesConst } from '@core/interfaces';
 import { UsersService } from '@modules/users/services/users.service';
 
 @Component({
@@ -14,7 +15,7 @@ import { UsersService } from '@modules/users/services/users.service';
 })
 export class UsersListComponent {
   routes: RoutesConst;
-  users;
+  users: Array<AppUser>;
 
   constructor(
     private authService: AuthenticationService,

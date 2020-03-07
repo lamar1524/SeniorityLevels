@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { ROUTES } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
-import { RoutesConst } from '@core/interfaces/routes';
+import { RoutesConst } from '@core/interfaces';
 import { UsersService } from '@modules/users/services/users.service';
 
 @Component({
