@@ -25,14 +25,12 @@ export class UsersListComponent {
     this.routes = ROUTES;
     this.usersService.getUsersList().subscribe((response) => {
       this.users = response;
-      console.log(response);
       this.cdRef.markForCheck();
     });
   }
 
   logout = (): void => {
     this.authService.logout();
-    this.router.navigate(['/']);
-    this.cdRef.markForCheck();
+    this.router.navigate([ROUTES.home]);
   };
 }

@@ -1,7 +1,36 @@
 <div class="container">
   <h2 class="users__header">Currently signed in users</h2>
   <div class="users__list">
-    <div class="users__result" *ngFor="let user of users; index as i">{{ i + 1 }}. {{ user.email }}</div>
+    <div class="users__table">
+      <div class="table__labels">
+        <div class="table__label">
+          Email
+        </div>
+        <div class="table__label">
+          First name
+        </div>
+        <div class="table__label">
+          Last name
+        </div>
+        <div class="table__label">
+          Seniorities
+        </div>
+      </div>
+      <div class="table__row" *ngFor="let user of users">
+        <div class="table__cell">
+          {{ user.email }}
+        </div>
+        <div class="table__cell">
+          {{ user.firstName }}
+        </div>
+        <div class="table__cell">
+          {{ user.lastName }}
+        </div>
+        <div class="table__cell">
+          <span class="u-text--link">Check seniorities</span>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="users__nav">
     <span [routerLink]="['../' + routes.userProfile]" class="u-text--link nav__link">Your profile</span>

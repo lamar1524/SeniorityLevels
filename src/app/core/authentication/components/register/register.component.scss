@@ -2,19 +2,20 @@
 @import '../../../../../styles/mixins';
 
 .container {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  padding: 25px 0 25px 0;
 
   .register__container {
     background-color: $gray;
     width: 70%;
     border-radius: $boxBorderRadius;
     display: grid;
-    grid-template-rows: 1fr 3fr 1fr;
+    grid-template-rows: 0.5fr 3fr 0.5fr;
 
     .register__header {
       display: flex;

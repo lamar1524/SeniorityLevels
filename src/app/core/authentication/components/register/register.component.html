@@ -16,6 +16,22 @@
         </div>
       </div>
       <mat-form-field class="form__control form__input">
+        <input placeholder="First name" type="text" matInput formControlName="firstName" />
+      </mat-form-field>
+      <div *ngIf="firstName.invalidControl" class="form__error u-text--error mat-body">
+        <div *ngIf="firstName.errors.required">
+          First name is required.
+        </div>
+      </div>
+      <mat-form-field class="form__control form__input">
+        <input placeholder="Last name" type="text" matInput formControlName="lastName" />
+      </mat-form-field>
+      <div *ngIf="lastName.invalidControl" class="form__error u-text--error mat-body">
+        <div *ngIf="lastName.errors.required">
+          Last name is required.
+        </div>
+      </div>
+      <mat-form-field class="form__control form__input">
         <input placeholder="Password" type="password" matInput formControlName="password" />
       </mat-form-field>
       <div *ngIf="password.invalidControl" class="form__error u-text--error mat-body">

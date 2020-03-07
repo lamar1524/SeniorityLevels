@@ -13,7 +13,6 @@ import { TokenInterceptor } from './core/interceptors/token.interceptor';
 initializeApp(environment.firebase);
 firebaseAuth().setPersistence(firebaseAuth.Auth.Persistence.LOCAL);
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, AngularFireModule.initializeApp(environment.firebase), BrowserAnimationsModule, AppRoutingModule],

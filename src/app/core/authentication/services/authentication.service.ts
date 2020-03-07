@@ -39,10 +39,7 @@ export class AuthenticationService {
   registerUser = (email: string, password: string): Observable<any> =>
     from(firebaseAuth().createUserWithEmailAndPassword(email, password)).pipe(first());
 
-  provideAdditionalUserData = (response) => {
-    const user = {
-      email: response.user.email,
-    };
-    return from(this.db.ref('users').push(user)).pipe(first());
+  provideAdditionalUserData = (userData) => {
+    return from(this.db.ref('users').push(userData)).pipe(first());
   };
 }

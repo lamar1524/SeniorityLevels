@@ -1,18 +1,74 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
 .container {
   height: 100vh;
 
+  .users__header {
+    text-align: center;
+  }
+
+  .users__list {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+
+    .users__table {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid $primary;
+      border-radius: 10px;
+
+      .table__labels,
+      .table__row {
+        display: grid;
+        grid-template-columns: repeat(4, 200px);
+
+        .table__label {
+          padding: 5px;
+          background-color: $secondary;
+        }
+      }
+
+      .table__row {
+        .table__cell {
+          padding: 5px;
+          background-color: $gray;
+          border-top: 1px solid $accent;
+        }
+      }
+    }
+  }
+
   .users__header,
-  .users__list,
   .users__nav {
     width: 80%;
-    margin: 10px auto 10px auto;
+    padding-top: 10px;
+    margin: 0px auto 10px auto;
   }
 
   .users__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     .nav__link {
       display: inline-block;
       margin-bottom: 10px;
+    }
+  }
+  @include break(map-get($breakpoints, md)) {
+    .users__list {
+      .users__table {
+        width: 60%;
+
+        .table__labels,
+        .table__row {
+          display: grid;
+          grid-template-columns: repeat(4, 25%);
+        }
+      }
     }
   }
 }
