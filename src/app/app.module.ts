@@ -1,24 +1,29 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
-
-import { AppRoutingModule } from './app-routing.module';
-import { MaterialModule } from './core/material/material.module';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppComponent } from './app.component';
+import { auth as firebaseAuth, initializeApp } from 'firebase';
+
 import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { TokenInterceptor } from './core/interceptors/token.interceptor';
+
+initializeApp(environment.firebase);
+firebaseAuth().setPersistence(firebaseAuth.Auth.Persistence.LOCAL);
 
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MaterialModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    BrowserAnimationsModule,
+  imports: [BrowserModule, AngularFireModule.initializeApp(environment.firebase), BrowserAnimationsModule, AppRoutingModule],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
   ],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

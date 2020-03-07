@@ -1,0 +1,20 @@
+// Colors
+$primary: #593880;
+$secondary: #806d38;
+$accent: #5f8038;
+$link: #402f5a !default;
+$gray: #f2f2f2 !default;
+$warn: red;
+$boxBorderRadius: 10px;
+
+// Values
+$inputWidth: 75%;
+
+// Breakpoints
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+) !default;
