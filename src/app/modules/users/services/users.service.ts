@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { auth as firebaseAuth, database, User } from 'firebase';
 import { from } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -16,12 +16,23 @@ export class UsersService {
 
   getUsersList = () =>
     from(this.db.ref('users').once('value')).pipe(
+      first(),
       map((response) => {
         const arr = [];
         response.forEach((element) => {
-          arr.push(element.val());
+          arr.push({
+            key: element.key,
+            values: element.val(),
+          });
         });
         return arr;
       }),
     );
+
+  getUserByKey(key: string) {
+    return from(this.db.ref(`users/${key}`).once('value')).pipe(
+      first(),
+      map((response) => response.val()),
+    );
+  }
 }

@@ -25,11 +25,19 @@ export class UsersListComponent {
   ) {
     this.routes = ROUTES;
     this.usersService.getUsersList().subscribe((response) => {
-      this.users = response;
+      this.users = this.getLinks(response);
       this.cdRef.markForCheck();
     });
   }
-
+  getLinks(tab) {
+    return tab.map((element) => {
+      return {
+        key: element.key,
+        profileLink: `/${ROUTES.home}/${ROUTES.users}/${ROUTES.otherUserProfile}/${element.key}`,
+        values: element.values,
+      };
+    });
+  }
   logout = (): void => {
     this.authService.logout();
     this.router.navigate([ROUTES.home]);

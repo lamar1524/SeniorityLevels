@@ -17,7 +17,7 @@
     .users__table {
       width: 100%;
       overflow-x: auto;
-      border: 1px solid $primary;
+      border: 1px solid $secondary;
       border-radius: 10px;
 
       .table__labels,
@@ -27,7 +27,7 @@
 
         .table__label {
           padding: 5px;
-          background-color: $secondary;
+          background-color: #59879085;
         }
       }
 

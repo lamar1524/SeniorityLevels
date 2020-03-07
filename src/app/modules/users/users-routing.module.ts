@@ -3,12 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ROUTES } from '@constants/routes.constants';
 import { AuthorizationGuard } from '@core/guards/authorization.guard';
-import { UsersListComponent, UserComponent } from './components';
+import { UsersListComponent, UserComponent, UserProfileComponent } from './components';
 
 const routes: Routes = [
   { path: '', redirectTo: ROUTES.userProfile, pathMatch: 'full' },
   { path: ROUTES.usersList, component: UsersListComponent, canActivate: [AuthorizationGuard] },
-  { path: ROUTES.userProfile, component: UserComponent, canActivate: [AuthorizationGuard] }
+  { path: ROUTES.userProfile, component: UserComponent, canActivate: [AuthorizationGuard] },
+  { path: `${ROUTES.otherUserProfile}/:key`, component: UserProfileComponent, canActivate: [AuthorizationGuard] },
 ];
 
 @NgModule({

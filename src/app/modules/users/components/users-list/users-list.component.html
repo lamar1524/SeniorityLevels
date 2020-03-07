@@ -18,16 +18,16 @@
       </div>
       <div class="table__row" *ngFor="let user of users">
         <div class="table__cell">
-          {{ user.email }}
+          {{ user.values.email }}
         </div>
         <div class="table__cell">
-          {{ user.firstName }}
+          {{ user.values.firstName }}
         </div>
         <div class="table__cell">
-          {{ user.lastName }}
+          {{ user.values.lastName }}
         </div>
         <div class="table__cell">
-          <span class="u-text--link">Check seniorities</span>
+          <span class="u-text--link" [routerLink]="[user.profileLink]">Check seniorities</span>
         </div>
       </div>
     </div>

@@ -1,5 +1,9 @@
 export interface AppUser {
-  email: string;
-  firstName: string;
-  lastName: string;
+  key: string;
+  values: {
+    email: string;
+    firstName: string;
+    lastName: string;
+    profileLink: string;
+  };
 }
