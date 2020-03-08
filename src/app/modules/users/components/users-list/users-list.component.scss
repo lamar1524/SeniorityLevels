@@ -15,12 +15,15 @@
 
     .users__table {
       width: 100%;
+
       .mat-header-row {
         background-color: $secondary;
+
         .mat-header-cell {
           color: black;
         }
       }
+
       .mat-row {
         background-color: $primary;
       }
