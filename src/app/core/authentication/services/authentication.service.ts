@@ -3,8 +3,6 @@ import { auth as firebaseAuth, database } from 'firebase';
 import { from, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { AppUser } from '@core/interfaces';
-
 @Injectable({
   providedIn: 'root',
 })

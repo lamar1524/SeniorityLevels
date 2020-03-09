@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { ROUTES } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
-import { AppLinkedUser, AppUser } from '@core/interfaces';
+import { ILinkedUser, IUser } from '@core/interfaces';
 import { RoutesConst } from '@core/interfaces';
 import { DISPLAYED_COLUMNS } from '@modules/users/consts/users.consts';
 import { UsersService } from '@modules/users/services/users.service';
@@ -17,7 +17,7 @@ import { UsersService } from '@modules/users/services/users.service';
 export class UsersListComponent {
   readonly routes: RoutesConst;
   readonly displayedColumns: string[];
-  users: AppLinkedUser[];
+  users: ILinkedUser[];
 
   constructor(
     private authService: AuthenticationService,
@@ -33,11 +33,13 @@ export class UsersListComponent {
     this.displayedColumns = DISPLAYED_COLUMNS;
   }
 
-  static usersToLinkedUsers(tab: AppUser[]): AppLinkedUser[] {
-    return tab.map((element: AppUser) => ({
-      ...element,
-      profileLink: `/${ROUTES.home}/${ROUTES.users}/${ROUTES.otherUserProfile}/${element.key}`,
-    }));
+  static usersToLinkedUsers(tab: IUser[]): ILinkedUser[] {
+    return tab.map(
+      (element: IUser): ILinkedUser => ({
+        ...element,
+        profileLink: `/${ROUTES.home}/${ROUTES.users}/${ROUTES.otherUserProfile}/${element.key}`,
+      }),
+    );
   }
 
   logout = (): void => {

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { ActivatedRoute } from '@angular/router';
 
 import { ROUTES } from '@constants/routes.constants';
-import { AppUser } from '@core/interfaces';
+import { IUser } from '@core/interfaces';
 import { UsersService } from '@modules/users/services/users.service';
 
 @Component({
@@ -13,14 +13,13 @@ import { UsersService } from '@modules/users/services/users.service';
 })
 export class UserProfileComponent {
   userKey: string;
-  userDetails: AppUser;
+  userDetails: IUser;
   goBackLink: string[];
   imgSrc: string;
 
   constructor(private route: ActivatedRoute, private usersService: UsersService, private cdRef: ChangeDetectorRef) {
     this.userKey = this.route.snapshot.paramMap.get('key');
     this.usersService.getUserByKey(this.userKey).subscribe((details) => {
-      console.log(details);
       this.userDetails = details;
       this.cdRef.markForCheck();
     });

@@ -1,10 +1,11 @@
-export interface AppLinkedUser {
+export interface IUser {
   key: string;
-  profileLink: string;
   values: {
     email: string;
     firstName: string;
     lastName: string;
-    profileLink: string;
   };
+}
+export interface ILinkedUser extends IUser {
+  profileLink: string;
 }

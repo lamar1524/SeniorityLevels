@@ -3,7 +3,7 @@ import { auth as firebaseAuth, database, User } from 'firebase';
 import { from, Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
-import { AppUser } from '@core/interfaces';
+import { IUser } from '@core/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -17,19 +17,17 @@ export class UsersService {
 
   getCurrentUser = (): User => firebaseAuth().currentUser;
 
-  getUsersList = (): Observable<AppUser[]> =>
+  getUsersList = (): Observable<IUser[]> =>
     from(this.db.ref('users').once('value')).pipe(
       first(),
       map((response) => {
-        const arr: AppUser[] = [];
-        response.forEach((element) => {
-          arr.push({ key: element.key, values: element.val() });
-        });
-        return arr;
+        return Object.entries(response.val()).map(
+          (element): IUser => ({ key: element[0], values: JSON.parse(JSON.stringify(element[1])) }),
+        );
       }),
     );
 
-  getUserByKey(userKey: string): Observable<AppUser> {
+  getUserByKey(userKey: string): Observable<IUser> {
     return from(this.db.ref(`users/${userKey}`).once('value')).pipe(
       first(),
       map((response) => ({
