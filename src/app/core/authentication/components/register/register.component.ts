@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { throwError } from 'rxjs';
 
 import { ROUTES } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
-import { RoutesConst } from '@core/interfaces/routes';
+import { RoutesConst } from '@core/interfaces';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 
@@ -22,6 +23,8 @@ export class RegisterComponent {
   constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
     this.registerForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
+      firstName: new AppFormControl('', [Validators.required]),
+      lastName: new AppFormControl('', [Validators.required]),
       password: new AppFormControl('', Validators.required),
       repeatPassword: new AppFormControl('', [Validators.required, equalityValidator('password')]),
     });
@@ -33,6 +36,14 @@ export class RegisterComponent {
     return this.registerForm.get('email');
   }
 
+  get firstName() {
+    return this.registerForm.get('firstName');
+  }
+
+  get lastName() {
+    return this.registerForm.get('lastName');
+  }
+
   get password() {
     return this.registerForm.get('password');
   }
@@ -41,9 +52,23 @@ export class RegisterComponent {
     return this.registerForm.get('repeatPassword');
   }
 
+  get formData() {
+    return {
+      email: this.email.value,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+    };
+  }
+
   sendCredentials = (): void => {
     this.authService.registerUser(this.email.value, this.password.value).subscribe(
-      () => this.router.navigate([this.routes.home]),
+      () =>
+        this.authService.provideAdditionalUserData(this.formData).subscribe(
+          () => this.router.navigate([ROUTES.users]),
+          (error) => {
+            throwError(error);
+          },
+        ),
       (error) => {
         this.message = error.message;
         this.chRef.markForCheck();

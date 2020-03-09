@@ -1,4 +1,4 @@
-@mixin absoluteCenteredVertivally {
+@mixin absolute-centered-vertivally {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -8,4 +8,15 @@
   @media only screen and (min-width: $breakpoint) {
     @content;
   }
+}
+
+@mixin form-shadow($color) {
+  box-shadow: 15px 15px 25px 0 $color;
+}
+
+@mixin center-one-element($direction: row) {
+  align-items: center;
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
 }

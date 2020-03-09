@@ -6,4 +6,5 @@ export const ROUTES: RoutesConst = {
   users: 'users',
   usersList: 'list',
   userProfile: 'profile',
+  otherUserProfile: 'user',
 };

@@ -1,7 +1,62 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
 .container {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+  .users__header {
+    text-align: center;
+  }
+
+  .users__list {
+    margin: auto;
+    width: 75%;
+    @include center-one-element();
+  }
+
+  .users__table {
+    width: 100%;
+  }
+
+  .mat-header-row {
+    background-color: $secondary;
+  }
+
+  .mat-header-cell {
+    color: #000;
+  }
+
+  .mat-row {
+    background-color: $primary;
+  }
+
+  .users__header,
+  .users__nav {
+    margin: 0 auto 10px;
+    padding-top: 10px;
+    width: 80%;
+  }
+
+  .users__nav {
+    @include center-one-element(column);
+  }
+
+  .nav__link {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    .users__list {
+      .users__table {
+        width: 60%;
+      }
+
+      .table__labels,
+      .table__row {
+        display: grid;
+        grid-template-columns: repeat(4, 25%);
+      }
+    }
+  }
 }

@@ -1,5 +1,37 @@
 <div class="container">
-  <h1>Hello, users list</h1>
-  <p [routerLink]="['../' + routes.userProfile]" class="u-text--link">Your profile</p>
-  <button (click)="logout()" color="primary" mat-raised-button>Logout</button>
+  <h2 class="users__header">Currently signed in users</h2>
+  <div class="users__list">
+    <table mat-table [dataSource]="users" class="mat-elevation-z8 users__table">
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.values.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.values.firstName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Last name</th>
+        <td mat-cell *matCellDef="let element">{{ element.values.lastName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="seniority">
+        <th mat-header-cell *matHeaderCellDef>Seniority</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="u-text--link" [routerLink]="element.profileLink">Check</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <div class="users__nav">
+    <span [routerLink]="['../' + routes.userProfile]" class="u-text--link nav__link">Your profile</span>
+    <div class="button__wrapper">
+      <button (click)="logout()" color="primary" class="nav__button" mat-raised-button>Logout</button>
+    </div>
+  </div>
 </div>
