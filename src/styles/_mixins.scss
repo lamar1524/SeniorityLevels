@@ -15,8 +15,8 @@
 }
 
 @mixin center-one-element($direction: row) {
+  align-items: center;
   display: flex;
   flex-direction: $direction;
   justify-content: center;
-  align-items: center;
 }

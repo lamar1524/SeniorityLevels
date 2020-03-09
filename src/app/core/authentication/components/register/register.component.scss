@@ -2,27 +2,27 @@
 @import '../../../../../styles/mixins';
 
 .container {
-  width: 100%;
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   min-height: 100vh;
   padding: 25px 0 25px 0;
+  width: 100%;
 
   .register__container {
     background-color: $primary;
-    width: 70%;
     border-radius: $boxBorderRadius;
     display: grid;
     grid-template-rows: 0.5fr 3fr 0.5fr;
+    width: 70%;
     @include form-shadow($blur-color);
 
     .register__header {
+      align-items: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
     }
 
     .register__form {
@@ -42,11 +42,11 @@
     }
 
     .register__messages {
-      padding: 15px;
+      align-items: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
+      padding: 15px;
 
       .register__caption,
       .register__error {

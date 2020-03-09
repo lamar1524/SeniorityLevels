@@ -9,8 +9,8 @@
   }
 
   .users__list {
-    width: 75%;
     margin: auto;
+    width: 75%;
     @include center-one-element();
 
     .users__table {
@@ -32,9 +32,9 @@
 
   .users__header,
   .users__nav {
-    width: 80%;
-    padding-top: 10px;
     margin: 0px auto 10px auto;
+    padding-top: 10px;
+    width: 80%;
   }
 
   .users__nav {
