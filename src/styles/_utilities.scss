@@ -6,6 +6,14 @@
   }
 }
 
+.u-text--link--light {
+  color: $light-link;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .u-text--error {
   color: $warn;
 }

@@ -5,10 +5,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { auth as firebaseAuth, initializeApp } from 'firebase';
 
+import { TokenInterceptor } from '@core/interceptors/token.interceptor';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TokenInterceptor } from './core/interceptors/token.interceptor';
 
 initializeApp(environment.firebase);
 firebaseAuth().setPersistence(firebaseAuth.Auth.Persistence.LOCAL);

@@ -1,0 +1,14 @@
+<button class="hamburger" (click)="toggleNav()">
+  <span class="hamburger__box">
+    <span class="hamburger__inner"></span>
+  </span>
+</button>
+<div class="nav">
+  <div class="nav__link u-text--link--light">
+    <span [routerLink]="['/' + routes.home + '/' + routes.users + '/' + routes.userProfile]" (click)="toggleNav()">Profile</span>
+  </div>
+  <div class="nav__link u-text--link--light">
+    <span [routerLink]="['/' + routes.home + '/' + routes.users + '/' + routes.usersList]" (click)="toggleNav()">Users list</span>
+  </div>
+  <div class="nav__link u-text--link--light"><span (click)="logout()">Logout</span></div>
+</div>

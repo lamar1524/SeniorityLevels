@@ -28,10 +28,4 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </div>
-  <div class="users__nav">
-    <span [routerLink]="['../' + routes.userProfile]" class="u-text--link nav__link">Your profile</span>
-    <div class="button__wrapper">
-      <button (click)="logout()" color="primary" class="nav__button" mat-raised-button>Logout</button>
-    </div>
-  </div>
 </div>

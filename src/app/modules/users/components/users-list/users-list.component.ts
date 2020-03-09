@@ -41,9 +41,4 @@ export class UsersListComponent {
       }),
     );
   }
-
-  logout = (): void => {
-    this.authService.logout();
-    this.router.navigate([ROUTES.home]);
-  };
 }

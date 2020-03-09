@@ -20,9 +20,4 @@ export class UserComponent {
     this.userDetails = this.usersService.getCurrentUser();
     this.routes = ROUTES;
   }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate([ROUTES.home]);
-  }
 }
