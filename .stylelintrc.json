@@ -1,6 +1,8 @@
 {
-  "plugins": ["stylelint-order"],
+  "plugins": ["stylelint-selector-bem-pattern", "stylelint-order", "stylelint-scss"],
+  "extends": "stylelint-config-sass-guidelines",
   "rules": {
+    "selector-class-pattern": null,
     "order/order": ["custom-properties", "declarations"],
     "order/properties-alphabetical-order": true
   }

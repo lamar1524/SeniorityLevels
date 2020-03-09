@@ -1,18 +1,19 @@
 // Colors
 $primary: #ebffde;
-$secondary: #AFE0CE;
+$secondary: #afe0ce;
 $accent: #9984b5;
 $link: #402f5a !default;
 $gray: #f2f2f2 !default;
-$warn: red;
+$warn: #f00;
 $blur-color: #9dcca9;
 
 // Values
-$inputWidth: 75%;
-$boxBorderRadius: 15px;
+$input-width: 75%;
+$box-border-radius: 15px;
 
 // Breakpoints
-$breakpoints: (xs: 0,
+$breakpoints: (
+  xs: 0,
   sm: 576px,
   md: 768px,
   lg: 992px,
