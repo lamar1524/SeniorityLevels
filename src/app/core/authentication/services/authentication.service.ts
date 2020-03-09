@@ -11,6 +11,7 @@ import { AppUser } from '@core/interfaces';
 export class AuthenticationService {
   private readonly TOKEN_KEY: string;
   private db: firebase.database.Database;
+
   constructor() {
     this.TOKEN_KEY = 'Bearer';
     this.db = database();

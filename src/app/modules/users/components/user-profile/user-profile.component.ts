@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ROUTES } from '@constants/routes.constants';
@@ -11,7 +11,7 @@ import { UsersService } from '@modules/users/services/users.service';
   styleUrls: ['./user-profile.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent {
   userKey: string;
   userDetails: AppUser;
   goBackLink: string[];
@@ -20,15 +20,12 @@ export class UserProfileComponent implements OnInit {
   constructor(private route: ActivatedRoute, private usersService: UsersService, private cdRef: ChangeDetectorRef) {
     this.userKey = this.route.snapshot.paramMap.get('key');
     this.usersService.getUserByKey(this.userKey).subscribe((details) => {
-      this.userDetails = {
-        key: this.userKey,
-        values: details,
-      };
+      console.log(details);
+      this.userDetails = details;
       this.cdRef.markForCheck();
     });
     this.goBackLink = [`/${ROUTES.home}/${ROUTES.users}/${ROUTES.usersList}`];
+    // TODO: Add image to model/discuss it
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';
   }
-
-  ngOnInit() {}
 }
