@@ -103,6 +103,11 @@
 
 @include break(map-get($breakpoints, md)) {
   .nav {
+    transform: translateX(250px);
     width: 250px;
+  }
+
+  .nav--active {
+    transform: translateX(0);
   }
 }
