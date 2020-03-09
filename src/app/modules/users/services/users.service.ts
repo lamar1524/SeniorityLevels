@@ -3,7 +3,7 @@ import { auth as firebaseAuth, database, User } from 'firebase';
 import { from, Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
-import { IUser } from '@core/interfaces';
+import { IUser, IUserValues } from '@core/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +21,7 @@ export class UsersService {
     from(this.db.ref('users').once('value')).pipe(
       first(),
       map((response) => {
-        return Object.entries(response.val()).map((element): IUser => ({ key: element[0], values: element[1] as IUser['values'] }));
+        return Object.entries(response.val()).map((element): IUser => ({ key: element[0], values: element[1] as IUserValues }));
       }),
     );
 
