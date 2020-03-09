@@ -1,8 +1,8 @@
 <div class="container" *ngIf="userDetails">
   <div class="profile__credentials">
-    <p>Email: {{ userDetails.values.email }}</p>
-    <p>First name: {{ userDetails.values.firstName }}</p>
-    <p>Last name: {{ userDetails.values.lastName }}</p>
+    <div class="profile__photo"><img class="photo__inner" [src]="imgSrc" /></div>
+    <span class="profile__name">{{ userDetails.values.firstName }} {{ userDetails.values.lastName }}</span>
+    <p class="profile__email">{{ userDetails.values.email }}</p>
+    <h3>Seniorities:</h3>
   </div>
-  <span class="nav u-text--link" [routerLink]="goBackLink">Go back</span>
 </div>

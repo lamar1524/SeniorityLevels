@@ -15,6 +15,7 @@ export class UserProfileComponent implements OnInit {
   userKey: string;
   userDetails: AppUser;
   goBackLink: string[];
+  imgSrc: string;
 
   constructor(private route: ActivatedRoute, private usersService: UsersService, private cdRef: ChangeDetectorRef) {
     this.userKey = this.route.snapshot.paramMap.get('key');
@@ -26,6 +27,7 @@ export class UserProfileComponent implements OnInit {
       this.cdRef.markForCheck();
     });
     this.goBackLink = [`/${ROUTES.home}/${ROUTES.users}/${ROUTES.usersList}`];
+    this.imgSrc = 'assets/img/mock/profile_mock.jpg';
   }
 
   ngOnInit() {}
