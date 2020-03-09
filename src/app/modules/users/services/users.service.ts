@@ -21,9 +21,7 @@ export class UsersService {
     from(this.db.ref('users').once('value')).pipe(
       first(),
       map((response) => {
-        return Object.entries(response.val()).map(
-          (element): IUser => ({ key: element[0], values: JSON.parse(JSON.stringify(element[1])) }),
-        );
+        return Object.entries(response.val()).map((element): IUser => ({ key: element[0], values: element[1] as IUser['values'] }));
       }),
     );
 
