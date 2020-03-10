@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ROUTES } from '@constants/routes.constants';
+import { ROUTES_PATH } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
 import { RoutesConst } from '@core/interfaces';
 
@@ -15,7 +15,7 @@ export class NavigationComponent {
   readonly routes: RoutesConst;
 
   constructor(private authService: AuthenticationService, private router: Router) {
-    this.routes = ROUTES;
+    this.routes = ROUTES_PATH;
   }
 
   toggleNav(): void {
@@ -25,6 +25,6 @@ export class NavigationComponent {
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate([ROUTES.home]);
+    this.router.navigate([ROUTES_PATH.home]);
   }
 }

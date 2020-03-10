@@ -5,10 +5,10 @@
 </button>
 <div class="nav">
   <div class="nav__link u-text--link--light">
-    <span [routerLink]="['/' + routes.home + '/' + routes.users + '/' + routes.userProfile]" (click)="toggleNav()">Profile</span>
+    <span [routerLink]="[routes.userProfile]" (click)="toggleNav()">Profile</span>
   </div>
   <div class="nav__link u-text--link--light">
-    <span [routerLink]="['/' + routes.home + '/' + routes.users + '/' + routes.usersList]" (click)="toggleNav()">Users list</span>
+    <span [routerLink]="[routes.usersList]" (click)="toggleNav()">Users list</span>
   </div>
   <div class="nav__link u-text--link--light"><span (click)="logout()">Logout</span></div>
 </div>

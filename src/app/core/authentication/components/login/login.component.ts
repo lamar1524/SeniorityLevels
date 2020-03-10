@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 
-import { ROUTES } from '@constants/routes.constants';
+import { ROUTES_PATH } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
 import { RoutesConst } from '@core/interfaces';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
@@ -25,7 +25,7 @@ export class LoginComponent {
       password: new AppFormControl('', [Validators.required]),
     });
     this.errorMessage = '';
-    this.routes = ROUTES;
+    this.routes = ROUTES_PATH;
   }
   get email() {
     return this.loginForm.get('email');
@@ -41,7 +41,7 @@ export class LoginComponent {
         this.authService.getTokenRemotely().subscribe(
           (token) => {
             this.authService.putTokenInSessionStorage(token);
-            this.router.navigate([`/${this.routes.users}`]);
+            this.router.navigate([this.routes.users]);
           },
           (error) => {
             throwError(error);

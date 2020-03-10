@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 
-import { ROUTES } from '@constants/routes.constants';
+import { ROUTES_PATH } from '@constants/routes.constants';
 import { AuthenticationService } from '@core/authentication/services/authentication.service';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class AuthorizationGuard implements CanActivate {
       return true;
     } else {
       this.authService.logout();
-      this.router.navigate([`/${ROUTES.home}`]);
+      this.router.navigate([ROUTES_PATH.home]);
       return false;
     }
   }
