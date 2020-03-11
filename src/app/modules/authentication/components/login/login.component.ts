@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'firebase';
-import { throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { RoutesConst } from '@core/interfaces';
@@ -28,6 +26,7 @@ export class LoginComponent {
     this.errorMessage = '';
     this.routes = ROUTES_PATH;
   }
+
   get email() {
     return this.loginForm.get('email');
   }
@@ -38,23 +37,27 @@ export class LoginComponent {
 
   sendCredentials = (): void => {
     this.authService.signIn(this.email.value, this.password.value).subscribe(
-      () => {
-        this.authService.getTokenRemotely().subscribe(
-          (user: User) => {
-            user.getIdToken().then(token => {
-              this.authService.putTokenInSessionStorage(token);
-              this.router.navigate([this.routes.users]);
-            });
-          },
-          (error) => {
-            throwError(error);
-          },
-        );
-      },
-      (error) => {
-        this.errorMessage = error.message;
-        this.cdRef.markForCheck();
-      },
+      () => this.handleCredentialSuccess(),
+      (error) => this.handleCredentialsError(error.message),
     );
   };
+
+  handleCredentialSuccess(): void {
+    this.authService.getTokenRemotely().subscribe(
+      (user) => {
+        user.getIdToken().then((token) => {
+          this.authService.putTokenInSessionStorage(token);
+          this.router.navigate([this.routes.users]);
+        });
+      },
+      (error) => {
+        this.handleCredentialsError(error.message);
+      },
+    );
+  }
+
+  handleCredentialsError(message) {
+    this.errorMessage = message;
+    this.cdRef.markForCheck();
+  }
 }

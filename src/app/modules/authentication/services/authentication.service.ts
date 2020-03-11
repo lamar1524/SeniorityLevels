@@ -37,7 +37,7 @@ export class AuthenticationService {
   };
 
   isLoggedIn = async (): Promise<boolean> => {
-    return !!this.getTokenFromSessionStorage() && !!await this.firebaseAuth.currentUser;
+    return !!this.getTokenFromSessionStorage() && !!(await this.firebaseAuth.currentUser);
   };
 
   registerUser = (email: string, password: string): Observable<any> =>
