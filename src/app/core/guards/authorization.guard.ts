@@ -10,12 +10,12 @@ import { AuthenticationService } from '@modules/authentication';
 export class AuthorizationGuard implements CanActivate {
   constructor(private authService: AuthenticationService, private router: Router) {}
 
-  canActivate(): boolean {
-    if (this.authService.isLoggedIn()) {
+  async canActivate(): Promise<boolean> {
+    if (await this.authService.isLoggedIn()) {
       return true;
     } else {
       this.authService.logout();
-      this.router.navigate([ROUTES_PATH.home]);
+      await this.router.navigate([ROUTES_PATH.home]);
       return false;
     }
   }

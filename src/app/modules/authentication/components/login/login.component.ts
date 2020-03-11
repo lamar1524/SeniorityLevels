@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'firebase';
 import { throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
@@ -39,9 +40,11 @@ export class LoginComponent {
     this.authService.signIn(this.email.value, this.password.value).subscribe(
       () => {
         this.authService.getTokenRemotely().subscribe(
-          (token) => {
-            this.authService.putTokenInSessionStorage(token);
-            this.router.navigate([this.routes.users]);
+          (user: User) => {
+            user.getIdToken().then(token => {
+              this.authService.putTokenInSessionStorage(token);
+              this.router.navigate([this.routes.users]);
+            });
           },
           (error) => {
             throwError(error);
