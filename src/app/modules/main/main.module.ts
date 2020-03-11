@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { NavigationComponent } from './components';
-import { MainComponent } from './components';
+import { MainComponent, NavigationComponent } from './components';
 import { MainRoutingModule } from './main-routing.module';
 
 @NgModule({
