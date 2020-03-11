@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { RoutesConst } from '@core/interfaces';
-import { AuthenticationService } from '@modules/authentication/services/authentication.service';
+import { AuthenticationService } from '@modules/authentication';
 
 @Component({
   selector: 'app-navigation',
@@ -14,13 +15,13 @@ import { AuthenticationService } from '@modules/authentication/services/authenti
 export class NavigationComponent {
   readonly routes: RoutesConst;
 
-  constructor(private authService: AuthenticationService, private router: Router) {
+  constructor(@Inject(DOCUMENT) private document: Document, private authService: AuthenticationService, private router: Router) {
     this.routes = ROUTES_PATH;
   }
 
   toggleNav(): void {
-    document.querySelector('.hamburger__box').classList.toggle('hamburger__box--active');
-    document.querySelector('.nav').classList.toggle('nav--active');
+    this.document.querySelector('.hamburger__box').classList.toggle('hamburger__box--active');
+    this.document.querySelector('.nav').classList.toggle('nav--active');
   }
 
   logout(): void {

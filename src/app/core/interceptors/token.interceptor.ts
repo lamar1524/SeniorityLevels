@@ -5,7 +5,7 @@ import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { AuthenticationService } from '@modules/authentication/services/authentication.service';
+import { AuthenticationService } from '@modules/authentication';
 
 @Injectable({
   providedIn: 'root',

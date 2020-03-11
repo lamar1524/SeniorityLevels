@@ -2,7 +2,7 @@
 @import '../../../../../styles/variables';
 
 @mixin hamburger-line {
-  background-color: #000;
+  background-color: $hamburger-line;
   height: 3px;
   position: absolute;
   width: 100%;
@@ -75,7 +75,7 @@
 
 .nav {
   align-items: center;
-  background-color: #777;
+  background-color: $nav-background;
   display: flex;
   flex-direction: column;
   font-size: 2rem;
