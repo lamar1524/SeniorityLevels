@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { AuthenticationService } from '@core/authentication/services/authentication.service';
 import { RoutesConst } from '@core/interfaces';
+import { AuthenticationService } from '@modules/authentication/services/authentication.service';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 
 @Component({

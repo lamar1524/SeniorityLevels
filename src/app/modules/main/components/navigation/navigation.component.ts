@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { AuthenticationService } from '@core/authentication/services/authentication.service';
 import { RoutesConst } from '@core/interfaces';
+import { AuthenticationService } from '@modules/authentication/services/authentication.service';
 
 @Component({
   selector: 'app-navigation',

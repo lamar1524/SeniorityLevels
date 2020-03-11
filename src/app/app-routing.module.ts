@@ -6,7 +6,7 @@ import { ROUTES } from '@constants/routes.constants';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./core/authentication/authentication.module').then((mod) => mod.AuthenticationModule),
+    loadChildren: () => import('./modules/authentication/authentication.module').then((mod) => mod.AuthenticationModule),
   },
   {
     path: ROUTES.home,

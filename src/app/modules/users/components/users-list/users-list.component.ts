@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { AuthenticationService } from '@core/authentication/services/authentication.service';
 import { ILinkedUser, IUser } from '@core/interfaces';
 import { RoutesConst } from '@core/interfaces';
 import { DISPLAYED_COLUMNS } from '@modules/users/consts/users.consts';

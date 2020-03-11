@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '@core/authentication/services/authentication.service';
+import { AuthenticationService } from '@modules/authentication/services/authentication.service';
 import { UsersService } from '@modules/users/services/users.service';
 
 @Component({

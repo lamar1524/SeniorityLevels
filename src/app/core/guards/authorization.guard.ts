@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { AuthenticationService } from '@core/authentication/services/authentication.service';
+import { AuthenticationService } from '@modules/authentication/services/authentication.service';
 
 @Injectable({
   providedIn: 'root',
