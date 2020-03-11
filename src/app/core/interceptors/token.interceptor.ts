@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { ROUTES } from '@constants/routes.constants';
-import { AuthenticationService } from '@core/authentication/services/authentication.service';
+import { ROUTES_PATH } from '@constants/routes.constants';
+import { AuthenticationService } from '@modules/authentication';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +39,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   handle401Error = (request: HttpRequest<any>, next: HttpHandler) => {
     this.authService.logout();
-    this.router.navigate([`/${ROUTES.home}`]);
+    this.router.navigate([ROUTES_PATH.home]);
     return next.handle(request);
   };
 

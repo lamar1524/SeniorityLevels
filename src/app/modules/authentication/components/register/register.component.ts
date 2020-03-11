@@ -3,9 +3,9 @@ import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 
-import { ROUTES } from '@constants/routes.constants';
-import { AuthenticationService } from '@core/authentication/services/authentication.service';
+import { ROUTES_PATH } from '@constants/routes.constants';
 import { RoutesConst } from '@core/interfaces';
+import { AuthenticationService } from '@modules/authentication';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 
@@ -29,7 +29,7 @@ export class RegisterComponent {
       repeatPassword: new AppFormControl('', [Validators.required, equalityValidator('password')]),
     });
     this.message = '';
-    this.routes = ROUTES;
+    this.routes = ROUTES_PATH;
   }
 
   get email() {
@@ -64,7 +64,7 @@ export class RegisterComponent {
     this.authService.registerUser(this.email.value, this.password.value).subscribe(
       () =>
         this.authService.provideAdditionalUserData(this.formData).subscribe(
-          () => this.router.navigate([ROUTES.users]),
+          () => this.router.navigate([this.routes.users]),
           (error) => {
             throwError(error);
           },

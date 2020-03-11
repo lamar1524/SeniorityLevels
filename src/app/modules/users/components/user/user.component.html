@@ -2,10 +2,6 @@
   <div class="profile__wrapper">
     <div class="profile__email">
       <h1>Hello {{ userDetails.email }}</h1>
-      <p [routerLink]="['../' + routes.usersList]" class="u-text--link">Users list</p>
-      <button mat-raised-button color="primary" (click)="logout()">
-        Logout
-      </button>
     </div>
   </div>
 </div>

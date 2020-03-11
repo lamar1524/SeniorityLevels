@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ROUTES } from '@constants/routes.constants';
-import { AuthenticationService } from '@core/authentication/services/authentication.service';
+import { ROUTES_PATH } from '@constants/routes.constants';
 import { ILinkedUser, IUser } from '@core/interfaces';
 import { RoutesConst } from '@core/interfaces';
 import { DISPLAYED_COLUMNS } from '@modules/users/consts/users.consts';
@@ -19,13 +18,8 @@ export class UsersListComponent {
   readonly displayedColumns: string[];
   users: ILinkedUser[];
 
-  constructor(
-    private authService: AuthenticationService,
-    private usersService: UsersService,
-    private router: Router,
-    private cdRef: ChangeDetectorRef,
-  ) {
-    this.routes = ROUTES;
+  constructor(private usersService: UsersService, private cdRef: ChangeDetectorRef) {
+    this.routes = ROUTES_PATH;
     this.usersService.getUsersList().subscribe((response) => {
       this.users = UsersListComponent.usersToLinkedUsers(response);
       this.cdRef.markForCheck();
@@ -37,13 +31,8 @@ export class UsersListComponent {
     return tab.map(
       (element: IUser): ILinkedUser => ({
         ...element,
-        profileLink: `/${ROUTES.home}/${ROUTES.users}/${ROUTES.otherUserProfile}/${element.key}`,
+        profileLink: `${ROUTES_PATH.otherUserProfile}/${element.key}`,
       }),
     );
   }
-
-  logout = (): void => {
-    this.authService.logout();
-    this.router.navigate([ROUTES.home]);
-  };
 }
