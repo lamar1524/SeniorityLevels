@@ -69,8 +69,8 @@ export class RegisterComponent {
             throwError(error);
           },
         ),
-      (error) => {
-        this.message = error.message;
+      ({ message }) => {
+        this.message = message;
         this.chRef.markForCheck();
       },
     );

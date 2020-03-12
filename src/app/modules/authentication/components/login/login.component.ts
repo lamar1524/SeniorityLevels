@@ -6,6 +6,7 @@ import { ROUTES_PATH } from '@constants/routes.constants';
 import { RoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -37,18 +38,23 @@ export class LoginComponent {
 
   sendCredentials = (): void => {
     this.authService.signIn(this.email.value, this.password.value).subscribe(
-      () => this.handleCredentialSuccess(),
+      () => this.handleCredentialsSuccess(),
       (error) => this.handleCredentialsError(error.message),
     );
   };
 
-  handleCredentialSuccess(): void {
-    this.authService.getTokenRemotely().subscribe(
+  handleCredentialsSuccess(): void {
+    this.authService.getUserRemotely().subscribe(
       (user) => {
-        user.getIdToken().then((token) => {
-          this.authService.putTokenInSessionStorage(token);
-          this.router.navigate([this.routes.users]);
-        });
+        this.authService.getTokenFromUser(user).subscribe(
+          (token) => {
+            this.authService.putTokenInSessionStorage(token);
+            this.router.navigate([this.routes.users]);
+          },
+          (error) => {
+            throwError(error);
+          },
+        );
       },
       (error) => {
         this.handleCredentialsError(error.message);
