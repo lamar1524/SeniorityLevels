@@ -11,6 +11,7 @@ import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { User } from 'firebase';
 import { of, throwError, Observable } from 'rxjs';
 import { LoginComponent } from './login.component';
+import UserCredential = firebase.auth.UserCredential;
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -79,13 +80,13 @@ describe('LoginComponent', () => {
       spyOn(router, 'navigate').and.stub();
     });
     it('should call authService signIn method with proper args', () => {
-      spyOn(authService, 'signIn').and.returnValue(of({}));
+      spyOn(authService, 'signIn').and.returnValue(of({}) as Observable<User | UserCredential>);
       component.sendCredentials();
       expect(authService.signIn).toHaveBeenCalledWith(component.email.value, component.password.value);
     });
 
     it('should call handleCredentialsSuccess method', () => {
-      spyOn(authService, 'signIn').and.returnValue(of({}));
+      spyOn(authService, 'signIn').and.returnValue(of({}) as Observable<User | UserCredential>);
       spyOn(component, 'handleCredentialsSuccess');
       component.sendCredentials();
       expect(component.handleCredentialsSuccess).toHaveBeenCalled();

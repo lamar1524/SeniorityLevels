@@ -7,6 +7,7 @@ import 'firebase/database';
 import { from, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import Reference = firebase.database.Reference;
+import UserCredential = firebase.auth.UserCredential;
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class AuthenticationService {
     this.TOKEN_KEY = 'Bearer';
   }
 
-  signIn = (email: string, password: string): Observable<any> =>
+  signIn = (email: string, password: string): Observable<User | UserCredential> =>
     from(this.firebaseAuth.signInWithEmailAndPassword(email, password)).pipe(first());
 
   getUserRemotely = (): Observable<User> => from(this.firebaseAuth.currentUser).pipe(first());
