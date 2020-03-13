@@ -147,5 +147,7 @@ describe('AuthenticationService', () => {
         expect(service.registerUser('', '') instanceof Observable).toEqual(true);
       });
     });
+
+    // TODO: No clue how to test provideAdditionalUserData method
   });
 });
