@@ -67,7 +67,7 @@ describe('AuthenticationService', () => {
 
   describe('getTokenFromUser method', () => {
     const userMock = {
-      getIdToken: () => new Promise<string>(() => 'sssssssssssssssss'),
+      getIdToken: () => new Promise<string>(() => ''),
       providerId: '',
     };
     it('should return observable', () => {
