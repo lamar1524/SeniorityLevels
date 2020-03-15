@@ -29,7 +29,7 @@ describe('UsersListComponent', () => {
     }).compileComponents();
   });
 
-  beforeEach(async () => {
+  beforeEach(() => {
     service = TestBed.get(UsersService);
     spyOn(service, 'getUsersList').and.returnValue(of([{}] as IUser[]));
     fixture = TestBed.createComponent(UsersListComponent);

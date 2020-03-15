@@ -2,9 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { User } from 'firebase';
-import { Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import UserCredential = firebase.auth.UserCredential;
 
+import { IUserValues } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 
 describe('AuthenticationService', () => {
@@ -18,7 +19,9 @@ describe('AuthenticationService', () => {
         {
           provide: AngularFireDatabase,
           useValue: {
-            database: {},
+            database: {
+              ref: () => ({ push: () => of({}) }),
+            },
           },
         },
         {
@@ -39,17 +42,22 @@ describe('AuthenticationService', () => {
     firebaseAuth = TestBed.get(AngularFireAuth);
     db = TestBed.get(AngularFireDatabase);
   });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
   describe('signIn method', () => {
+    const email = 'email';
+    const password = 'password';
+
     beforeEach(() => {
       spyOn(firebaseAuth, 'signInWithEmailAndPassword').and.returnValue(new Promise<UserCredential>(() => ({} as UserCredential)));
     });
+
     it('should call signInWithEmailAndPassword', () => {
-      service.signIn('', '');
-      expect(firebaseAuth.signInWithEmailAndPassword).toHaveBeenCalled();
+      service.signIn(email, password);
+      expect(firebaseAuth.signInWithEmailAndPassword).toHaveBeenCalledWith(email, password);
     });
 
     it('should return observable', () => {
@@ -148,6 +156,36 @@ describe('AuthenticationService', () => {
       });
     });
 
-    // TODO: No clue how to test provideAdditionalUserData method
+    describe('provideAdditionalUserData method', () => {
+      const userDataMock: IUserValues = {
+        email: '',
+        firstName: '',
+        lastName: '',
+      };
+      const dataReturned = {
+        foo: 'bar',
+      };
+
+      beforeEach(() => {
+        spyOn(db.database, 'ref').and.callFake(
+          () =>
+            ({
+              push: () => of(dataReturned),
+            } as any),
+        );
+      });
+
+      it('should call ref method with proper arg', () => {
+        service.provideAdditionalUserData(userDataMock);
+        expect(db.database.ref).toHaveBeenCalledWith('users');
+      });
+
+      it('should return proper data', (done) => {
+        service.provideAdditionalUserData(userDataMock).subscribe((value) => {
+          expect(value).toBe(dataReturned as any);
+          done();
+        });
+      });
+    });
   });
 });

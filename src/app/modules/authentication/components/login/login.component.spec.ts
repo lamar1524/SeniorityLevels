@@ -3,15 +3,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ROUTES_PATH } from '@constants/routes.constants';
+import { User } from 'firebase';
+import { of, throwError, Observable } from 'rxjs';
+import UserCredential = firebase.auth.UserCredential;
 
+import { ROUTES_PATH } from '@constants/routes.constants';
 import { MaterialModule } from '@core/material/material.module';
 import { AuthenticationService } from '@modules/authentication';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { User } from 'firebase';
-import { of, throwError, Observable } from 'rxjs';
 import { LoginComponent } from './login.component';
-import UserCredential = firebase.auth.UserCredential;
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -79,6 +79,7 @@ describe('LoginComponent', () => {
     beforeEach(() => {
       spyOn(router, 'navigate').and.stub();
     });
+
     it('should call authService signIn method with proper args', () => {
       spyOn(authService, 'signIn').and.returnValue(of({}) as Observable<User | UserCredential>);
       component.sendCredentials();

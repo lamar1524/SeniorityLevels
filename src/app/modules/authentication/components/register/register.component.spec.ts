@@ -68,7 +68,7 @@ describe('RegisterComponent', () => {
   });
 
   describe('Routes const', () => {
-    it('should assing routes const properly', () => {
+    it('should assign routes const properly', () => {
       expect(component.routes).toEqual(ROUTES_PATH);
     });
   });
@@ -81,7 +81,7 @@ describe('RegisterComponent', () => {
     it('should call registerUser method', () => {
       spyOn(authService, 'registerUser').and.returnValue(of({}));
       component.sendCredentials();
-      expect(authService.registerUser).toHaveBeenCalled();
+      expect(authService.registerUser).toHaveBeenCalledWith(component.email.value, component.password.value);
     });
 
     it('should call provideAdditionalUserData method', () => {

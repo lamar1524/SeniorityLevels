@@ -37,7 +37,7 @@ describe('UserComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call getCurrentUser method', async () => {
+  it('should call getCurrentUser method', () => {
     expect(usersService.getCurrentUser).toHaveBeenCalled();
   });
 });
