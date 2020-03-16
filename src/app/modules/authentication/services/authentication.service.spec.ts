@@ -146,6 +146,7 @@ describe('AuthenticationService', () => {
       beforeEach(() => {
         spyOn(firebaseAuth, 'createUserWithEmailAndPassword').and.returnValue(new Promise<UserCredential>(() => ({} as UserCredential)));
       });
+
       it('should call createUserWithEmailAndPassword method', () => {
         service.registerUser('email', 'password');
         expect(firebaseAuth.createUserWithEmailAndPassword).toHaveBeenCalledWith('email', 'password');
