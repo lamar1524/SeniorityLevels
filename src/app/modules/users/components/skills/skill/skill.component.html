@@ -1,0 +1,23 @@
+<div class="container">
+  <button class="button--exit" (click)="hideComponent($event)"><span class="line--left"></span><span class="line--right"></span></button>
+  <div class="data__table">
+      <div class="skill__category" *ngFor="let category of categoryData; index as i">
+          <button mat-raised-button class="header" (click)="showList(i)" >
+              {{ category.title }}
+          </button>
+          <div *ngIf="isVisible(i)" class="skill__table">
+              <div class="table__row">
+                  <div class="table__column">Junior</div>
+                  <div class="table__column">Middle</div>
+                  <div class="table__column">Senior</div>
+              </div>
+              <div class="table__row">
+                  <div class="table__column">{{category.levels.junior}}</div>
+                  <div class="table__column">{{category.levels.middle}}</div>
+                  <div class="table__column">{{category.levels.senior}}</div>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</div>
