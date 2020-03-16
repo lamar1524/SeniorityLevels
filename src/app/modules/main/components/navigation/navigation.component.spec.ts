@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { AuthenticationService } from '@modules/authentication';
-
 import { NavigationComponent } from './navigation.component';
 
 describe('NavigationComponent', () => {
@@ -38,7 +38,18 @@ describe('NavigationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO toggleNav tests
+
+  describe('toggleNav method', () => {
+    it('should call proper methods', () => {
+      spyOn(document, 'querySelector').and.returnValue({ classList: {toggle: () => {}} as any } as Element);
+      spyOn(document.querySelector('foo').classList, 'toggle');
+      component.toggleNav();
+      expect(document.querySelector).toHaveBeenCalledWith('.hamburger__box');
+      expect(document.querySelector).toHaveBeenCalledWith('.nav');
+      expect(document.querySelector('foo').classList.toggle).toHaveBeenCalledWith('hamburger__box--active');
+      expect(document.querySelector('foo').classList.toggle).toHaveBeenCalledWith('nav--active');
+    });
+  });
 
   describe('logout method', () => {
     beforeEach(() => {
