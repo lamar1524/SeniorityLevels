@@ -27,6 +27,7 @@ export class LoginComponent {
     this.errorMessage = '';
     this.routes = ROUTES_PATH;
   }
+
   get email() {
     return this.loginForm.get('email');
   }
@@ -37,8 +38,15 @@ export class LoginComponent {
 
   sendCredentials = (): void => {
     this.authService.signIn(this.email.value, this.password.value).subscribe(
-      () => {
-        this.authService.getTokenRemotely().subscribe(
+      () => this.handleCredentialsSuccess(),
+      (error) => this.handleCredentialsError(error.message),
+    );
+  };
+
+  handleCredentialsSuccess(): void {
+    this.authService.getUserRemotely().subscribe(
+      (user) => {
+        this.authService.getTokenFromUser(user).subscribe(
           (token) => {
             this.authService.putTokenInSessionStorage(token);
             this.router.navigate([this.routes.users]);
@@ -49,9 +57,13 @@ export class LoginComponent {
         );
       },
       (error) => {
-        this.errorMessage = error.message;
-        this.cdRef.markForCheck();
+        this.handleCredentialsError(error.message);
       },
     );
-  };
+  }
+
+  handleCredentialsError(message) {
+    this.errorMessage = message;
+    this.cdRef.markForCheck();
+  }
 }

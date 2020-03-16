@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { ILinkedUser, IUser } from '@core/interfaces';
