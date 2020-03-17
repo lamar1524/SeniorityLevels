@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { throwError } from 'rxjs';
 
-import { ISeniorityLevels, ISubCategoryProgress } from '@core/interfaces';
+import { ISeniority, ISubCategoryProgress } from '@core/interfaces';
 import { UsersService } from '@modules/users/services/users.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class SkillComponent implements OnInit {
   @Input() subCategory: ISubCategoryProgress;
   @Input() catTitle: string;
   private tableVisibility: boolean;
-  private levels: ISeniorityLevels;
+  private levels: ISeniority;
 
   constructor(private cdRef: ChangeDetectorRef, private usersService: UsersService) {
     this.levels = {
@@ -28,7 +28,7 @@ export class SkillComponent implements OnInit {
     this.tableVisibility = false;
     this.usersService.getCurrentUser().subscribe(
       (user) => {
-        this.usersService.getSkillsBySubCategory(this.catTitle, this.subCategory.title, user.uid).subscribe((res: ISeniorityLevels) => {
+        this.usersService.getSkillsBySubCategory(this.catTitle, this.subCategory.title, user.uid).subscribe((res: ISeniority) => {
           this.levels = res;
         });
       },

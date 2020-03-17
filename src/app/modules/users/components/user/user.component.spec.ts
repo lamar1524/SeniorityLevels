@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ICategoryProgress, ISubCategoryProgress } from '@core/interfaces';
+import { MaterialModule } from '@core/material/material.module';
 import { SkillsComponent } from '@modules/users/components';
 import { User } from 'firebase';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
 import { default as data } from '@modules/users/components/skills/data';
@@ -18,7 +19,7 @@ describe('UserComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [UserComponent, MockComponent(SkillsComponent)],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, MockModule(MaterialModule)],
       providers: [
         {
           provide: UsersService,
