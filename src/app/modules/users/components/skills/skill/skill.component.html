@@ -8,13 +8,13 @@
     <div class="table__column ">Senior</div>
   </div>
   <div class="table__row">
-    <div [ngClass]="{ 'content--active': levels.junior, 'table__column': true, 'table__content': true }" (click)="changeSkillLevel('junior')">
+    <div class="table__column table__content" [ngClass]="{'content--active': levels.junior}" (click)="changeSkillLevel('junior')">
       {{ subCategory.levels.junior }}
     </div>
-    <div [ngClass]="{ 'content--active': levels.middle, 'table__column': true, 'table__content': true }" (click)="changeSkillLevel('middle')">
+    <div class="table__column table__content" [ngClass]="{ 'content--active': levels.middle}" (click)="changeSkillLevel('middle')">
       {{ subCategory.levels.middle }}
     </div>
-    <div [ngClass]="{ 'content--active': levels.senior, 'table__column': true, 'table__content': true }" (click)="changeSkillLevel('senior')">
+    <div class="table__column table__content" [ngClass]="{ 'content--active': levels.senior}" (click)="changeSkillLevel('senior')">
       {{ subCategory.levels.senior }}
     </div>
   </div>
