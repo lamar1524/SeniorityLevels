@@ -11,11 +11,22 @@
   text-align: center;
   width: 100%;
 
-  .profile__wrapper {
+  .profile__introduction {
     text-align: left;
+  }
 
-    .skill_title {
-      padding: 5px 5px 5px 0;
+  .skill_title {
+    align-self: center;
+    display: inline-block;
+    padding: 5px 5px 5px 0;
+    width: 200px;
+  }
+
+  .category__button {
+    width: 100%;
+
+    &:hover {
+      color: $pgs;
     }
   }
 }

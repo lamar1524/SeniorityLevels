@@ -5,7 +5,7 @@
     </div>
     <form (ngSubmit)="sendCredentials()" class="login__form" [formGroup]="loginForm">
       <mat-form-field class="form__control form__input">
-        <input placeholder="Email" formControlName="email" type="text" matInput />
+          <input placeholder="Email" formControlName="email" type="text" matInput />
       </mat-form-field>
       <div *ngIf="email.invalidControl" class="form__error u-text--error mat-body">
         <div *ngIf="email.errors.required">
@@ -20,7 +20,7 @@
           Password is required.
         </div>
       </div>
-      <button [disabled]="loginForm.invalid" type="submit" class="form__control form__button" mat-raised-button color="primary">
+      <button [disabled]="loginForm.invalid" type="submit" class="form__control form__button" mat-stroked-button>
         Log in
       </button>
     </form>
@@ -29,7 +29,7 @@
         <span class="u-text--error mat-body">{{ errorMessage }}</span>
       </div>
       <div class="login__caption">
-        <span [routerLink]="[routes.register]" color="primary" class="mat-body u-text--link"> No account yet? Register here</span>
+        <span [routerLink]="[routes.register]" class="mat-body u-text--link"> No account yet? Register here</span>
       </div>
     </div>
   </div>

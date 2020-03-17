@@ -10,7 +10,9 @@
     <div class="profile__skills">
       <div class="skills__titles">
         <div class="skill_title" *ngFor="let category of data">
-          <button mat-stroked-button color="primary" (click)="chooseCategory(category.subCategories)">{{ category.title }}</button>
+          <button class="category__button" mat-stroked-button (click)="chooseCategory(category.subCategories)">
+            {{ category.title }}
+          </button>
         </div>
         <app-skills *ngIf="skillVisibility" [categoryData]="chosenCategories" (hide)="hideSkill()"></app-skills>
       </div>

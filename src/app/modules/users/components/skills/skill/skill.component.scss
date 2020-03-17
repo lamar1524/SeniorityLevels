@@ -3,12 +3,21 @@
 .header {
   height: 50px;
   width: 100%;
+
+  &:hover {
+    color: $pgs;
+  }
 }
 
 .skill__table {
   .table__row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .table__headers {
+    background-color: $pgs;
+    color: $primary;
   }
 
   .table__column {

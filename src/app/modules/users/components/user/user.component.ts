@@ -16,7 +16,7 @@ export class UserComponent {
   private progress: ISeniority;
   data: IProgressCategory[];
   chosenCategories: ISubCategoryProgress[];
-  private skillVisibility: boolean;
+  private skillVisible: boolean;
 
   constructor(private usersService: UsersService, private cdRef: ChangeDetectorRef) {
     this.usersService.getCurrentUser().subscribe((user) => {
@@ -29,15 +29,19 @@ export class UserComponent {
       senior: '3%',
     };
     this.data = data;
-    this.skillVisibility = false;
+    this.skillVisible = false;
   }
 
   chooseCategory(categories: ISubCategoryProgress[]) {
     this.chosenCategories = categories;
-    this.skillVisibility = true;
+    this.skillVisible = true;
+  }
+
+  get skillVisibility() {
+    return this.skillVisible;
   }
 
   hideSkill() {
-    this.skillVisibility = false;
+    this.skillVisible = false;
   }
 }

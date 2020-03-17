@@ -29,11 +29,11 @@ export class LoginComponent {
   }
 
   get email() {
-    return this.loginForm.get('email');
+    return this.loginForm.get('email') as AppFormControl;
   }
 
   get password() {
-    return this.loginForm.get('password');
+    return this.loginForm.get('password') as AppFormControl;
   }
 
   sendCredentials = (): void => {

@@ -11,9 +11,10 @@
   width: 90vw;
 
   .data__table {
-    border: 1px $accent solid;
+    border-radius: $box-border-radius;
     max-height: 80vh;
     overflow-y: auto;
+    @include form-shadow($blur-color);
   }
 
   .button--exit {
