@@ -37,9 +37,16 @@ export class LoginComponent {
   }
 
   sendCredentials = (): void => {
+    this.loginForm.disable();
     this.authService.signIn(this.email.value, this.password.value).subscribe(
-      () => this.handleCredentialsSuccess(),
-      (error) => this.handleCredentialsError(error.message),
+      () => {
+        this.loginForm.enable();
+        this.handleCredentialsSuccess();
+      },
+      (error) => {
+        this.loginForm.enable();
+        this.handleCredentialsError(error.message);
+      },
     );
   };
 

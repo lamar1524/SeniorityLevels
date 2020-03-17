@@ -20,8 +20,9 @@
           Password is required.
         </div>
       </div>
-      <button [disabled]="loginForm.invalid" type="submit" class="form__control form__button" mat-raised-button color="primary">
-        Log in
+      <button [disabled]="loginForm.invalid || loginForm.disabled" type="submit" class="form__control form__button" mat-raised-button color="primary">
+        <span *ngIf="!loginForm.disabled">Log in</span>
+        <mat-spinner [diameter]="35" class="u-loading__button" *ngIf="loginForm.disabled"></mat-spinner>
       </button>
     </form>
     <div class="login__messages">

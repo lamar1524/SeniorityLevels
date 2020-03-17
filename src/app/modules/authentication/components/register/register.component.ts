@@ -61,16 +61,22 @@ export class RegisterComponent {
   }
 
   sendCredentials = (): void => {
+    this.registerForm.disable();
     this.authService.registerUser(this.email.value, this.password.value).subscribe(
       (user) => {
         this.authService.provideAdditionalUserData(this.formData, user.user.uid).subscribe(
-          () => this.router.navigate([this.routes.users]),
+          () => {
+            this.registerForm.enable();
+            this.router.navigate([this.routes.users]);
+          },
           (error) => {
+            this.registerForm.enable();
             throwError(error);
           },
         );
       },
       ({ message }) => {
+        this.registerForm.enable();
         this.message = message;
         this.chRef.markForCheck();
       },
