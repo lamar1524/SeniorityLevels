@@ -20,8 +20,18 @@
     color: $primary;
   }
 
+  .table__content {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   .table__column {
-    padding: 5px;
+    padding: 10px;
     text-align: left;
+  }
+
+  .content--active {
+    background-color: $accept;
   }
 }

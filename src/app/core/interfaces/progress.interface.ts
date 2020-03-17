@@ -7,7 +7,13 @@ export interface ISubCategoryProgress {
   title: string;
   levels: ISeniority;
 }
-export interface IProgressCategory {
+export interface ICategoryProgress {
   title: string;
   subCategories: ISubCategoryProgress[];
+}
+
+export interface ISeniorityLevels {
+  junior: boolean;
+  middle: boolean;
+  senior: boolean;
 }

@@ -48,7 +48,7 @@ export class AuthenticationService {
   registerUser = (email: string, password: string): Observable<any> =>
     from(this.firebaseAuth.createUserWithEmailAndPassword(email, password)).pipe(first());
 
-  provideAdditionalUserData = (values: IUserValues): Observable<Reference> => {
-    return from(this.db.database.ref('users').push(values)).pipe(first());
+  provideAdditionalUserData = (values: IUserValues, userId: string): Observable<Reference> => {
+    return from(this.db.database.ref(`users/${userId}`).set(values)).pipe(first());
   };
 }

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { ISubCategoryProgress } from '@core/interfaces';
+import { ICategoryProgress } from '@core/interfaces';
 
 @Component({
   selector: 'app-skills',
@@ -8,7 +8,8 @@ import { ISubCategoryProgress } from '@core/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillsComponent {
-  @Input() categoryData: ISubCategoryProgress[];
+  @Input() categoryData: ICategoryProgress;
+  @Input() categoryName: string;
   @Output() hide = new EventEmitter();
 
   constructor() {}

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ISubCategoryProgress } from '@core/interfaces';
+import { ICategoryProgress, ISubCategoryProgress } from '@core/interfaces';
 import { SkillsComponent } from '@modules/users/components';
 import { User } from 'firebase';
 import { MockComponent } from 'ng-mocks';
@@ -53,9 +53,9 @@ describe('UserComponent', () => {
 
   describe('choseCategory method', () => {
     it('should set chosenCategory list properly', () => {
-      const mockSubCategories = [] as ISubCategoryProgress[];
+      const mockSubCategories = {} as ICategoryProgress;
       component.chooseCategory(mockSubCategories);
-      expect(component.chosenCategories).toEqual(mockSubCategories);
+      expect(component.chosenCategory).toEqual(mockSubCategories);
       expect(component.skillVisibility).toEqual(true);
     });
   });

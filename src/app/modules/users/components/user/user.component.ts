@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { default as data } from '@modules/users/components/skills/data';
 import { User } from 'firebase';
 
-import { IProgressCategory, ISeniority, ISubCategoryProgress } from '@core/interfaces';
+import { ICategoryProgress, ISeniority } from '@core/interfaces';
 import { UsersService } from '@modules/users/services/users.service';
 
 @Component({
@@ -14,8 +14,8 @@ import { UsersService } from '@modules/users/services/users.service';
 export class UserComponent {
   private userDetails: User;
   private progress: ISeniority;
-  data: IProgressCategory[];
-  chosenCategories: ISubCategoryProgress[];
+  data: ICategoryProgress[];
+  chosenCategory: ICategoryProgress;
   private skillVisible: boolean;
 
   constructor(private usersService: UsersService, private cdRef: ChangeDetectorRef) {
@@ -32,8 +32,8 @@ export class UserComponent {
     this.skillVisible = false;
   }
 
-  chooseCategory(categories: ISubCategoryProgress[]) {
-    this.chosenCategories = categories;
+  chooseCategory(category: ICategoryProgress) {
+    this.chosenCategory = category;
     this.skillVisible = true;
   }
 

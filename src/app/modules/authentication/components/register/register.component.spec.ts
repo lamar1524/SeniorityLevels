@@ -3,14 +3,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of, throwError, Observable } from 'rxjs';
+import { IUserValues } from '@core/interfaces';
+import { of, throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { MaterialModule } from '@core/material/material.module';
 import { AuthenticationService } from '@modules/authentication';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { RegisterComponent } from './register.component';
-import Reference = firebase.database.Reference;
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -84,15 +84,8 @@ describe('RegisterComponent', () => {
       expect(authService.registerUser).toHaveBeenCalledWith(component.email.value, component.password.value);
     });
 
-    it('should call provideAdditionalUserData method', () => {
-      spyOn(authService, 'registerUser').and.returnValue(of({}));
-      spyOn(authService, 'provideAdditionalUserData').and.returnValue(of({}) as Observable<Reference>);
-      component.sendCredentials();
-      expect(authService.provideAdditionalUserData).toHaveBeenCalled();
-    });
-
     it('should set error message on error thrown', () => {
-      spyOn(authService, 'registerUser').and.returnValue(throwError({message: 'error'}));
+      spyOn(authService, 'registerUser').and.returnValue(throwError({ message: 'error' }));
       component.sendCredentials();
       expect(component.message).toEqual('error');
     });

@@ -1,15 +1,21 @@
-<button class="header" mat-stroked-button (click)="tableToggle()" >
-    {{ subCategory.title }}
+<button class="header" mat-stroked-button (click)="tableToggle()">
+  {{ subCategory.title }}
 </button>
 <div *ngIf="tableVisibility" class="skill__table">
-    <div class="table__row table__headers">
-        <div class="table__column ">Junior</div>
-        <div class="table__column ">Middle</div>
-        <div class="table__column ">Senior</div>
+  <div class="table__row table__headers">
+    <div class="table__column ">Junior</div>
+    <div class="table__column ">Middle</div>
+    <div class="table__column ">Senior</div>
+  </div>
+  <div class="table__row">
+    <div [ngClass]="{ 'content--active': levels.junior, 'table__column': true, 'table__content': true }" (click)="changeSkillLevel('junior')">
+      {{ subCategory.levels.junior }}
     </div>
-    <div class="table__row">
-        <div class="table__column">{{subCategory.levels.junior}}</div>
-        <div class="table__column">{{subCategory.levels.middle}}</div>
-        <div class="table__column">{{subCategory.levels.senior}}</div>
+    <div [ngClass]="{ 'content--active': levels.middle, 'table__column': true, 'table__content': true }" (click)="changeSkillLevel('middle')">
+      {{ subCategory.levels.middle }}
     </div>
+    <div [ngClass]="{ 'content--active': levels.senior, 'table__column': true, 'table__content': true }" (click)="changeSkillLevel('senior')">
+      {{ subCategory.levels.senior }}
+    </div>
+  </div>
 </div>

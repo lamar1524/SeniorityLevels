@@ -6,7 +6,7 @@ import 'firebase/database';
 import { from, Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
-import { IUser, IUserValues } from '@core/interfaces';
+import { ISeniorityLevels, IUser, IUserValues } from '@core/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +31,17 @@ export class UsersService {
         key: userKey,
         values: response.val(),
       })),
+    );
+  }
+
+  setUsersSkills(skillCategory: string, skillName: string, skillValues: ISeniorityLevels, userId: string) {
+    return from(this.db.database.ref(`users/${userId}/skills/${skillCategory}/${skillName}`).set(skillValues)).pipe(first());
+  }
+
+  getSkillsBySubCategory(skillCategory: string, skillName: string, userId: string) {
+    return from(this.db.database.ref(`users/${userId}/skills/${skillCategory}/${skillName}`).once('value')).pipe(
+      first(),
+      map((element) => (element.val() === null ? { junior: false, middle: false, senior: false } : element.val())),
     );
   }
 }
