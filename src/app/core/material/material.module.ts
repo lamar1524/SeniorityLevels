@@ -1,11 +1,21 @@
 import { NgModule } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
+import {
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatTableModule,
+} from '@angular/material';
 
-const materialModules = [MatInputModule, MatButtonModule, MatFormFieldModule, MatTableModule, MatProgressSpinnerModule];
+const materialModules = [
+  MatInputModule,
+  MatButtonModule,
+  MatFormFieldModule,
+  MatTableModule,
+  MatProgressSpinnerModule,
+  MatProgressBarModule,
+];
 
 @NgModule({
   declarations: [],
