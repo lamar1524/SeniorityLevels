@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import { ISubCategoryProgress } from '@core/interfaces';
 
@@ -9,27 +9,16 @@ import { ISubCategoryProgress } from '@core/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillComponent implements OnInit {
-  @Input() categoryData: ISubCategoryProgress[];
-  @Output() hide = new EventEmitter();
-  private listVisible: boolean[];
+  @Input() subCategory: ISubCategoryProgress;
+  private tableVisibility: boolean;
 
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.categoryData);
-    this.listVisible = [];
-    this.listVisible.fill(true, 0, this.categoryData.length);
+    this.tableVisibility = false;
   }
 
-  isVisible = (index: number): boolean => this.listVisible[index];
-
-  showList(index: number) {
-    this.listVisible.fill(false);
-    this.listVisible[index] = true;
-  }
-
-  hideComponent(event) {
-    event.preventDefault();
-    this.hide.emit();
+  tableToggle() {
+    this.tableVisibility = !this.tableVisibility;
   }
 }

@@ -1,3 +1,58 @@
-.skill_title {
-  padding: 5px 5px 5px 0;
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.container {
+  background-color: $primary;
+  left: 50%;
+  padding: 1px;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+
+  .data__table {
+    border: 1px $accent solid;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .button--exit {
+    background: transparent;
+    border: 0;
+    height: 26px;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    width: 30px;
+    z-index: 2;
+
+    &:hover {
+      background-color: $secondary;
+      cursor: pointer;
+    }
+
+    .line--left,
+    .line--right {
+      background-color: $accent;
+      display: inline-block;
+      height: 3px;
+      left: 50%;
+      position: absolute;
+      width: 20px;
+    }
+
+    .line--left {
+      top: 0;
+      transform: translate(-50%, 13px) rotate(45deg);
+    }
+
+    .line--right {
+      top: 100%;
+      transform: translate(-50%, -13px) rotate(-45deg);
+    }
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    width: 60vw;
+  }
 }

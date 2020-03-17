@@ -1,6 +1,8 @@
-<div class="skills__titles">
-  <div class="skill_title" *ngFor="let category of data">
-    <button mat-stroked-button color="primary" (click)="chooseCategory(category.subCategories)">{{ category.title }}</button>
-  </div>
-  <app-skill *ngIf="skillVisibility" [categoryData]="chosenCategories" (hide)="hideSkill()"></app-skill>
+<div class="container">
+    <button class="button--exit" (click)="hideComponent($event)"><span class="line--left"></span><span class="line--right"></span></button>
+    <div class="data__table">
+        <div class="skill__category" *ngFor="let subCategory of categoryData">
+            <app-skill [subCategory]="subCategory"></app-skill>
+        </div>
+    </div>
 </div>

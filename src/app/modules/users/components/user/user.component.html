@@ -8,7 +8,12 @@
       <h3>Fill up your skills below</h3>
     </div>
     <div class="profile__skills">
-      <app-skills [editable]="true"></app-skills>
+      <div class="skills__titles">
+        <div class="skill_title" *ngFor="let category of data">
+          <button mat-stroked-button color="primary" (click)="chooseCategory(category.subCategories)">{{ category.title }}</button>
+        </div>
+        <app-skills *ngIf="skillVisibility" [categoryData]="chosenCategories" (hide)="hideSkill()"></app-skills>
+      </div>
     </div>
   </div>
 </div>
