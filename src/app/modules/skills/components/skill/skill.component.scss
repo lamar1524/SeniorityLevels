@@ -1,37 +1,78 @@
 @import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
 
-.header {
-  height: 50px;
-  width: 100%;
+.container {
+  padding: 25px;
+  user-select: none;
 
-  &:hover {
-    color: $pgs;
+  .back__button {
+    background-color: $secondary;
+    height: 50px;
+    left: 15px;
+    position: absolute;
+    top: 15px;
+    width: 50px;
   }
-}
 
-.skill__table {
-  .table__row {
+  .header {
+    text-align: center;
+  }
+
+  .current-level {
+    &:hover {
+      color: $pgs;
+      cursor: pointer;
+    }
+  }
+
+  .table {
+    border: 1px solid $secondary;
+    border-right: 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 'labels content';
+    grid-template-columns: repeat(2, 50%);
   }
 
-  .table__headers {
+  .table__column {
+    border-right: 1px solid $secondary;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .content--active {
+    background-color: $accept;
+  }
+
+  .table__labels {
     background-color: $pgs;
     color: $primary;
+    grid-area: labels;
+
+    .table__row {
+      &:hover {
+        color: $black;
+        cursor: pointer;
+      }
+    }
   }
 
   .table__content {
+    grid-area: content;
+
     &:hover {
       cursor: pointer;
     }
   }
 
-  .table__column {
-    padding: 10px;
-    text-align: left;
+  .table__row {
+    border-collapse: separate;
+    display: block;
+    padding: 10px 5px;
   }
 
-  .content--active {
-    background-color: $accept;
+  @include break(map-get($breakpoints, md)) {
+    margin: 0 auto;
+    width: 50vw;
   }
 }

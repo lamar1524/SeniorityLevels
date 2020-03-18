@@ -33,15 +33,4 @@ export class UsersService {
       })),
     );
   }
-
-  setUsersSkills(skillCategory: string, skillName: string, skillValues: ISeniority, userId: string) {
-    return from(this.db.database.ref(`users/${userId}/skills/${skillCategory}/${skillName}`).set(skillValues)).pipe(first());
-  }
-
-  getSkillsBySubCategory(skillCategory: string, skillName: string, userId: string) {
-    return from(this.db.database.ref(`users/${userId}/skills/${skillCategory}/${skillName}`).once('value')).pipe(
-      first(),
-      map((element) => (element.val() === null ? { junior: false, middle: false, senior: false } : element.val())),
-    );
-  }
 }

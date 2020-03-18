@@ -33,4 +33,9 @@
   .progress__bar {
     width: 50%;
   }
+
+  @include break(map-get($breakpoints, md)) {
+    margin: 0 auto;
+    width: 50vw;
+  }
 }

@@ -1,21 +1,26 @@
-<button class="header" mat-stroked-button (click)="tableToggle()">
-  {{ subCategory.title }}
-</button>
-<div *ngIf="tableVisibility" class="skill__table">
-  <div class="table__row table__headers">
-    <div class="table__column ">Junior</div>
-    <div class="table__column ">Middle</div>
-    <div class="table__column ">Senior</div>
+<div class="container">
+  <button class="back__button" mat-icon-button [routerLink]="[routes.skills]">Back</button>
+  <div class="header">
+    <h2 class="header__text">{{ catTitle }}</h2>
+    <h4 class="header__level-switch">
+      Currently displaying requirements for <span class="u-text--bold current-level" (click)="requirementsUp()">{{ currentlyDisplayedLevel }}</span>
+    </h4>
   </div>
-  <div class="table__row">
-    <div class="table__column table__content" [ngClass]="{'content--active': levels.junior}" (click)="changeSkillLevel('junior')">
-      {{ subCategory.levels.junior }}
+  <div class="table">
+    <div class="table__column table__labels">
+      <div class="table__row table__label" (click)="chooseSubCategory(subCat, i)" *ngFor="let subCat of subCategories; index as i">
+        {{ subCat.title }}
+      </div>
     </div>
-    <div class="table__column table__content" [ngClass]="{ 'content--active': levels.middle}" (click)="changeSkillLevel('middle')">
-      {{ subCategory.levels.middle }}
-    </div>
-    <div class="table__column table__content" [ngClass]="{ 'content--active': levels.senior}" (click)="changeSkillLevel('senior')">
-      {{ subCategory.levels.senior }}
+    <div
+      *ngIf="contentLoaded"
+      (click)="setSkill(currentlyDisplayedLevel)"
+      class="table__column table__content"
+      [ngClass]="{ 'content--active': levels[currentlyDisplayedLevel] }"
+    >
+      <div class="table__row">
+        {{ chosenSubCat.levels[currentlyDisplayedLevel] }}
+      </div>
     </div>
   </div>
 </div>
