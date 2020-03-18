@@ -2,12 +2,12 @@
   <div class="profile__wrapper">
     <div class="profile__introduction">
       <h1>Hello {{ userDetails.email }}</h1>
-      <h2>You are junior in {{ progress.junior }}</h2>
-      <mat-progress-bar class="progress__bar" mode="determinate" value="82"></mat-progress-bar>
-      <h2>You are middle in {{ progress.middle }}</h2>
-      <mat-progress-bar class="progress__bar" mode="determinate" value="15"></mat-progress-bar>
-      <h2>You are senior in {{ progress.senior }}</h2>
-      <mat-progress-bar class="progress__bar" mode="determinate" value="3"></mat-progress-bar>
+      <h2>You are junior in {{ progress.junior }}%</h2>
+      <mat-progress-bar class="progress__bar" mode="determinate" [value]=progress.junior></mat-progress-bar>
+      <h2>You are middle in {{ progress.middle }}%</h2>
+      <mat-progress-bar class="progress__bar" mode="determinate" [value]=progress.middle></mat-progress-bar>
+      <h2>You are senior in {{ progress.senior }}%</h2>
+      <mat-progress-bar class="progress__bar" mode="determinate" [value]=progress.senior></mat-progress-bar>
       <h3>Fill up your skills below</h3>
     </div>
   </div>

@@ -1,7 +1,7 @@
 export interface ISeniority {
-  junior: string | boolean;
-  middle: string | boolean;
-  senior: string | boolean;
+  junior: string | number;
+  middle: string | number;
+  senior: string | number;
 }
 
 export interface ISubCategoryProgress {
