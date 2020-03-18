@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { default as data } from '@modules/users/components/skills/data';
+import { default as data } from '@modules/skills/components/skills/data';
+import { DataSharingService } from '@shared/services/data-sharing.service';
 import { User } from 'firebase';
 
 import { ICategoryProgress, ISeniority } from '@core/interfaces';
@@ -16,32 +17,15 @@ export class UserComponent {
   private progress: ISeniority;
   data: ICategoryProgress[];
   chosenCategory: ICategoryProgress;
-  private skillVisible: boolean;
 
-  constructor(private usersService: UsersService, private cdRef: ChangeDetectorRef) {
-    this.usersService.getCurrentUser().subscribe((user) => {
-      this.userDetails = user;
-      this.cdRef.markForCheck();
-    });
+  constructor(private usersService: UsersService, private dataSharingService: DataSharingService, private cdRef: ChangeDetectorRef) {
+    this.userDetails = this.dataSharingService.getUser();
+    this.cdRef.markForCheck();
     this.progress = {
       junior: '82%',
       middle: '15%',
       senior: '3%',
     };
     this.data = data;
-    this.skillVisible = false;
-  }
-
-  chooseCategory(category: ICategoryProgress) {
-    this.chosenCategory = category;
-    this.skillVisible = true;
-  }
-
-  get skillVisibility() {
-    return this.skillVisible;
-  }
-
-  hideSkill() {
-    this.skillVisible = false;
   }
 }

@@ -13,6 +13,10 @@ const routes: Routes = [
         path: ROUTES.users,
         loadChildren: () => import('@modules/users/users.module').then((mod) => mod.UsersModule),
       },
+      {
+        path: ROUTES.skills,
+        loadChildren: () => import('@modules/skills/skills.module').then((mod) => mod.SkillsModule),
+      },
     ],
   },
 ];

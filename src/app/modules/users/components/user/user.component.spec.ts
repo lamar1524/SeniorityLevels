@@ -1,13 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ICategoryProgress, ISubCategoryProgress } from '@core/interfaces';
 import { MaterialModule } from '@core/material/material.module';
-import { SkillsComponent } from '@modules/users/components';
-import { User } from 'firebase';
-import { MockComponent, MockModule } from 'ng-mocks';
+import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
-import { default as data } from '@modules/users/components/skills/data';
+import { default as data } from '@modules/skills/components/skills/data';
 import { UsersService } from '@modules/users/services/users.service';
 import { UserComponent } from './user.component';
 
@@ -18,7 +15,7 @@ describe('UserComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [UserComponent, MockComponent(SkillsComponent)],
+      declarations: [UserComponent],
       imports: [RouterTestingModule, MockModule(MaterialModule)],
       providers: [
         {
@@ -33,7 +30,6 @@ describe('UserComponent', () => {
 
   beforeEach(() => {
     usersService = TestBed.get(UsersService);
-    spyOn(usersService, 'getCurrentUser').and.returnValue(of({} as User));
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
   });
@@ -42,29 +38,9 @@ describe('UserComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call getCurrentUser method', () => {
-    expect(usersService.getCurrentUser).toHaveBeenCalled();
-  });
-
   describe('data assignation', () => {
     it('should assign data variable properly', () => {
       expect(component.data).toEqual(data);
-    });
-  });
-
-  describe('choseCategory method', () => {
-    it('should set chosenCategory list properly', () => {
-      const mockSubCategories = {} as ICategoryProgress;
-      component.chooseCategory(mockSubCategories);
-      expect(component.chosenCategory).toEqual(mockSubCategories);
-      expect(component.skillVisibility).toEqual(true);
-    });
-  });
-
-  describe('hideSkill method', () => {
-    it('should hide skill window', () => {
-      component.hideSkill();
-      expect(component.skillVisibility).toEqual(false);
     });
   });
 });

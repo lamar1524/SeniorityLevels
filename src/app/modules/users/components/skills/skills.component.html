@@ -1,8 +1,0 @@
-<div class="container">
-    <button class="button--exit" (click)="hideComponent($event)"><span class="line--left"></span><span class="line--right"></span></button>
-    <div class="data__table">
-        <div class="skill__category" *ngFor="let subCategory of categoryData.subCategories">
-            <app-skill [subCategory]="subCategory" [catTitle]="categoryData.title"></app-skill>
-        </div>
-    </div>
-</div>

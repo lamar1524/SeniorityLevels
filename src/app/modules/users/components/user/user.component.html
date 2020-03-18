@@ -10,15 +10,5 @@
       <mat-progress-bar class="progress__bar" mode="determinate" value="3"></mat-progress-bar>
       <h3>Fill up your skills below</h3>
     </div>
-    <div class="profile__skills">
-      <div class="skills__titles">
-        <div class="skill_title" *ngFor="let category of data">
-          <button class="category__button" mat-stroked-button (click)="chooseCategory(category)">
-            {{ category.title }}
-          </button>
-        </div>
-        <app-skills *ngIf="skillVisibility" [categoryData]="chosenCategory" (hide)="hideSkill()"></app-skills>
-      </div>
-    </div>
   </div>
 </div>

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { IUserValues } from '@core/interfaces';
 import { User } from 'firebase';
 import 'firebase/database';
 import { from, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import Reference = firebase.database.Reference;
 import UserCredential = firebase.auth.UserCredential;
+
+import { IUserValues } from '@core/interfaces';
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DataSharingService } from '@shared/services/data-sharing.service';
+import { User } from 'firebase';
 import { throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
@@ -19,7 +21,12 @@ export class LoginComponent {
   readonly routes: RoutesConst;
   errorMessage: string;
 
-  constructor(private router: Router, private cdRef: ChangeDetectorRef, private authService: AuthenticationService) {
+  constructor(
+    private router: Router,
+    private cdRef: ChangeDetectorRef,
+    private authService: AuthenticationService,
+    private dataSharingService: DataSharingService,
+  ) {
     this.loginForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
       password: new AppFormControl('', [Validators.required]),
@@ -29,11 +36,11 @@ export class LoginComponent {
   }
 
   get email() {
-    return this.loginForm.get('email') as AppFormControl;
+    return this.loginForm.get('email');
   }
 
   get password() {
-    return this.loginForm.get('password') as AppFormControl;
+    return this.loginForm.get('password');
   }
 
   sendCredentials = (): void => {
@@ -53,6 +60,7 @@ export class LoginComponent {
   handleCredentialsSuccess(): void {
     this.authService.getUserRemotely().subscribe(
       (user) => {
+        this.dataSharingService.setUser(user);
         this.authService.getTokenFromUser(user).subscribe(
           (token) => {
             this.authService.putTokenInSessionStorage(token);

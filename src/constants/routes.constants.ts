@@ -8,6 +8,8 @@ export const ROUTES: RoutesConst = {
   usersList: 'list',
   userProfile: 'profile',
   otherUserProfile: 'user',
+  skills: 'skills',
+  skill: 'skill'
 };
 
 export const ROUTES_PATH: RoutesConst = {
@@ -17,4 +19,6 @@ export const ROUTES_PATH: RoutesConst = {
   usersList: '/dashboard/users/list',
   userProfile: '/dashboard/users/profile',
   otherUserProfile: '/dashboard/users/user/',
+  skills: '/dashboard/skills',
+  skill: '/dashboard/skills/skill/'
 };
