@@ -6,7 +6,7 @@ import 'firebase/database';
 import { from, Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
-import { ISeniority, IUser, IUserValues } from '@core/interfaces';
+import { IUser, IUserValues } from '@core/interfaces';
 
 @Injectable({
   providedIn: 'root',
