@@ -124,24 +124,6 @@ describe('AuthenticationService', () => {
       });
     });
 
-    describe('isLoggedIn method', () => {
-      it('should call getTokenFromSessionStorage', () => {
-        spyOn(service, 'getTokenFromSessionStorage');
-        service.isLoggedIn();
-        expect(service.getTokenFromSessionStorage).toHaveBeenCalled();
-      });
-
-      it('should return true properly', async () => {
-        spyOn(service, 'getTokenFromSessionStorage').and.returnValue('token');
-        await expectAsync(service.isLoggedIn()).toBeResolvedTo(true);
-      });
-
-      it('should return false properly', async () => {
-        spyOn(service, 'getTokenFromSessionStorage').and.returnValue(null);
-        await expectAsync(service.isLoggedIn()).toBeResolvedTo(false);
-      });
-    });
-
     describe('registerUser method', () => {
       beforeEach(() => {
         spyOn(firebaseAuth, 'createUserWithEmailAndPassword').and.returnValue(new Promise<UserCredential>(() => ({} as UserCredential)));

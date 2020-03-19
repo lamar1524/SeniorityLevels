@@ -4,6 +4,7 @@ import { User } from 'firebase';
 
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { UsersService } from '@modules/users/services/users.service';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -17,12 +18,23 @@ export class UserComponent {
   data: ICategoryProgress[];
 
   constructor(private usersService: UsersService, private dataSharingService: DataSharingService, private cdRef: ChangeDetectorRef) {
-    this.userDetails = this.dataSharingService.getUser();
-    this.cdRef.markForCheck();
+    this.dataSharingService.getUser().subscribe(
+      (user) => {
+        this.userDetails = user;
+        this.cdRef.markForCheck();
+      },
+      (error) => {
+        throwError(error);
+      },
+    );
     this.progress = {
       junior: 82,
       middle: 15,
       senior: 3,
     };
+  }
+
+  get contentLoaded() {
+    return this.userDetails !== undefined;
   }
 }

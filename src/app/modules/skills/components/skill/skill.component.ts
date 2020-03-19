@@ -38,7 +38,6 @@ export class SkillComponent {
     @Inject(DOCUMENT) private document: Document,
     private textifyPipe: SlugTextifyPipe,
   ) {
-    this.setInitialValues();
     this.activatedRoute.params.subscribe(
       (param) => {
         this.catTitle = this.textifyPipe.transform(param.category);
@@ -47,7 +46,7 @@ export class SkillComponent {
           throwError('Wrong category name');
         } else {
           this.subCategories = categoriesFiltered[0].subCategories;
-          this.chooseSubCategory(this.subCategories[0], 0);
+          this.setInitialValues();
           this.cdRef.markForCheck();
         }
       },
@@ -63,9 +62,18 @@ export class SkillComponent {
 
   setInitialValues() {
     this.routes = ROUTES_PATH;
-    this.currentUser = this.dataSharingService.getUser();
     this.currentlyDisplayedLevel = seniorityEnum.junior;
     this.clickable = true;
+    this.dataSharingService.getUser().subscribe(
+      (user) => {
+        this.currentUser = user;
+        this.cdRef.markForCheck();
+        this.chooseSubCategory(this.subCategories[0], 0);
+      },
+      (error) => {
+        throwError(error);
+      },
+    );
   }
 
   chooseSubCategory(subCat: ISubCategoryDescription, index: number) {

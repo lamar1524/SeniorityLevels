@@ -4,7 +4,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { User } from 'firebase';
 import 'firebase/database';
 import { from, Observable } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { first, map, tap } from 'rxjs/operators';
 import Reference = firebase.database.Reference;
 import UserCredential = firebase.auth.UserCredential;
 
@@ -48,8 +48,8 @@ export class AuthenticationService {
     this.removeTokenFromSessionStorage();
   };
 
-  isLoggedIn = async (): Promise<boolean> => {
-    return !!this.getTokenFromSessionStorage() && !!(await this.firebaseAuth.currentUser);
+  isLoggedIn = (): Observable<boolean> => {
+    return this.firebaseAuth.authState.pipe(map((user) => user !== null));
   };
 
   registerUser = (email: string, password: string): Observable<any> =>

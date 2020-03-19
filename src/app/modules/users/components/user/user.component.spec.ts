@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '@core/material/material.module';
-import { SubmitButtonComponent } from '@modules/authentication/components';
 import { MockComponent, MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
-import { default as data } from '@modules/skills/services/data';
+import { SubmitButtonComponent } from '@modules/authentication/components';
 import { UsersService } from '@modules/users/services/users.service';
 import { UserComponent } from './user.component';
 
@@ -23,6 +23,12 @@ describe('UserComponent', () => {
           provide: UsersService,
           useValue: {
             getCurrentUser: () => of({}),
+          },
+        },
+        {
+          provide: AngularFireAuth,
+          useValue: {
+            authState: of({}),
           },
         },
       ],
