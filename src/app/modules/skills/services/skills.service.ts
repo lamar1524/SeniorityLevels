@@ -3,7 +3,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { from } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
-import { ISeniority } from '@core/interfaces';
+import { ISeniorityValues } from '@core/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ import { ISeniority } from '@core/interfaces';
 export class SkillsService {
   constructor(private db: AngularFireDatabase) {}
 
-  setUsersSkills(skillCategory: string, skillName: string, skillValues: ISeniority, userId: string) {
+  setUsersSkills(skillCategory: string, skillName: string, skillValues: ISeniorityValues, userId: string) {
     return from(this.db.database.ref(`users/${userId}/skills/${skillCategory}/${skillName}`).set(skillValues)).pipe(first());
   }
 

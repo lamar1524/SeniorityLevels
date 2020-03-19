@@ -5,7 +5,7 @@ import { User } from 'firebase';
 import { throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { ISeniority, ISubCategoryProgress, RoutesConst } from '@core/interfaces';
+import { ISeniorityValues, ISubCategoryDescription, RoutesConst } from '@core/interfaces';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { DataSharingService } from '@shared/services/data-sharing.service';
 import { default as data } from '../skills/data';
@@ -18,9 +18,9 @@ import { default as data } from '../skills/data';
 })
 export class SkillComponent {
   private catTitle: string;
-  private subCategories: ISubCategoryProgress[];
-  private chosenSubCat: ISubCategoryProgress;
-  private levels: ISeniority;
+  private subCategories: ISubCategoryDescription[];
+  private chosenSubCat: ISubCategoryDescription;
+  private levels: ISeniorityValues;
   private currentlyDisplayedLevel: string;
   private clickable: boolean;
   private currentUser: User;
@@ -60,7 +60,7 @@ export class SkillComponent {
     return this.chosenSubCat !== undefined;
   }
 
-  chooseSubCategory(subCat: ISubCategoryProgress, index: number) {
+  chooseSubCategory(subCat: ISubCategoryDescription, index: number) {
     this.document.querySelectorAll('.table__label').forEach((element) => {
       element.classList.remove('u-text--black');
     });
