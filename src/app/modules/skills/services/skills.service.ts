@@ -35,6 +35,14 @@ export class SkillsService {
     );
   }
 
+  getValuesBySkillNames(userId: string, skillCategory: string) {
+    return from(this.db.database.ref(`users/${userId}/skills/${skillCategory}`).once('value')).pipe(
+      first(),
+      map((res) => res.val()),
+    );
+  }
+
+  // TODO not sure if this should be here, but it will be used app-wide
   getProgressOf(skills: ISeniority[], total: number): ISeniority {
     const result = {
       junior: 0,

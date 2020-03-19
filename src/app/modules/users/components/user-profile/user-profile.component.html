@@ -1,8 +1,19 @@
 <div class="container" *ngIf="userDetails">
-  <div class="profile__credentials">
-    <div class="profile__photo"><img class="photo__inner" [src]="imgSrc" /></div>
-    <span class="profile__name">{{ userDetails.values.firstName }} {{ userDetails.values.lastName }}</span>
-    <p class="profile__email">{{ userDetails.values.email }}</p>
-    <h3>Seniorities:</h3>
+  <div class="profile__wrapper">
+    <div class="profile__introduction">
+      <div class="profile__photo"><img class="photo__inner" [src]="imgSrc" /></div>
+      <span class="profile__name">{{ userDetails.values.firstName }} {{ userDetails.values.lastName }}</span>
+      <p class="profile__email">{{ userDetails.values.email }}</p>
+    </div>
+    <div class="profile__summary">
+      <h3>Seniority levels:</h3>
+      Currently displayed level: <span class="u-text--bold current-level" (click)="requirementsUp()">{{ chosenLevel }}</span>
+      <div class="levels">
+        <div class="seniority" *ngFor="let category of categories">
+          <p>{{ category.title }} {{ category.levels[chosenLevel] }}%</p>
+          <mat-progress-bar class="progress__bar" mode="determinate" [value]="category.levels[chosenLevel]"></mat-progress-bar>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -5,18 +5,21 @@
   min-height: 100vh;
   @include center-one-element(column);
 
-  .profile__credentials {
+  .profile__wrapper {
     background-color: #fff;
     border-radius: $box-border-radius;
-    @include center-one-element(column);
-    @include form-shadow($blur-color);
-    justify-content: flex-start;
     padding: 10px;
     width: 75%;
+    @include form-shadow($blur-color);
+  }
+
+  .profile__introduction {
+    text-align: center;
   }
 
   .profile__photo {
     height: 150px;
+    margin: 0 auto;
     width: 150px;
   }
 
@@ -30,8 +33,19 @@
     font-size: 2rem;
   }
 
+  .levels {
+    display: block;
+  }
+
+  .current-level {
+    &:hover {
+      color: $pgs;
+      cursor: pointer;
+    }
+  }
+
   @include break(map-get($breakpoints, sm)) {
-    .profile__credentials {
+    .profile__wrapper {
       width: 300px;
     }
   }
