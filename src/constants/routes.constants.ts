@@ -1,6 +1,6 @@
-import { RoutesConst } from '@core/interfaces/routes';
+import { IRoutesConst } from '@core/interfaces/routes.interface';
 
-export const ROUTES: RoutesConst = {
+export const ROUTES: IRoutesConst = {
   home: '',
   register: 'register',
   dashboard: 'dashboard',
@@ -12,7 +12,7 @@ export const ROUTES: RoutesConst = {
   skill: 'skill'
 };
 
-export const ROUTES_PATH: RoutesConst = {
+export const ROUTES_PATH: IRoutesConst = {
   home: '/',
   register: '/register',
   users: '/dashboard/users',

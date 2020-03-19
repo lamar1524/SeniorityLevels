@@ -3,14 +3,14 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { ISeniorityValues, ISubCategoryDescription, RoutesConst } from '@core/interfaces';
+import { IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
 import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
 import { SlugTextifyPipe } from '@modules/skills/pipes/slug-textify';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { DataSharingService } from '@shared/services/data-sharing.service';
 import { User } from 'firebase';
 import { throwError } from 'rxjs';
-import { default as data } from '../skills/data';
+import { default as data } from '../../services/data';
 
 @Component({
   selector: 'app-skill',
@@ -27,7 +27,7 @@ export class SkillComponent {
   private currentlyDisplayedLevel: seniorityEnum;
   private clickable: boolean;
   private currentUser: User;
-  private routes: RoutesConst;
+  private routes: IRoutesConst;
 
   constructor(
     private cdRef: ChangeDetectorRef,

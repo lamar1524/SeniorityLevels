@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { ILinkedUser, IUser } from '@core/interfaces';
-import { RoutesConst } from '@core/interfaces';
+import { IRoutesConst } from '@core/interfaces';
 import { DISPLAYED_COLUMNS } from '@modules/users/consts/users.consts';
 import { UsersService } from '@modules/users/services/users.service';
 
@@ -13,7 +13,7 @@ import { UsersService } from '@modules/users/services/users.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersListComponent {
-  readonly routes: RoutesConst;
+  readonly routes: IRoutesConst;
   readonly displayedColumns: string[];
   users: ILinkedUser[];
 

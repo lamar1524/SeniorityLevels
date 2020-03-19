@@ -5,7 +5,7 @@ import { throwError } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { RoutesConst } from '@core/interfaces';
+import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { DataSharingService } from '@shared/services/data-sharing.service';
@@ -18,7 +18,7 @@ import { DataSharingService } from '@shared/services/data-sharing.service';
 })
 export class LoginComponent {
   readonly loginForm: AppFormGroup;
-  readonly routes: RoutesConst;
+  readonly routes: IRoutesConst;
   errorMessage: string;
 
   constructor(

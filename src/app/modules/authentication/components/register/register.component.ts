@@ -5,7 +5,7 @@ import { throwError } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { RoutesConst } from '@core/interfaces';
+import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
@@ -19,7 +19,7 @@ import { AppFormControl, AppFormGroup } from '@shared/forms';
 export class RegisterComponent {
   registerForm: AppFormGroup;
   message: string;
-  routes: RoutesConst;
+  routes: IRoutesConst;
 
   constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
     this.registerForm = new AppFormGroup({

@@ -3,7 +3,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SubmitButtonComponent } from '@modules/authentication/components';
 import { User } from 'firebase';
+import { MockComponent } from 'ng-mocks';
 import { of, throwError, Observable } from 'rxjs';
 import UserCredential = firebase.auth.UserCredential;
 
@@ -21,7 +23,7 @@ describe('LoginComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent],
+      declarations: [LoginComponent, MockComponent(SubmitButtonComponent)],
       imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, BrowserAnimationsModule],
       providers: [
         {

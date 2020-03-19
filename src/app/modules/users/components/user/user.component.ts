@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { default as data } from '@modules/skills/components/skills/data';
 import { DataSharingService } from '@shared/services/data-sharing.service';
 import { User } from 'firebase';
 
-import { ICategoryProgress, ISeniorityCount, ISeniorityDescriptions } from '@core/interfaces';
+import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { UsersService } from '@modules/users/services/users.service';
 
 @Component({
@@ -25,6 +24,5 @@ export class UserComponent {
       middle: 15,
       senior: 3,
     };
-    this.data = data;
   }
 }
