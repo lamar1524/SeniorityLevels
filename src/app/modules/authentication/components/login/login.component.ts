@@ -21,12 +21,7 @@ export class LoginComponent {
   readonly routes: IRoutesConst;
   errorMessage: string;
 
-  constructor(
-    private router: Router,
-    private cdRef: ChangeDetectorRef,
-    private authService: AuthenticationService,
-    private dataSharingService: DataSharingService,
-  ) {
+  constructor(private router: Router, private cdRef: ChangeDetectorRef, private authService: AuthenticationService) {
     this.loginForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
       password: new AppFormControl('', [Validators.required]),
@@ -65,7 +60,6 @@ export class LoginComponent {
   handleCredentialsSuccess(): void {
     this.authService.getUserRemotely().subscribe(
       (user) => {
-        this.dataSharingService.setUser(user);
         this.authService.getTokenFromUser(user).subscribe(
           (token) => {
             this.authService.putTokenInSessionStorage(token);
