@@ -1,14 +1,15 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'firebase';
-import { throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { ISeniorityValues, ISubCategoryDescription, RoutesConst } from '@core/interfaces';
+import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
 import { SlugTextifyPipe } from '@modules/skills/pipes/slug-textify';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { DataSharingService } from '@shared/services/data-sharing.service';
+import { User } from 'firebase';
+import { throwError } from 'rxjs';
 import { default as data } from '../skills/data';
 
 @Component({
@@ -23,7 +24,7 @@ export class SkillComponent {
   private subCategories: ISubCategoryDescription[];
   private chosenSubCat: ISubCategoryDescription;
   private levels: ISeniorityValues;
-  private currentlyDisplayedLevel: string;
+  private currentlyDisplayedLevel: seniorityEnum;
   private clickable: boolean;
   private currentUser: User;
   private routes: RoutesConst;
@@ -63,7 +64,7 @@ export class SkillComponent {
   setInitialValues() {
     this.routes = ROUTES_PATH;
     this.currentUser = this.dataSharingService.getUser();
-    this.currentlyDisplayedLevel = 'junior';
+    this.currentlyDisplayedLevel = seniorityEnum.junior;
     this.clickable = true;
   }
 
@@ -107,23 +108,23 @@ export class SkillComponent {
 
   requirementsUp() {
     switch (this.currentlyDisplayedLevel) {
-      case 'junior': {
-        this.currentlyDisplayedLevel = 'middle';
+      case seniorityEnum.junior: {
+        this.currentlyDisplayedLevel = seniorityEnum.middle;
         break;
       }
 
-      case 'middle': {
-        this.currentlyDisplayedLevel = 'senior';
+      case seniorityEnum.middle: {
+        this.currentlyDisplayedLevel = seniorityEnum.senior;
         break;
       }
 
-      case 'senior': {
-        this.currentlyDisplayedLevel = 'junior';
+      case seniorityEnum.senior: {
+        this.currentlyDisplayedLevel = seniorityEnum.junior;
         break;
       }
 
       default: {
-        this.currentlyDisplayedLevel = 'junior';
+        this.currentlyDisplayedLevel = seniorityEnum.junior;
         break;
       }
     }
