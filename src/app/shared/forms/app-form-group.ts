@@ -15,4 +15,8 @@ export class AppFormGroup extends FormGroup {
   get(path: Array<string | number> | string): AbstractControl | AppFormControl | null {
     return super.get(path);
   }
+
+  get ableToSend() {
+    return this.disabled || this.invalid;
+  }
 }

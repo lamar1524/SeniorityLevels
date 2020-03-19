@@ -1,0 +1,6 @@
+<div class="button__wrapper">
+  <button [disabled]="ableToSend" type="submit" class="form__button" mat-raised-button color="primary">
+    <span *ngIf="!disabled">{{ text }}</span>
+    <mat-spinner [diameter]="35" class="u-loading__button" *ngIf="disabled"></mat-spinner>
+  </button>
+</div>
