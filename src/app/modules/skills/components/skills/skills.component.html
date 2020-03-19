@@ -4,7 +4,7 @@
     </div>
     <div class="categories__wrapper">
         <div class="category" *ngFor="let category of data">
-            <button class="category__button" mat-stroked-button [routerLink]="[routes.skill + category.title]">
+            <button class="category__button" mat-stroked-button [routerLink]="[routes.skill + (category.title | slugify)]">
                 {{ category.title }}
             </button>
         </div>

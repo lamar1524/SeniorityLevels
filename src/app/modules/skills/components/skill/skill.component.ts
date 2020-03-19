@@ -6,6 +6,7 @@ import { throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { ISeniorityValues, ISubCategoryDescription, RoutesConst } from '@core/interfaces';
+import { SlugTextifyPipe } from '@modules/skills/pipes/slug-textify';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { DataSharingService } from '@shared/services/data-sharing.service';
 import { default as data } from '../skills/data';
@@ -15,6 +16,7 @@ import { default as data } from '../skills/data';
   templateUrl: './skill.component.html',
   styleUrls: ['./skill.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [SlugTextifyPipe],
 })
 export class SkillComponent {
   private catTitle: string;
@@ -33,14 +35,12 @@ export class SkillComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
+    private textifyPipe: SlugTextifyPipe,
   ) {
-    this.routes = ROUTES_PATH;
-    this.currentUser = this.dataSharingService.getUser();
-    this.currentlyDisplayedLevel = 'junior';
-    this.clickable = true;
+    this.setInitialValues();
     this.activatedRoute.params.subscribe(
       (param) => {
-        this.catTitle = param.category;
+        this.catTitle = this.textifyPipe.transform(param.category);
         const categoriesFiltered = data.filter((element) => element.title === this.catTitle);
         if (categoriesFiltered.length < 1) {
           throwError('Wrong category name');
@@ -58,6 +58,13 @@ export class SkillComponent {
 
   get contentLoaded() {
     return this.chosenSubCat !== undefined;
+  }
+
+  setInitialValues() {
+    this.routes = ROUTES_PATH;
+    this.currentUser = this.dataSharingService.getUser();
+    this.currentlyDisplayedLevel = 'junior';
+    this.clickable = true;
   }
 
   chooseSubCategory(subCat: ISubCategoryDescription, index: number) {

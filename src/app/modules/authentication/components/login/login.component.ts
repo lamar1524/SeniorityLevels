@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DataSharingService } from '@shared/services/data-sharing.service';
-import { User } from 'firebase';
 import { throwError } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { RoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { DataSharingService } from '@shared/services/data-sharing.service';
 
 @Component({
   selector: 'app-login',
@@ -45,16 +45,21 @@ export class LoginComponent {
 
   sendCredentials = (): void => {
     this.loginForm.disable();
-    this.authService.signIn(this.email.value, this.password.value).subscribe(
-      () => {
-        this.loginForm.enable();
-        this.handleCredentialsSuccess();
-      },
-      (error) => {
-        this.loginForm.enable();
-        this.handleCredentialsError(error.message);
-      },
-    );
+    this.authService
+      .signIn(this.email.value, this.password.value)
+      .pipe(
+        finalize(() => {
+          this.loginForm.enable();
+        }),
+      )
+      .subscribe(
+        () => {
+          this.handleCredentialsSuccess();
+        },
+        (error) => {
+          this.handleCredentialsError(error.message);
+        },
+      );
   };
 
   handleCredentialsSuccess(): void {

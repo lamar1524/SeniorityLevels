@@ -3,7 +3,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IUserValues } from '@core/interfaces';
 import { of, throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';

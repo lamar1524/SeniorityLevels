@@ -87,7 +87,7 @@ export default [
     ],
   },
   {
-    title: 'General programming',
+    title: 'General Programming',
     subCategories: [
       {
         title: 'Modułowość',
