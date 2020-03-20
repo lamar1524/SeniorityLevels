@@ -1,29 +1,26 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
-import { of, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataSharingService {
-  private currentUser: User;
+  private currentUser: Subject<User>;
 
-  constructor(private firebaseAuth: AngularFireAuth) {}
+  constructor() {
+    this.currentUser = new Subject<User>();
+  }
 
   getUser = (): Observable<User> => {
-    if (this.currentUser !== undefined) {
-      return of(this.currentUser);
-    }
-    return this.firebaseAuth.authState.pipe(tap((user) => (this.currentUser = user)));
+    return this.currentUser.asObservable();
   };
 
   setUser = (user: User) => {
-    this.currentUser = user;
+    this.currentUser.next(user);
   };
 
   clearUser() {
-    this.currentUser = null;
+    this.currentUser.next(null);
   }
 }

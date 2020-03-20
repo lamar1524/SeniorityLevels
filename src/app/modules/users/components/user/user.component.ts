@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { DataSharingService } from '@shared/services/data-sharing.service';
 import { User } from 'firebase';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { UsersService } from '@modules/users/services/users.service';
@@ -18,15 +18,7 @@ export class UserComponent {
   data: ICategoryProgress[];
 
   constructor(private usersService: UsersService, private dataSharingService: DataSharingService, private cdRef: ChangeDetectorRef) {
-    this.dataSharingService.getUser().subscribe(
-      (user) => {
-        this.userDetails = user;
-        this.cdRef.markForCheck();
-      },
-      (error) => {
-        throwError(error);
-      },
-    );
+    this.dataSharingService.getUser().subscribe((user) => console.log(user));
     this.progress = {
       junior: 82,
       middle: 15,
@@ -35,6 +27,6 @@ export class UserComponent {
   }
 
   get contentLoaded() {
-    return this.userDetails !== undefined;
+    return !!this.userDetails;
   }
 }
