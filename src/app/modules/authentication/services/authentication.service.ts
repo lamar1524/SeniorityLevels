@@ -44,7 +44,7 @@ export class AuthenticationService {
 
   logout = (): void => {
     this.firebaseAuth.signOut();
-    this.dataSharingService.setUser(null);
+    this.dataSharingService.clearUser();
     this.removeTokenFromSessionStorage();
   };
 

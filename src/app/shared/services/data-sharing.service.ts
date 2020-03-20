@@ -16,10 +16,14 @@ export class DataSharingService {
     if (this.currentUser !== undefined) {
       return of(this.currentUser);
     }
-    return this.firebaseAuth.authState.pipe(tap((user) => this.currentUser = user));
+    return this.firebaseAuth.authState.pipe(tap((user) => (this.currentUser = user)));
   };
 
   setUser = (user: User) => {
     this.currentUser = user;
   };
+
+  clearUser() {
+    this.currentUser = null;
+  }
 }

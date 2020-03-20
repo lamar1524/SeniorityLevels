@@ -7,8 +7,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SubmitButtonComponent {
+  @Input() loading: boolean;
   @Input() disabled: boolean;
-  @Input() ableToSend: boolean;
-  @Input() text: string;
+
   constructor() {}
 }

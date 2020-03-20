@@ -41,18 +41,10 @@ export class LoginComponent {
     this.loginForm.disable();
     this.authService
       .signIn(this.email.value, this.password.value)
-      .pipe(
-        finalize(() => {
-          this.loginForm.enable();
-        }),
-      )
+      .pipe(finalize(() => this.loginForm.enable()))
       .subscribe(
-        () => {
-          this.handleCredentialsSuccess();
-        },
-        (error) => {
-          this.handleCredentialsError(error.message);
-        },
+        () => this.handleCredentialsSuccess(),
+        (error) => this.handleCredentialsError(error.message),
       );
   };
 
