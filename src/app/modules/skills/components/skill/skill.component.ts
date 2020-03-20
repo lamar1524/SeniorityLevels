@@ -10,7 +10,6 @@ import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
 import { SlugTextifyPipe } from '@modules/skills/pipes/slug-textify';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { DataSharingService } from '@shared/services/data-sharing.service';
-import { default as data } from '../../services/data';
 
 @Component({
   selector: 'app-skill',
@@ -41,14 +40,16 @@ export class SkillComponent {
     this.activatedRoute.params.subscribe(
       (param) => {
         this.catTitle = this.textifyPipe.transform(param.category);
-        const categoriesFiltered = data.filter((element) => element.title === this.catTitle);
-        if (categoriesFiltered.length < 1) {
-          throwError('Wrong category name');
-        } else {
-          this.subCategories = categoriesFiltered[0].subCategories;
-          this.setInitialValues();
-          this.cdRef.markForCheck();
-        }
+        this.skillsService.getSkillsData().subscribe((data) => {
+          const categoriesFiltered = data.filter((element) => element.title === this.catTitle);
+          if (categoriesFiltered.length < 1) {
+            this.router.navigate([ROUTES_PATH.skills]);
+          } else {
+            this.subCategories = categoriesFiltered[0].subCategories;
+            this.setInitialValues();
+            this.cdRef.markForCheck();
+          }
+        });
       },
       () => {
         this.router.navigate([ROUTES_PATH.skills]);
