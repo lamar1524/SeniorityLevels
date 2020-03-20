@@ -1,6 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'firebase';
+import { throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
@@ -8,8 +10,6 @@ import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
 import { SlugTextifyPipe } from '@modules/skills/pipes/slug-textify';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { DataSharingService } from '@shared/services/data-sharing.service';
-import { User } from 'firebase';
-import { throwError } from 'rxjs';
 import { default as data } from '../../services/data';
 
 @Component({

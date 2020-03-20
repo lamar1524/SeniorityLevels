@@ -43,7 +43,4 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(request);
   };
 
-  handleError(request: HttpRequest<any>, next: HttpHandler) {
-    return next.handle(request);
-  }
 }

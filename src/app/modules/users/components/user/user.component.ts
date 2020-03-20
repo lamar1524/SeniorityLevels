@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { DataSharingService } from '@shared/services/data-sharing.service';
 import { User } from 'firebase';
+import { throwError } from 'rxjs';
 
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { UsersService } from '@modules/users/services/users.service';
-import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-user',

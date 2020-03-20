@@ -8,7 +8,6 @@ import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { DataSharingService } from '@shared/services/data-sharing.service';
 
 @Component({
   selector: 'app-login',

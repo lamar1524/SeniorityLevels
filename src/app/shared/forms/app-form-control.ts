@@ -8,6 +8,7 @@ export class AppFormControl extends FormControl {
   ) {
     super(formState, validatorOrOpts, asyncValidator);
   }
+
   get invalidControl(): boolean {
     return this.invalid && (this.dirty || this.touched);
   }
