@@ -364,7 +364,7 @@ export default [
     ],
   },
   {
-    title: 'HTML',
+    title: 'Html',
     subCategories: [
       {
         title: 'Struktura',
@@ -408,7 +408,7 @@ export default [
     ],
   },
   {
-    title: 'CSS',
+    title: 'Css',
     subCategories: [
       {
         title: 'Selektory',
