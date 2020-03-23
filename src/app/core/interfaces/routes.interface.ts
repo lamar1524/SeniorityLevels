@@ -1,3 +1,3 @@
-export interface RoutesConst {
+export interface IRoutesConst {
   [routeName: string]: string;
 }

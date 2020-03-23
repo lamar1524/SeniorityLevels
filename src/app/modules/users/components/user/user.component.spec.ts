@@ -1,8 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { RouterTestingModule } from '@angular/router/testing';
-import { User } from 'firebase';
+import { MaterialModule } from '@core/material/material.module';
+import { MockComponent, MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
+import { SubmitButtonComponent } from '@modules/authentication/components';
 import { UsersService } from '@modules/users/services/users.service';
 import { UserComponent } from './user.component';
 
@@ -13,13 +16,19 @@ describe('UserComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [UserComponent],
-      imports: [RouterTestingModule],
+      declarations: [UserComponent, MockComponent(SubmitButtonComponent)],
+      imports: [RouterTestingModule, MockModule(MaterialModule)],
       providers: [
         {
           provide: UsersService,
           useValue: {
             getCurrentUser: () => of({}),
+          },
+        },
+        {
+          provide: AngularFireAuth,
+          useValue: {
+            authState: of({}),
           },
         },
       ],
@@ -28,16 +37,11 @@ describe('UserComponent', () => {
 
   beforeEach(() => {
     usersService = TestBed.get(UsersService);
-    spyOn(usersService, 'getCurrentUser').and.returnValue(of({} as User));
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should call getCurrentUser method', () => {
-    expect(usersService.getCurrentUser).toHaveBeenCalled();
   });
 });

@@ -5,10 +5,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@core/material/material.module';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { LoginComponent, RegisterComponent } from './components';
+import { SubmitButtonComponent } from './components';
 import { AuthenticationService } from './services/authentication.service';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [LoginComponent, RegisterComponent, SubmitButtonComponent],
   imports: [CommonModule, AuthenticationRoutingModule, MaterialModule, ReactiveFormsModule],
   providers: [AuthenticationService],
 })

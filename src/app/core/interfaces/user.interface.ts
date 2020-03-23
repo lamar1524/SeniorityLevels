@@ -8,6 +8,7 @@ export interface IUser {
   key: string;
   values: IUserValues;
 }
+
 export interface ILinkedUser extends IUser {
   profileLink: string;
 }

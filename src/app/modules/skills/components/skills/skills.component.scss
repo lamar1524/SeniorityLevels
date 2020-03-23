@@ -1,0 +1,35 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.container {
+  min-height: 100vh;
+  padding: 25px 20px;
+
+  .categories__wrapper {
+    text-align: center;
+  }
+
+  .categories__header {
+    padding-bottom: 10px;
+    padding-left: 5px;
+  }
+
+  .category {
+    display: inline-block;
+    padding: 5px;
+  }
+
+  .category__button {
+    height: 40px;
+    width: 200px;
+
+    &:hover {
+      color: $pgs;
+    }
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    margin: 0 auto;
+    width: 50%;
+  }
+}

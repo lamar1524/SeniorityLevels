@@ -50,7 +50,7 @@
           Passwords are not the same
         </div>
       </div>
-      <button [disabled]="registerForm.invalid" class="form__control form__button" mat-raised-button color="primary">Register</button>
+      <app-submit-button [loading]="registerForm.disabled" [disabled]="registerForm.ableToSend">Register</app-submit-button>
     </form>
     <div class="register__messages">
       <div class="register__error">

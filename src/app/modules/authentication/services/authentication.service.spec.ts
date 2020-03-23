@@ -20,7 +20,7 @@ describe('AuthenticationService', () => {
           provide: AngularFireDatabase,
           useValue: {
             database: {
-              ref: () => ({ push: () => of({}) }),
+              ref: () => ({ set: () => of({}) }),
             },
           },
         },
@@ -124,24 +124,6 @@ describe('AuthenticationService', () => {
       });
     });
 
-    describe('isLoggedIn method', () => {
-      it('should call getTokenFromSessionStorage', () => {
-        spyOn(service, 'getTokenFromSessionStorage');
-        service.isLoggedIn();
-        expect(service.getTokenFromSessionStorage).toHaveBeenCalled();
-      });
-
-      it('should return true properly', async () => {
-        spyOn(service, 'getTokenFromSessionStorage').and.returnValue('token');
-        await expectAsync(service.isLoggedIn()).toBeResolvedTo(true);
-      });
-
-      it('should return false properly', async () => {
-        spyOn(service, 'getTokenFromSessionStorage').and.returnValue(null);
-        await expectAsync(service.isLoggedIn()).toBeResolvedTo(false);
-      });
-    });
-
     describe('registerUser method', () => {
       beforeEach(() => {
         spyOn(firebaseAuth, 'createUserWithEmailAndPassword').and.returnValue(new Promise<UserCredential>(() => ({} as UserCredential)));
@@ -171,18 +153,18 @@ describe('AuthenticationService', () => {
         spyOn(db.database, 'ref').and.callFake(
           () =>
             ({
-              push: () => of(dataReturned),
+              set: () => of(dataReturned),
             } as any),
         );
       });
 
       it('should call ref method with proper arg', () => {
-        service.provideAdditionalUserData(userDataMock);
-        expect(db.database.ref).toHaveBeenCalledWith('users');
+        service.provideAdditionalUserData(userDataMock, '1');
+        expect(db.database.ref).toHaveBeenCalledWith('users/1');
       });
 
       it('should return proper data', (done) => {
-        service.provideAdditionalUserData(userDataMock).subscribe((value) => {
+        service.provideAdditionalUserData(userDataMock, '1').subscribe((value) => {
           expect(value).toBe(dataReturned as any);
           done();
         });

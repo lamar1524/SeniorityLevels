@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { RoutesConst } from '@core/interfaces';
+import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
@@ -18,7 +19,7 @@ import { AppFormControl, AppFormGroup } from '@shared/forms';
 export class RegisterComponent {
   registerForm: AppFormGroup;
   message: string;
-  routes: RoutesConst;
+  routes: IRoutesConst;
 
   constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
     this.registerForm = new AppFormGroup({
@@ -61,18 +62,32 @@ export class RegisterComponent {
   }
 
   sendCredentials = (): void => {
-    this.authService.registerUser(this.email.value, this.password.value).subscribe(
-      () =>
-        this.authService.provideAdditionalUserData(this.formData).subscribe(
-          () => this.router.navigate([this.routes.users]),
-          (error) => {
-            throwError(error);
-          },
-        ),
-      ({ message }) => {
-        this.message = message;
-        this.chRef.markForCheck();
-      },
-    );
+    this.registerForm.disable();
+    this.authService
+      .registerUser(this.email.value, this.password.value)
+      .pipe(
+        finalize(() => {
+          this.registerForm.enable();
+        }),
+      )
+      .subscribe(
+        (user) => {
+          this.authService.provideAdditionalUserData(this.formData, user.user.uid).subscribe(
+            () => {
+              this.registerForm.enable();
+              this.router.navigate([this.routes.users]);
+            },
+            (error) => {
+              this.registerForm.enable();
+              throwError(error);
+            },
+          );
+        },
+        ({ message }) => {
+          this.registerForm.enable();
+          this.message = message;
+          this.chRef.markForCheck();
+        },
+      );
   };
 }

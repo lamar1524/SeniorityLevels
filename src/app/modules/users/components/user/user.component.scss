@@ -2,11 +2,40 @@
 @import '../../../../../styles/variables';
 
 .container {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 15px;
   text-align: center;
   width: 100%;
+
+  .profile__introduction {
+    text-align: left;
+  }
+
+  .skill_title {
+    align-self: center;
+    display: inline-block;
+    padding: 5px 5px 5px 0;
+    width: 200px;
+  }
+
+  .category__button {
+    width: 100%;
+
+    &:hover {
+      color: $pgs;
+    }
+  }
+
+  .progress__bar {
+    width: 50%;
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    margin: 0 auto;
+    width: 50vw;
+  }
 }
