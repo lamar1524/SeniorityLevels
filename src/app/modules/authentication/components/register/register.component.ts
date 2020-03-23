@@ -26,7 +26,7 @@ export class RegisterComponent {
       email: new AppFormControl('', [Validators.required, Validators.email]),
       firstName: new AppFormControl('', [Validators.required]),
       lastName: new AppFormControl('', [Validators.required]),
-      password: new AppFormControl('', Validators.required),
+      password: new AppFormControl('', [Validators.required, Validators.minLength(6)]),
       repeatPassword: new AppFormControl('', [Validators.required, equalityValidator('password')]),
     });
     this.message = '';
