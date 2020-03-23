@@ -2,13 +2,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { ActivatedRoute } from '@angular/router';
 import { throwError } from 'rxjs';
 
-
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
-import { ISeniority, ISubCategoryProgress, IUser } from '@core/interfaces';
-import { default as data } from '@modules/skills/components/skills/data';
+import { ISeniorityValues, ISubCategoryDescription, IUser } from '@core/interfaces';
+import { default as data } from '@modules/skills/services/data';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { UsersService } from '@modules/users/services/users.service';
-
 
 @Component({
   selector: 'app-user-profile',
@@ -20,7 +18,7 @@ export class UserProfileComponent {
   private readonly userKey: string;
   private readonly imgSrc: string;
   private userDetails: IUser;
-  private categories: ISubCategoryProgress[];
+  private categories: ISubCategoryDescription[];
   private chosenLevel: string;
 
   constructor(
@@ -44,7 +42,7 @@ export class UserProfileComponent {
       this.skillsService.getValuesBySkillNames(userId, element.title).subscribe(
         (values) => {
           if (values !== null) {
-            const categoryValues: ISeniority[] = Object.values(values);
+            const categoryValues: ISeniorityValues[] = Object.values(values);
             arrayToPut.push({
               title: element.title,
               levels: this.skillsService.getProgressOf(categoryValues, CATEGORIES_AMOUNT[element.title]),

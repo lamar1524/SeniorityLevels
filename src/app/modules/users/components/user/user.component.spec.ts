@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '@core/material/material.module';
-import { MockModule } from 'ng-mocks';
+import { MockComponent, MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
-import { default as data } from '@modules/skills/components/skills/data';
+import { SubmitButtonComponent } from '@modules/authentication/components';
 import { UsersService } from '@modules/users/services/users.service';
 import { UserComponent } from './user.component';
 
@@ -15,13 +16,19 @@ describe('UserComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [UserComponent],
+      declarations: [UserComponent, MockComponent(SubmitButtonComponent)],
       imports: [RouterTestingModule, MockModule(MaterialModule)],
       providers: [
         {
           provide: UsersService,
           useValue: {
             getCurrentUser: () => of({}),
+          },
+        },
+        {
+          provide: AngularFireAuth,
+          useValue: {
+            authState: of({}),
           },
         },
       ],
@@ -36,11 +43,5 @@ describe('UserComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  describe('data assignation', () => {
-    it('should assign data variable properly', () => {
-      expect(component.data).toEqual(data);
-    });
   });
 });

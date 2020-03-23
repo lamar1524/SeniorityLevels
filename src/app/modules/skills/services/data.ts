@@ -87,7 +87,7 @@ export default [
     ],
   },
   {
-    title: 'General programming',
+    title: 'General Programming',
     subCategories: [
       {
         title: 'Modułowość',
@@ -335,7 +335,7 @@ export default [
     title: 'Build System',
     subCategories: [
       {
-        title: 'Webpack/Gulp',
+        title: 'Webpack lub Gulp',
         levels: {
           junior:
             'Wiem czym są i do czego służą bundlery i task runnery. Potrafi napisać prosty task oraz stworzyć podstawową konfigurację webpacka z pomocą CLI lub dokumentacji.\n',
@@ -353,7 +353,7 @@ export default [
         },
       },
       {
-        title: 'Standardy kodowania/ linting',
+        title: 'Standardy kodowania i linting',
         levels: {
           junior:
             'Rozumie znaczenie trzymania się w projekcie określonego standardu kodu. Zna podstawowe narzędzia do lintowania i umie ich używać jeżeli są już skonfigurowane w projekcie.\n',

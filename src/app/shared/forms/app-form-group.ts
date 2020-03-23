@@ -1,4 +1,5 @@
 import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
+
 import { AppFormControl } from '@shared/forms/app-form-control';
 
 export class AppFormGroup extends FormGroup {
@@ -14,5 +15,9 @@ export class AppFormGroup extends FormGroup {
 
   get(path: Array<string | number> | string): AbstractControl | AppFormControl | null {
     return super.get(path);
+  }
+
+  get ableToSend() {
+    return this.disabled || this.invalid;
   }
 }

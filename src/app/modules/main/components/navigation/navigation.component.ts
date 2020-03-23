@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { RoutesConst } from '@core/interfaces';
+import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 
 @Component({
@@ -13,7 +13,7 @@ import { AuthenticationService } from '@modules/authentication';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationComponent {
-  readonly routes: RoutesConst;
+  readonly routes: IRoutesConst;
 
   constructor(@Inject(DOCUMENT) private document: Document, private authService: AuthenticationService, private router: Router) {
     this.routes = ROUTES_PATH;

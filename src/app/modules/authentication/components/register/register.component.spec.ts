@@ -3,12 +3,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IUserValues } from '@core/interfaces';
+import { MockComponent } from 'ng-mocks';
 import { of, throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { MaterialModule } from '@core/material/material.module';
 import { AuthenticationService } from '@modules/authentication';
+import { SubmitButtonComponent } from '@modules/authentication/components';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { RegisterComponent } from './register.component';
 
@@ -20,7 +21,7 @@ describe('RegisterComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RegisterComponent],
+      declarations: [RegisterComponent, MockComponent(SubmitButtonComponent)],
       imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, BrowserAnimationsModule],
       providers: [
         {

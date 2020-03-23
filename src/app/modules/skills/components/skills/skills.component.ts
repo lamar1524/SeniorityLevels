@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ROUTES_PATH } from '@constants/routes.constants';
-import { RoutesConst } from '@core/interfaces';
+import { throwError } from 'rxjs';
 
-import { default as data } from './data';
+import { ROUTES_PATH } from '@constants/routes.constants';
+import { IRoutesConst } from '@core/interfaces';
+import { SkillsService } from '@modules/skills/services/skills.service';
 
 @Component({
   selector: 'app-skills',
@@ -11,11 +12,22 @@ import { default as data } from './data';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillsComponent {
-  private readonly data;
-  private readonly routes: RoutesConst;
+  private data;
+  private readonly routes: IRoutesConst;
 
-  constructor() {
+  constructor(private skillsService: SkillsService) {
     this.routes = ROUTES_PATH;
-    this.data = data;
+    this.skillsService.getSkillsData().subscribe(
+      (res) => {
+        this.data = res;
+      },
+      (error) => {
+        throwError(error);
+      },
+    );
+  }
+
+  get contentLoaded() {
+    return this.data !== undefined;
   }
 }

@@ -1,32 +1,41 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { from } from 'rxjs';
+import { from, of, Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
-import { ISeniority } from '@core/interfaces';
+import { ISeniorityCount, ISeniorityValues } from '@core/interfaces';
+import { default as data } from './data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SkillsService {
-  constructor(private db: AngularFireDatabase) {}
+  private skillsData;
 
-  setUsersSkills(skillCategory: string, skillName: string, skillValues: ISeniority, userId: string) {
+  constructor(private db: AngularFireDatabase) {
+    this.skillsData = data;
+  }
+
+  getSkillsData() {
+    return of(this.skillsData);
+  }
+
+  setUsersSkills(skillCategory: string, skillName: string, skillValues: ISeniorityValues, userId: string) {
     return from(this.db.database.ref(`users/${userId}/skills/${skillCategory}/${skillName}`).set(skillValues)).pipe(first());
   }
 
-  getSkillsBySubCategory(skillCategory: string, skillName: string, userId: string) {
+  getSkillsBySubCategory(skillCategory: string, skillName: string, userId: string): Observable<ISeniorityValues> {
     return from(this.db.database.ref(`users/${userId}/skills/${skillCategory}/${skillName}`).once('value')).pipe(
       first(),
       map((element) => (element.val() === null ? { junior: false, middle: false, senior: false } : element.val())),
     );
   }
 
-  getAllSkillsValues(userId: string) {
+  getAllSkillsValues(userId: string): Observable<ISeniorityValues[]> {
     return from(this.db.database.ref(`users/${userId}/skills`).once('value')).pipe(
       first(),
       map((element) => {
-        const toReturn: ISeniority[] = [];
+        const toReturn: ISeniorityValues[] = [];
         Object.values(element.val()).forEach((val) => {
           toReturn.push(...Object.values(val));
         });
@@ -43,7 +52,7 @@ export class SkillsService {
   }
 
   // TODO not sure if this should be here, but it will be used app-wide
-  getProgressOf(skills: ISeniority[], total: number): ISeniority {
+  getProgressOf(skills: ISeniorityValues[], total: number): ISeniorityCount {
     const result = {
       junior: 0,
       middle: 0,

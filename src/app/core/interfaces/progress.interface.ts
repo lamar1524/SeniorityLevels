@@ -1,15 +1,27 @@
-export interface ISeniority {
-  junior: string | number;
-  middle: string | number;
-  senior: string | number;
+export interface ISeniorityDescriptions {
+  junior: string;
+  middle: string;
+  senior: string;
 }
 
-export interface ISubCategoryProgress {
+export interface ISubCategoryDescription {
   title: string;
-  levels: ISeniority;
+  levels: ISeniorityDescriptions;
 }
 
 export interface ICategoryProgress {
   title: string;
-  subCategories: ISubCategoryProgress[];
+  subCategories: ISubCategoryDescription[];
+}
+
+export interface ISeniorityValues {
+  junior: boolean;
+  middle: boolean;
+  senior: boolean;
+}
+
+export interface ISeniorityCount {
+  junior: number;
+  middle: number;
+  senior: number;
 }
