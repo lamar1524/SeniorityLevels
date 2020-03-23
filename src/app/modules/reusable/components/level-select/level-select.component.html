@@ -1,6 +1,5 @@
 <form class="select">
   <mat-form-field>
-    <mat-label>Pick a level</mat-label>
     <mat-select [(ngModel)]="selectedValue" (selectionChange)="chooseLevel.emit(selectedValue)" name="level">
       <mat-option *ngFor="let option of options" [value]="option">{{ option | titlecase}}</mat-option>
     </mat-select>
