@@ -107,7 +107,6 @@ export class SkillComponent {
 
   sendSkill() {
     this.clickable = false;
-    console.log(this.chosenSubCat.title);
     this.skillsService
       .setUsersSkills(this.catTitle, this.chosenSubCat.title, this.levels, this.currentUser.uid)
       .pipe(
