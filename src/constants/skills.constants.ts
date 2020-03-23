@@ -1,5 +1,5 @@
 export const CATEGORIES_AMOUNT = {
-  total: 111,
+  total: 110,
   'Web Technology': 8,
   'General Programming': 14,
   'Visual Skills': 6,
