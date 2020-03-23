@@ -3,9 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { throwError } from 'rxjs';
 
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
-import { ISeniorityValues, ISubCategoryDescription, ISubCategoryValue, IUser } from '@core/interfaces';
+import { ICategoryProgress, ISeniorityValues, ISubCategoryValue, IUser } from '@core/interfaces';
 import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
-import { default as data } from '@modules/skills/services/data';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { UsersService } from '@modules/users/services/users.service';
 
@@ -33,12 +32,13 @@ export class UserProfileComponent {
     this.userKey = this.route.snapshot.paramMap.get('key');
     this.usersService.getUserByKey(this.userKey).subscribe((details) => {
       this.userDetails = details;
-      this.computeUsersLevels(this.userDetails.key, this.categories);
+      this.skillsService.getSkillsData().subscribe(data => {
+        this.computeUsersLevels(data, this.userDetails.key, this.categories); });
     });
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';
   }
 
-  computeUsersLevels(userId: string, arrayToPut: any[]) {
+  computeUsersLevels(data: ICategoryProgress[], userId: string, arrayToPut: any[]) {
     data.forEach((element: any) => {
       this.skillsService.getValuesBySkillNames(userId, element.title).subscribe(
         (values) => {
