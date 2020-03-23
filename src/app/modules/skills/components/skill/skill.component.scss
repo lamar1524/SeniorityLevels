@@ -60,6 +60,10 @@
   .table__content {
     grid-area: content;
 
+    .table__spinner {
+      margin: auto;
+    }
+
     &:hover {
       cursor: pointer;
     }

@@ -84,17 +84,24 @@ export class SkillComponent {
     this.document.querySelectorAll('.table__label').forEach((element) => {
       element.classList.remove('u-text--black');
     });
-    this.skillsService.getSkillsBySubCategory(this.catTitle, subCat.title, this.currentUser.uid).subscribe(
-      (res) => {
-        this.levels = res;
-        this.chosenSubCat = subCat;
-        this.cdRef.markForCheck();
-        this.document.querySelectorAll('.table__label')[index].classList.add('u-text--black');
-      },
-      (error) => {
-        throwError(error);
-      },
-    );
+    this.clickable = false;
+    this.skillsService
+      .getSkillsBySubCategory(this.catTitle, subCat.title, this.currentUser.uid)
+      .pipe(finalize(() => (this.clickable = true)))
+      .subscribe(
+        (res) => {
+          this.levels = res;
+          this.chosenSubCat = subCat;
+          this.cdRef.markForCheck();
+          const element = this.document.querySelectorAll('.table__label')[index];
+          if (element !== undefined) {
+            element.classList.add('u-text--black');
+          }
+        },
+        (error) => {
+          throwError(error);
+        },
+      );
   }
 
   setSkill(level: string) {
@@ -112,6 +119,7 @@ export class SkillComponent {
       .pipe(
         finalize(() => {
           this.clickable = true;
+          this.cdRef.markForCheck();
         }),
       )
       .subscribe(
