@@ -122,28 +122,8 @@ export class SkillComponent {
       );
   }
 
-  requirementsUp() {
-    switch (this.currentlyDisplayedLevel) {
-      case seniorityEnum.junior: {
-        this.currentlyDisplayedLevel = seniorityEnum.middle;
-        break;
-      }
-
-      case seniorityEnum.middle: {
-        this.currentlyDisplayedLevel = seniorityEnum.senior;
-        break;
-      }
-
-      case seniorityEnum.senior: {
-        this.currentlyDisplayedLevel = seniorityEnum.junior;
-        break;
-      }
-
-      default: {
-        this.currentlyDisplayedLevel = seniorityEnum.junior;
-        break;
-      }
-    }
+  chooseLevel(level: seniorityEnum) {
+    this.currentlyDisplayedLevel = level;
     this.cdRef.markForCheck();
   }
 }

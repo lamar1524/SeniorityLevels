@@ -4,7 +4,7 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatProgressBarModule,
-  MatProgressSpinnerModule,
+  MatProgressSpinnerModule, MatSelectModule,
   MatTableModule,
 } from '@angular/material';
 
@@ -15,6 +15,7 @@ const materialModules = [
   MatTableModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
+  MatSelectModule
 ];
 
 @NgModule({

@@ -9,6 +9,11 @@ export interface ISubCategoryDescription {
   levels: ISeniorityDescriptions;
 }
 
+export interface ISubCategoryValue {
+  title: string;
+  levels: ISeniorityCount;
+}
+
 export interface ICategoryProgress {
   title: string;
   subCategories: ISubCategoryDescription[];

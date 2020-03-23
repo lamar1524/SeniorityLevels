@@ -3,7 +3,7 @@
   <div class="header">
     <h2 class="header__text">{{ catTitle }}</h2>
     <h4 class="header__level-switch">
-      Currently displaying requirements for <span class="u-text--bold current-level" (click)="requirementsUp()">{{ currentlyDisplayedLevel }}</span>
+      Currently displaying requirements for <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select>
     </h4>
   </div>
   <div class="table">

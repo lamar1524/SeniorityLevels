@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { throwError } from 'rxjs';
 
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
-import { ISeniorityValues, ISubCategoryDescription, IUser } from '@core/interfaces';
+import { ISeniorityValues, ISubCategoryDescription, ISubCategoryValue, IUser } from '@core/interfaces';
+import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
 import { default as data } from '@modules/skills/services/data';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { UsersService } from '@modules/users/services/users.service';
@@ -18,8 +19,8 @@ export class UserProfileComponent {
   private readonly userKey: string;
   private readonly imgSrc: string;
   private userDetails: IUser;
-  private categories: ISubCategoryDescription[];
-  private chosenLevel: string;
+  private categories: ISubCategoryValue[];
+  private chosenLevel: seniorityEnum;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +28,7 @@ export class UserProfileComponent {
     private skillsService: SkillsService,
     private cdRef: ChangeDetectorRef,
   ) {
-    this.chosenLevel = 'junior';
+    this.chosenLevel = seniorityEnum.junior;
     this.categories = [];
     this.userKey = this.route.snapshot.paramMap.get('key');
     this.usersService.getUserByKey(this.userKey).subscribe((details) => {
@@ -57,28 +58,8 @@ export class UserProfileComponent {
     });
   }
 
-  requirementsUp() {
-    switch (this.chosenLevel) {
-      case 'junior': {
-        this.chosenLevel = 'middle';
-        break;
-      }
-
-      case 'middle': {
-        this.chosenLevel = 'senior';
-        break;
-      }
-
-      case 'senior': {
-        this.chosenLevel = 'junior';
-        break;
-      }
-
-      default: {
-        this.chosenLevel = 'junior';
-        break;
-      }
-    }
+  chooseLevel(level: seniorityEnum) {
+    this.chosenLevel = level;
     this.cdRef.markForCheck();
   }
 }

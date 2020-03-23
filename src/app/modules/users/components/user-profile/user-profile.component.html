@@ -7,7 +7,7 @@
     </div>
     <div class="profile__summary">
       <h3>Seniority levels:</h3>
-      Currently displayed level: <span class="u-text--bold current-level" (click)="requirementsUp()">{{ chosenLevel }}</span>
+      Currently displayed level: <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select>
       <div class="levels">
         <div class="seniority" *ngFor="let category of categories">
           <p>{{ category.title }} {{ category.levels[chosenLevel] }}%</p>
