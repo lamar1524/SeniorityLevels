@@ -75,7 +75,7 @@ export class RegisterComponent {
           this.authService.provideAdditionalUserData(this.formData, user.user.uid).subscribe(
             () => {
               this.registerForm.enable();
-              this.router.navigate([this.routes.users]);
+              this.router.navigate([this.routes.home]);
             },
             (error) => {
               this.registerForm.enable();
