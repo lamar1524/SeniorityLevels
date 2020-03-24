@@ -39,6 +39,7 @@ export class SkillComponent {
     private textifyPipe: SlugTextifyPipe,
     private popupService: PopupService,
   ) {
+    this.routes = ROUTES_PATH;
     this.activatedRoute.params.subscribe(
       (param) => {
         this.catTitle = this.textifyPipe.transform(param.category);
@@ -71,7 +72,6 @@ export class SkillComponent {
   }
 
   setInitialValues() {
-    this.routes = ROUTES_PATH;
     this.currentlyDisplayedLevel = seniorityEnum.junior;
     this.clickable = true;
     this.dataSharingService
