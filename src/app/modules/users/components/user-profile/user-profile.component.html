@@ -8,12 +8,14 @@
     <div class="profile__summary">
       <h3>Seniority levels:</h3>
       Currently displayed level: <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select>
-      <div class="levels">
+      <div class="levels" *ngIf="levelsLoaded; else spinner">
         <div class="seniority" *ngFor="let category of categories">
           <p>{{ category.title }} {{ category.levels[chosenLevel] }}%</p>
           <mat-progress-bar class="progress__bar" mode="determinate" [value]="category.levels[chosenLevel]"></mat-progress-bar>
         </div>
+        <div *ngIf="!levelsFound">User didn't fill skills yet</div>
       </div>
+      <ng-template #spinner><mat-spinner class="spinner"></mat-spinner></ng-template>
     </div>
   </div>
 </div>

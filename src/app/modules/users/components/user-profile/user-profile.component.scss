@@ -48,6 +48,10 @@
     padding: 10px 0;
   }
 
+  .spinner {
+    margin: auto;
+  }
+
   @include break(map-get($breakpoints, sm)) {
     .profile__wrapper {
       width: 300px;
