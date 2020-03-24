@@ -5,7 +5,7 @@ import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
 import { MaterialModule } from '@core/material/material.module';
-import { ReusableModule } from '@modules/reusable/reusable.module';
+import { SharedUiModule } from '@modules/reusable/shared-ui.module';
 import { UsersService } from '@modules/users/services/users.service';
 import { UserComponent } from './user.component';
 
@@ -17,7 +17,7 @@ describe('UserComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [UserComponent],
-      imports: [RouterTestingModule, MockModule(MaterialModule), MockModule(ReusableModule)],
+      imports: [RouterTestingModule, MockModule(MaterialModule), MockModule(SharedUiModule)],
       providers: [
         {
           provide: UsersService,

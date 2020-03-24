@@ -13,4 +13,4 @@ import { LevelSelectComponent, SubmitButtonComponent } from '@modules/reusable/c
     LevelSelectComponent
   ],
 })
-export class ReusableModule {}
+export class SharedUiModule {}

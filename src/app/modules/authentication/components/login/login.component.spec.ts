@@ -11,7 +11,7 @@ import UserCredential = firebase.auth.UserCredential;
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { MaterialModule } from '@core/material/material.module';
 import { AuthenticationService } from '@modules/authentication';
-import { ReusableModule } from '@modules/reusable/reusable.module';
+import { SharedUiModule } from '@modules/reusable/shared-ui.module';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { LoginComponent } from './login.component';
 
@@ -24,7 +24,7 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, BrowserAnimationsModule, MockModule(ReusableModule)],
+      imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, BrowserAnimationsModule, MockModule(SharedUiModule)],
       providers: [
         {
           provide: AuthenticationService,
