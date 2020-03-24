@@ -17,12 +17,8 @@
         {{ subCat.title }}
       </div>
     </div>
-    <div
-      (click)="setSkill(currentlyDisplayedLevel)"
-      class="table__column table__content"
-      [ngClass]="{ 'content--active': levels[currentlyDisplayedLevel] }"
-    >
-      <div class="table__row" *ngIf="clickable; else spinner">
+    <div class="table__column table__content" [ngClass]="{ 'content--active': levels[currentlyDisplayedLevel] }">
+      <div class="table__row" *ngIf="clickable; else spinner" (click)="setSkill(currentlyDisplayedLevel)">
         {{ chosenSubCat.levels[currentlyDisplayedLevel] }}
       </div>
       <ng-template #spinner><mat-spinner class="table__spinner"></mat-spinner></ng-template>

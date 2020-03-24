@@ -65,15 +65,17 @@
       margin: auto;
     }
 
-    &:hover {
-      cursor: pointer;
-    }
   }
 
   .table__row {
     border-collapse: separate;
     display: block;
+    height: 100%;
     padding: 10px 5px;
+    
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   @include break(map-get($breakpoints, md)) {
