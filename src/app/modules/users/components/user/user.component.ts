@@ -3,11 +3,11 @@ import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
 import { DataSharingService } from '@shared/services/data-sharing.service';
 import { User } from 'firebase';
 import { throwError } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { UsersService } from '@modules/users/services/users.service';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user',
