@@ -7,6 +7,7 @@ import { throwError } from 'rxjs';
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { UsersService } from '@modules/users/services/users.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user',
@@ -25,12 +26,13 @@ export class UserComponent {
     private dataSharingService: DataSharingService,
     private cdRef: ChangeDetectorRef,
   ) {
-    this.dataSharingService.getUser().subscribe((user) => {
-      if (user !== null) {
+    this.dataSharingService
+      .getUser()
+      .pipe(filter((user) => user !== null))
+      .subscribe((user) => {
         this.userDetails = user;
         this.getProgressOf(this.userDetails.uid);
-      }
-    });
+      });
     this.progress = {
       junior: 0,
       middle: 0,
