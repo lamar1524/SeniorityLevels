@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
@@ -8,9 +7,9 @@ import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { PopupComponent } from '@modules/reusable/components';
+import { PopupService } from '@modules/reusable/services/popup.service';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { DataSharingService } from '@shared/services/data-sharing.service';
 
 @Component({
   selector: 'app-register',
@@ -26,8 +25,7 @@ export class RegisterComponent {
     private authService: AuthenticationService,
     private chRef: ChangeDetectorRef,
     private router: Router,
-    private dataSharingService: DataSharingService,
-    private snackBar: MatSnackBar,
+    private popupService: PopupService
   ) {
     this.registerForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
@@ -81,26 +79,20 @@ export class RegisterComponent {
           this.authService.provideAdditionalUserData(this.formData, user.user.uid).subscribe(
             () => {
               this.registerForm.enable();
-              this.showPopup('You successfully registered');
+              this.popupService.showPopup('You successfully registered');
               this.router.navigate([this.routes.home]);
             },
             (error) => {
               this.registerForm.enable();
-              this.showPopup(error.message);
+              this.popupService.showPopup(error.message);
             },
           );
         },
         ({ message }) => {
           this.registerForm.enable();
-          this.showPopup(message);
+          this.popupService.showPopup(message);
         },
       );
   };
 
-  showPopup(message: string) {
-    this.dataSharingService.setPopupMessage(message);
-    this.snackBar.openFromComponent(PopupComponent, {
-      duration: 3000,
-    });
-  }
 }

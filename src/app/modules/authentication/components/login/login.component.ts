@@ -1,15 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
-import { PopupComponent } from '@modules/reusable/components';
+import { PopupService } from '@modules/reusable/services/popup.service';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { DataSharingService } from '@shared/services/data-sharing.service';
 
 @Component({
   selector: 'app-login',
@@ -25,8 +23,7 @@ export class LoginComponent {
     private router: Router,
     private cdRef: ChangeDetectorRef,
     private authService: AuthenticationService,
-    private snackbar: MatSnackBar,
-    private dataSharingService: DataSharingService,
+    private popupService: PopupService,
   ) {
     this.loginForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
@@ -50,7 +47,7 @@ export class LoginComponent {
       .pipe(finalize(() => this.loginForm.enable()))
       .subscribe(
         () => this.handleCredentialsSuccess(),
-        (error) => this.handleCredentialsError(error.message),
+        (error) => this.popupService.showPopup(error.message),
       );
   };
 
@@ -63,20 +60,13 @@ export class LoginComponent {
             this.router.navigate([this.routes.users]);
           },
           (error) => {
-            this.handleCredentialsError(error.message);
+            this.popupService.showPopup(error.message);
           },
         );
       },
       (error) => {
-        this.handleCredentialsError(error.message);
+        this.popupService.showPopup(error.message);
       },
     );
-  }
-
-  handleCredentialsError(message) {
-    this.dataSharingService.setPopupMessage(message);
-    this.snackbar.openFromComponent(PopupComponent, {
-      duration: 3000,
-    });
   }
 }

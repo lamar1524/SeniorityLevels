@@ -2,11 +2,11 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'firebase';
-import { throwError } from 'rxjs';
 import { filter, finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
+import { PopupService } from '@modules/reusable/services/popup.service';
 import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
 import { SlugTextifyPipe } from '@modules/skills/pipes/slug-textify';
 import { SkillsService } from '@modules/skills/services/skills.service';
@@ -37,22 +37,29 @@ export class SkillComponent {
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
     private textifyPipe: SlugTextifyPipe,
+    private popupService: PopupService,
   ) {
     this.activatedRoute.params.subscribe(
       (param) => {
         this.catTitle = this.textifyPipe.transform(param.category);
-        this.skillsService.getSkillsData().subscribe((data) => {
-          const categoriesFiltered = data.filter((element) => element.title === this.catTitle);
-          if (categoriesFiltered.length < 1) {
-            this.router.navigate([ROUTES_PATH.skills]);
-          } else {
-            this.subCategories = categoriesFiltered[0].subCategories;
-            this.setInitialValues();
-            this.cdRef.markForCheck();
-          }
-        });
+        this.skillsService.getSkillsData().subscribe(
+          (data) => {
+            const categoriesFiltered = data.filter((element) => element.title === this.catTitle);
+            if (categoriesFiltered.length < 1) {
+              this.router.navigate([ROUTES_PATH.skills]);
+            } else {
+              this.subCategories = categoriesFiltered[0].subCategories;
+              this.setInitialValues();
+              this.cdRef.markForCheck();
+            }
+          },
+          (error) => {
+            this.popupService.showPopup(error.message);
+          },
+        );
       },
-      () => {
+      (error) => {
+        this.popupService.showPopup(error.message);
         this.router.navigate([ROUTES_PATH.skills]);
       },
     );
@@ -76,7 +83,7 @@ export class SkillComponent {
           this.chooseSubCategory(this.subCategories[0], 0);
         },
         (error) => {
-          throwError(error);
+          this.popupService.showPopup(error.message);
         },
       );
   }
@@ -100,7 +107,7 @@ export class SkillComponent {
           }
         },
         (error) => {
-          throwError(error);
+          this.popupService.showPopup(error.message);
         },
       );
   }
@@ -126,7 +133,7 @@ export class SkillComponent {
       .subscribe(
         () => {},
         (error) => {
-          throwError(error);
+          this.popupService.showPopup(error.message);
         },
       );
   }

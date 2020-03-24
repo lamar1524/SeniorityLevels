@@ -9,7 +9,6 @@ import { first } from 'rxjs/operators';
 })
 export class DataSharingService {
   private currentUser: BehaviorSubject<User>;
-  private popupMessage: string;
 
   constructor(private firebaseAuth: AngularFireAuth) {
     this.currentUser = new BehaviorSubject<User>(null);
@@ -33,13 +32,5 @@ export class DataSharingService {
 
   clearUser() {
     this.currentUser.next(null);
-  }
-
-  getPopupMessage(): string {
-    return this.popupMessage;
-  }
-
-  setPopupMessage(message: string): void {
-    this.popupMessage = message;
   }
 }
