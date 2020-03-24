@@ -2,13 +2,19 @@
   <div class="profile__wrapper">
     <div class="profile__introduction" *ngIf="contentLoaded">
       <h1>Hello {{ userDetails.email }}</h1>
-      <h2>You are junior in {{ progress.junior }}%</h2>
-      <mat-progress-bar class="progress__bar" mode="determinate" [value]=progress.junior></mat-progress-bar>
-      <h2>You are middle in {{ progress.middle }}%</h2>
-      <mat-progress-bar class="progress__bar" mode="determinate" [value]=progress.middle></mat-progress-bar>
-      <h2>You are senior in {{ progress.senior }}%</h2>
-      <mat-progress-bar class="progress__bar" mode="determinate" [value]=progress.senior></mat-progress-bar>
-      <h3>Fill up your skills below</h3>
+      <h2>You are:</h2>
+      <div class="level__wrapper">
+        <h3>Junior in {{ progress.junior }}%</h3>
+        <mat-progress-bar class="progress__bar" mode="determinate" [value]="progress.junior"></mat-progress-bar>
+      </div>
+      <div class="level__wrapper">
+        <h3>Middle in {{ progress.middle }}%</h3>
+        <mat-progress-bar class="progress__bar" mode="determinate" [value]="progress.middle"></mat-progress-bar>
+      </div>
+      <div class="level__wrapper">
+        <h3>Senior in {{ progress.senior }}%</h3>
+        <mat-progress-bar class="progress__bar" mode="determinate" [value]="progress.senior"></mat-progress-bar>
+      </div>
     </div>
   </div>
 </div>

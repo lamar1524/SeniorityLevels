@@ -3,6 +3,7 @@ import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
 import { DataSharingService } from '@shared/services/data-sharing.service';
 import { User } from 'firebase';
 import { throwError } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { SkillsService } from '@modules/skills/services/skills.service';
@@ -25,12 +26,13 @@ export class UserComponent {
     private dataSharingService: DataSharingService,
     private cdRef: ChangeDetectorRef,
   ) {
-    this.dataSharingService.getUser().subscribe((user) => {
-      if (user !== null) {
+    this.dataSharingService
+      .getUser()
+      .pipe(filter((user) => user !== null))
+      .subscribe((user) => {
         this.userDetails = user;
         this.getProgressOf(this.userDetails.uid);
-      }
-    });
+      });
     this.progress = {
       junior: 0,
       middle: 0,

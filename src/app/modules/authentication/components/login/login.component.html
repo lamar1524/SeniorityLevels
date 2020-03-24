@@ -19,6 +19,9 @@
         <div *ngIf="password.errors.required">
           Password is required.
         </div>
+        <div *ngIf="password.errors.minlength">
+          Password must be at least 6 characters long.
+        </div>
       </div>
       <app-submit-button [loading]="loginForm.disabled" [disabled]="loginForm.ableToSend">Login</app-submit-button>
     </form>

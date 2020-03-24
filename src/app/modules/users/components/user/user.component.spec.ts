@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MaterialModule } from '@core/material/material.module';
-import { MockComponent, MockModule } from 'ng-mocks';
+import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
-import { SubmitButtonComponent } from '@modules/authentication/components';
+import { MaterialModule } from '@core/material/material.module';
+import { ReusableModule } from '@modules/reusable/reusable.module';
 import { UsersService } from '@modules/users/services/users.service';
 import { UserComponent } from './user.component';
 
@@ -16,8 +16,8 @@ describe('UserComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [UserComponent, MockComponent(SubmitButtonComponent)],
-      imports: [RouterTestingModule, MockModule(MaterialModule)],
+      declarations: [UserComponent],
+      imports: [RouterTestingModule, MockModule(MaterialModule), MockModule(ReusableModule)],
       providers: [
         {
           provide: UsersService,

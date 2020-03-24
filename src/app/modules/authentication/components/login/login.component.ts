@@ -23,7 +23,7 @@ export class LoginComponent {
   constructor(private router: Router, private cdRef: ChangeDetectorRef, private authService: AuthenticationService) {
     this.loginForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
-      password: new AppFormControl('', [Validators.required]),
+      password: new AppFormControl('', [Validators.required, Validators.minLength(6)]),
     });
     this.errorMessage = '';
     this.routes = ROUTES_PATH;

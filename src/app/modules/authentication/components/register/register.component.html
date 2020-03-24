@@ -38,6 +38,9 @@
         <div *ngIf="password.errors.required">
           Password is required.
         </div>
+        <div *ngIf="password.errors.minlength">
+          Password must be at least 6 characters long.
+        </div>
       </div>
       <mat-form-field class="form__control form__input">
         <input placeholder="Repeat password" type="password" matInput formControlName="repeatPassword" />

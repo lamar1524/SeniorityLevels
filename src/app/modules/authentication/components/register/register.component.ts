@@ -26,7 +26,7 @@ export class RegisterComponent {
       email: new AppFormControl('', [Validators.required, Validators.email]),
       firstName: new AppFormControl('', [Validators.required]),
       lastName: new AppFormControl('', [Validators.required]),
-      password: new AppFormControl('', Validators.required),
+      password: new AppFormControl('', [Validators.required, Validators.minLength(6)]),
       repeatPassword: new AppFormControl('', [Validators.required, equalityValidator('password')]),
     });
     this.message = '';
@@ -75,7 +75,7 @@ export class RegisterComponent {
           this.authService.provideAdditionalUserData(this.formData, user.user.uid).subscribe(
             () => {
               this.registerForm.enable();
-              this.router.navigate([this.routes.users]);
+              this.router.navigate([this.routes.home]);
             },
             (error) => {
               this.registerForm.enable();

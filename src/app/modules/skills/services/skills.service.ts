@@ -3,7 +3,8 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { from, of, Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
-import { ISeniorityCount, ISeniorityValues } from '@core/interfaces';
+import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
+import { ICategoryCount, ISeniorityCount, ISeniorityValues } from '@core/interfaces';
 import { default as data } from './data';
 
 @Injectable({
@@ -44,14 +45,6 @@ export class SkillsService {
     );
   }
 
-  getValuesBySkillNames(userId: string, skillCategory: string) {
-    return from(this.db.database.ref(`users/${userId}/skills/${skillCategory}`).once('value')).pipe(
-      first(),
-      map((res) => res.val()),
-    );
-  }
-
-  // TODO not sure if this should be here, but it will be used app-wide
   getProgressOf(skills: ISeniorityValues[], total: number): ISeniorityCount {
     const result = {
       junior: 0,
@@ -59,19 +52,28 @@ export class SkillsService {
       senior: 0,
     };
     skills.forEach((skill) => {
-      if (skill.junior) {
-        result.junior += 1;
-      }
-      if (skill.middle) {
-        result.middle += 1;
-      }
-      if (skill.senior) {
-        result.senior += 1;
-      }
+      Object.keys(skill).forEach((key) => {
+        if (skill[key]) {
+          result[key] += 1;
+        }
+      });
     });
-    result.junior = Math.round((result.junior * 100) / total);
-    result.middle = Math.round((result.middle * 100) / total);
-    result.senior = Math.round((result.senior * 100) / total);
+    Object.keys(result).forEach((key) => {
+      result[key] = Math.round((result[key] * 100) / total);
+    });
     return result;
+  }
+
+  getAllSkillsWithTitles(userId: string) {
+    return from(this.db.database.ref(`users/${userId}/skills`).once('value')).pipe(
+      map((res) => Object.entries(res.val()).map((element): ICategoryCount => ({ title: element[0], levels: Object.values(element[1]) }))),
+    );
+  }
+
+  getSummaryProgress(computes: ICategoryCount[]) {
+    return computes.map((element) => ({
+      title: element.title,
+      levels: this.getProgressOf(element.levels, CATEGORIES_AMOUNT[element.title]),
+    }));
   }
 }
