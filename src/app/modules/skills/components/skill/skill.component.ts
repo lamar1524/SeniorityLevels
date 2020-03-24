@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'firebase';
 import { throwError } from 'rxjs';
+import { filter, finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
@@ -10,7 +11,6 @@ import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
 import { SlugTextifyPipe } from '@modules/skills/pipes/slug-textify';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { DataSharingService } from '@shared/services/data-sharing.service';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-skill',
@@ -66,18 +66,19 @@ export class SkillComponent {
     this.routes = ROUTES_PATH;
     this.currentlyDisplayedLevel = seniorityEnum.junior;
     this.clickable = true;
-    this.dataSharingService.getUser().subscribe(
-      (user) => {
-        if (user !== null) {
+    this.dataSharingService
+      .getUser()
+      .pipe(filter((user) => user !== null))
+      .subscribe(
+        (user) => {
           this.currentUser = user;
           this.cdRef.markForCheck();
           this.chooseSubCategory(this.subCategories[0], 0);
-        }
-      },
-      (error) => {
-        throwError(error);
-      },
-    );
+        },
+        (error) => {
+          throwError(error);
+        },
+      );
   }
 
   chooseSubCategory(subCat: ISubCategoryDescription, index: number) {

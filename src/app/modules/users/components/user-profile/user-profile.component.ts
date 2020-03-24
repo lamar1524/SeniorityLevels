@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { throwError } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
+import { ROUTES_PATH } from '@constants/routes.constants';
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
-import { ICategoryProgress, ISeniorityValues, ISubCategoryValue, IUser } from '@core/interfaces';
+import { ICategoryProgress, IRoutesConst, ISeniorityValues, ISubCategoryValue, IUser } from '@core/interfaces';
 import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
 import { SkillsService } from '@modules/skills/services/skills.service';
 import { UsersService } from '@modules/users/services/users.service';
@@ -18,10 +19,11 @@ import { UsersService } from '@modules/users/services/users.service';
 export class UserProfileComponent {
   private readonly userKey: string;
   private readonly imgSrc: string;
-  private userDetails: IUser;
+  private readonly routes: IRoutesConst;
   private categories: ISubCategoryValue[];
   private chosenLevel: seniorityEnum;
   private levelsLoaded: boolean;
+  private userDetails: IUser;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,44 +31,25 @@ export class UserProfileComponent {
     private skillsService: SkillsService,
     private cdRef: ChangeDetectorRef,
   ) {
+    this.routes = ROUTES_PATH;
     this.levelsLoaded = false;
     this.chosenLevel = seniorityEnum.junior;
     this.categories = [];
     this.userKey = this.route.snapshot.paramMap.get('key');
     this.usersService.getUserByKey(this.userKey).subscribe((details) => {
       this.userDetails = details;
-      this.skillsService.getSkillsData().subscribe((data) => {
-        this.computeUsersLevels(data, this.userDetails.key, this.categories);
-      });
+      this.skillsService.getAllSkillsWithTitles(this.userKey).subscribe(
+        (result) => {
+          this.categories = this.skillsService.getSummaryProgress(result);
+          this.levelsLoaded = true;
+          this.cdRef.markForCheck();
+        },
+        (error) => {
+          throwError(error);
+        },
+      );
     });
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';
-  }
-
-  computeUsersLevels(data: ICategoryProgress[], userId: string, arrayToPut: ISubCategoryValue[]) {
-    data.forEach((element: ICategoryProgress) => {
-      this.skillsService
-        .getValuesBySkillNames(userId, element.title)
-        .pipe(
-          finalize(() => {
-            this.levelsLoaded = true;
-          }),
-        )
-        .subscribe(
-          (values) => {
-            if (values !== null) {
-              const categoryValues: ISeniorityValues[] = Object.values(values);
-              arrayToPut.push({
-                title: element.title,
-                levels: this.skillsService.getProgressOf(categoryValues, CATEGORIES_AMOUNT[element.title]),
-              });
-            }
-            this.cdRef.markForCheck();
-          },
-          (error) => {
-            throwError(error);
-          },
-        );
-    });
   }
 
   chooseLevel(level: seniorityEnum) {

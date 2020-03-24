@@ -1,7 +1,8 @@
 <div class="container" *ngIf="userDetails">
+  <button class="back__button" mat-icon-button [routerLink]="[routes.usersList]">Back</button>
   <div class="profile__wrapper">
     <div class="profile__introduction">
-      <div class="profile__photo"><img class="photo__inner" [src]="imgSrc" /></div>
+      <div class="profile__photo"><img class="photo__inner" alt="Profile picture" aria-label="Profile picture" [src]="imgSrc" /></div>
       <span class="profile__name">{{ userDetails.values.firstName }} {{ userDetails.values.lastName }}</span>
       <p class="profile__email">{{ userDetails.values.email }}</p>
     </div>

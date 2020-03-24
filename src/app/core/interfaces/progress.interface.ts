@@ -30,3 +30,8 @@ export interface ISeniorityCount {
   middle: number;
   senior: number;
 }
+
+export interface ICategoryCount {
+  title: string;
+  levels: ISeniorityValues[];
+}
