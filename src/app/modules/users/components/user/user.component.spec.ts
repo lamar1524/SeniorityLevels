@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 
 import { MaterialModule } from '@core/material/material.module';
 import { SharedUiModule } from '@modules/reusable/shared-ui.module';
+import { SkillsService } from '@modules/skills/services/skills.service';
 import { UsersService } from '@modules/users/services/users.service';
 import { UserComponent } from './user.component';
 
@@ -24,6 +25,10 @@ describe('UserComponent', () => {
           useValue: {
             getCurrentUser: () => of({}),
           },
+        },
+        {
+          provide: SkillsService,
+          useValue: { getAllSkillsValues: () => of({}), getProgressOf: () => {} },
         },
         {
           provide: AngularFireAuth,

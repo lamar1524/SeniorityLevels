@@ -16,12 +16,12 @@ import { UsersService } from '@modules/users/services/users.service';
 })
 export class UserProfileComponent {
   private readonly userKey: string;
-  private readonly imgSrc: string;
   private readonly routes: IRoutesConst;
   private categories: ISubCategoryValue[];
   private chosenLevel: seniorityEnum;
   private levelsLoaded: boolean;
   private userDetails: IUser;
+  readonly imgSrc: string;
 
   constructor(
     private route: ActivatedRoute,

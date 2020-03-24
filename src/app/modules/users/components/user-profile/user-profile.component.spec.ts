@@ -1,8 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IUser } from '@core/interfaces';
+import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
+import { IUser } from '@core/interfaces';
+import { SharedUiModule } from '@modules/reusable/shared-ui.module';
+import { SkillsService } from '@modules/skills/services/skills.service';
 import { UsersService } from '@modules/users/services/users.service';
 import { UserProfileComponent } from './user-profile.component';
 
@@ -14,12 +17,19 @@ describe('UserProfileComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [UserProfileComponent],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, MockModule(SharedUiModule)],
       providers: [
         {
           provide: UsersService,
           useValue: {
             getUserByKey: () => of({}),
+          },
+        },
+        {
+          provide: SkillsService,
+          useValue: {
+            getAllSkillsWithTitles: () => of({}),
+            getSummaryProgress: () => of({}),
           },
         },
       ],
