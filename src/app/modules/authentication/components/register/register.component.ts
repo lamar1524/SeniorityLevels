@@ -1,14 +1,16 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
+import { PopupComponent } from '@modules/reusable/components';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { DataSharingService } from '@shared/services/data-sharing.service';
 
 @Component({
   selector: 'app-register',
@@ -18,10 +20,15 @@ import { AppFormControl, AppFormGroup } from '@shared/forms';
 })
 export class RegisterComponent {
   registerForm: AppFormGroup;
-  message: string;
   routes: IRoutesConst;
 
-  constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
+  constructor(
+    private authService: AuthenticationService,
+    private chRef: ChangeDetectorRef,
+    private router: Router,
+    private dataSharingService: DataSharingService,
+    private snackBar: MatSnackBar,
+  ) {
     this.registerForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
       firstName: new AppFormControl('', [Validators.required]),
@@ -29,7 +36,6 @@ export class RegisterComponent {
       password: new AppFormControl('', [Validators.required, Validators.minLength(6)]),
       repeatPassword: new AppFormControl('', [Validators.required, equalityValidator('password')]),
     });
-    this.message = '';
     this.routes = ROUTES_PATH;
   }
 
@@ -75,19 +81,26 @@ export class RegisterComponent {
           this.authService.provideAdditionalUserData(this.formData, user.user.uid).subscribe(
             () => {
               this.registerForm.enable();
+              this.showPopup('You successfully registered');
               this.router.navigate([this.routes.home]);
             },
             (error) => {
               this.registerForm.enable();
-              throwError(error);
+              this.showPopup(error.message);
             },
           );
         },
         ({ message }) => {
           this.registerForm.enable();
-          this.message = message;
-          this.chRef.markForCheck();
+          this.showPopup(message);
         },
       );
   };
+
+  showPopup(message: string) {
+    this.dataSharingService.setPopupMessage(message);
+    this.snackBar.openFromComponent(PopupComponent, {
+      duration: 3000,
+    });
+  }
 }
