@@ -46,6 +46,7 @@ export class SkillComponent {
           (data) => {
             const categoriesFiltered = data.filter((element) => element.title === this.catTitle);
             if (categoriesFiltered.length < 1) {
+              this.popupService.showPopup('Wrong route path!');
               this.router.navigate([ROUTES_PATH.skills]);
             } else {
               this.subCategories = categoriesFiltered[0].subCategories;
