@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { from, of, Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { filter, first, map } from 'rxjs/operators';
 
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
 import { ICategoryCount, ISeniorityCount, ISeniorityValues } from '@core/interfaces';
@@ -66,6 +66,7 @@ export class SkillsService {
 
   getAllSkillsWithTitles(userId: string) {
     return from(this.db.database.ref(`users/${userId}/skills`).once('value')).pipe(
+      filter((res) => res.val() !== null),
       map((res) => Object.entries(res.val()).map((element): ICategoryCount => ({ title: element[0], levels: Object.values(element[1]) }))),
     );
   }
