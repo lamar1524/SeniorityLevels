@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
 import { User } from 'firebase';
 import { filter } from 'rxjs/operators';
@@ -26,7 +27,9 @@ export class UserComponent {
     private dataSharingService: DataSharingService,
     private popupService: PopupService,
     private cdRef: ChangeDetectorRef,
+    private titleService: Title
   ) {
+    this.titleService.setTitle('Your profile');
     this.dataSharingService
       .getUser()
       .pipe(filter((user) => user !== null))

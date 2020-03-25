@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
@@ -30,6 +31,7 @@ export class UserProfileComponent {
     private cdRef: ChangeDetectorRef,
     private popupService: PopupService,
     private router: Router,
+    private titleService: Title,
   ) {
     this.routes = ROUTES_PATH;
     this.levelsLoaded = false;
@@ -43,6 +45,7 @@ export class UserProfileComponent {
           this.router.navigate([this.routes.usersList]);
         } else {
           this.userDetails = details;
+          this.titleService.setTitle(`${this.userDetails.values.firstName} ${this.userDetails.values.lastName}`);
           this.levelsLoaded = true;
           this.cdRef.markForCheck();
           this.skillsService.getAllSkillsWithTitles(this.userKey).subscribe(

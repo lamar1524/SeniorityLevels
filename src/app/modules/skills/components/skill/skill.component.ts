@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'firebase';
 import { filter, finalize } from 'rxjs/operators';
@@ -38,6 +39,7 @@ export class SkillComponent {
     @Inject(DOCUMENT) private document: Document,
     private textifyPipe: SlugTextifyPipe,
     private popupService: PopupService,
+    private titleService: Title
   ) {
     this.routes = ROUTES_PATH;
     this.activatedRoute.params.subscribe(
@@ -50,6 +52,7 @@ export class SkillComponent {
               this.popupService.showPopup('Wrong route path!');
               this.router.navigate([ROUTES_PATH.skills]);
             } else {
+              this.titleService.setTitle(this.catTitle);
               this.subCategories = categoriesFiltered[0].subCategories;
               this.setInitialValues();
               this.cdRef.markForCheck();

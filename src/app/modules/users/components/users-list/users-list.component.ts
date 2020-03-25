@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { ILinkedUser, IUser } from '@core/interfaces';
@@ -18,7 +19,13 @@ export class UsersListComponent {
   readonly displayedColumns: string[];
   users: ILinkedUser[];
 
-  constructor(private usersService: UsersService, private cdRef: ChangeDetectorRef, private popupService: PopupService) {
+  constructor(
+    private usersService: UsersService,
+    private cdRef: ChangeDetectorRef,
+    private popupService: PopupService,
+    private titleService: Title,
+  ) {
+    this.titleService.setTitle('Users list');
     this.routes = ROUTES_PATH;
     this.usersService.getUsersList().subscribe(
       (response) => {
