@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { PopupService } from '@modules/reusable/services/popup.service';
+import { DataSharingService } from '@shared/services/data-sharing.service';
 
 @Component({
   selector: 'app-error-popup',
@@ -11,7 +11,7 @@ import { PopupService } from '@modules/reusable/services/popup.service';
 export class PopupComponent {
   private readonly message: string;
 
-  constructor(private popupService: PopupService) {
-    this.message = this.popupService.getPopupMessage();
+  constructor(private dataSharingService: DataSharingService) {
+    this.message = this.dataSharingService.getPopupMessage();
   }
 }
