@@ -5,9 +5,9 @@ import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { AuthenticationService } from '@modules/authentication';
 import { PopupService } from '@modules/reusable';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { AuthenticationService } from '../../services';
 
 @Component({
   selector: 'app-login',

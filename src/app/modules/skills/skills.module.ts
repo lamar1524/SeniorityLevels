@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { MaterialModule } from '@core/material';
 import { SharedUiModule } from '@modules/reusable';
-import { SkillsComponent, SkillComponent, SlugTextifyPipe, TextSlugifyPipe } from '@modules/skills';
+import { SkillsComponent, SkillComponent } from './components';
+import { SlugTextifyPipe, TextSlugifyPipe } from './pipes';
 import { SkillsRoutingModule } from './skills-routing.module';
 
 @NgModule({

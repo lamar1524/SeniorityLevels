@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ROUTES } from '@constants/routes.constants';
 import { AuthorizationGuard } from '@core/guards/authorization.guard';
-import { SkillsComponent, SkillComponent } from '@modules/skills';
+import { SkillsComponent, SkillComponent } from './components';
 
 const routes: Routes = [
   {

@@ -5,7 +5,7 @@ import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISubCategoryValue, IUser } from '@core/interfaces';
 import { PopupService } from '@modules/reusable';
 import { seniorityEnum, SkillsService } from '@modules/skills';
-import { UsersService } from '@modules/users';
+import { UsersService } from '../../services';
 
 @Component({
   selector: 'app-user-profile',

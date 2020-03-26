@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { PopupService } from '@modules/reusable';
-import { SkillsService } from '@modules/skills';
+import { SkillsService } from '../../services';
 
 @Component({
   selector: 'app-skills',

@@ -7,8 +7,10 @@ import { filter, finalize } from 'rxjs/operators';
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
 import { PopupService } from '@modules/reusable';
-import { seniorityEnum, SkillsService, SlugTextifyPipe } from '@modules/skills';
 import { DataSharingService } from '@shared/services';
+import { seniorityEnum } from '../../enums';
+import { SlugTextifyPipe } from '../../pipes';
+import { SkillsService } from '../../services';
 
 @Component({
   selector: 'app-skill',

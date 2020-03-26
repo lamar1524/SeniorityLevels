@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { MaterialModule } from '@core/material';
-import { LevelSelectComponent, PopupComponent, PopupService, SubmitButtonComponent } from '@modules/reusable';
+import { LevelSelectComponent, PopupComponent, SubmitButtonComponent } from './components';
+import { PopupService } from './services';
 
 @NgModule({
   declarations: [LevelSelectComponent, SubmitButtonComponent, PopupComponent],

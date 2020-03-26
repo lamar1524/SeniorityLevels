@@ -3,7 +3,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { ILinkedUser, IRoutesConst, IUser } from '@core/interfaces';
 import { PopupService } from '@modules/reusable';
-import { DISPLAYED_COLUMNS, UsersService } from '@modules/users';
+import { DISPLAYED_COLUMNS } from '../../consts';
+import { UsersService } from '../../services';
 
 @Component({
   selector: 'app-users-list',

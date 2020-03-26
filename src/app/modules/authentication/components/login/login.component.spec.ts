@@ -9,9 +9,9 @@ import { of, Observable } from 'rxjs';
 import UserCredential = firebase.auth.UserCredential;
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { AuthenticationService } from '@modules/authentication';
-import { SharedUiModule } from '@modules/reusable/shared-ui.module';
+import { SharedUiModule } from '@modules/reusable';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { AuthenticationService } from '../../services';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -112,5 +112,4 @@ describe('LoginComponent', () => {
       expect(authService.getTokenFromUser).toHaveBeenCalled();
     });
   });
-
 });

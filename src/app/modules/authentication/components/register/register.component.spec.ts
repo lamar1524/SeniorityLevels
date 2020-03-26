@@ -7,10 +7,10 @@ import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { AuthenticationService } from '@modules/authentication';
 import { PopupService } from '@modules/reusable/services';
 import { SharedUiModule } from '@modules/reusable/shared-ui.module';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { AuthenticationService } from '../../services';
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {

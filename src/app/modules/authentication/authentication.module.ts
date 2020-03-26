@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '@core/material';
-import { AuthenticationService, LoginComponent, RegisterComponent } from '@modules/authentication';
 import { SharedUiModule } from '@modules/reusable';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
+import { LoginComponent, RegisterComponent } from './components';
+import { AuthenticationService } from './services';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],

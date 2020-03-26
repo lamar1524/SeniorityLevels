@@ -5,10 +5,10 @@ import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { AuthenticationService } from '@modules/authentication';
 import { PopupService } from '@modules/reusable';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { AuthenticationService } from '../../services';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +24,7 @@ export class RegisterComponent {
     private authService: AuthenticationService,
     private chRef: ChangeDetectorRef,
     private router: Router,
-    private popupService: PopupService
+    private popupService: PopupService,
   ) {
     this.registerForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
@@ -93,5 +93,4 @@ export class RegisterComponent {
         },
       );
   };
-
 }

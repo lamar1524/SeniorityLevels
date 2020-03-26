@@ -6,8 +6,8 @@ import { filter } from 'rxjs/operators';
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
-import { UsersService } from '@modules/users';
 import { DataSharingService } from '@shared/services';
+import { UsersService } from '../../services';
 
 @Component({
   selector: 'app-user',
