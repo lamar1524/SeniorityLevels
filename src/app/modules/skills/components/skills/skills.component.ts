@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
@@ -16,8 +15,7 @@ export class SkillsComponent {
   private data;
   private readonly routes: IRoutesConst;
 
-  constructor(private skillsService: SkillsService, private popupService: PopupService, private titleService: Title) {
-    this.titleService.setTitle('Set up your skills');
+  constructor(private skillsService: SkillsService, private popupService: PopupService) {
     this.routes = ROUTES_PATH;
     this.skillsService.getSkillsData().subscribe(
       (res) => {

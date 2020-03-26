@@ -45,6 +45,7 @@ export class SkillComponent {
     this.activatedRoute.params.subscribe(
       (param) => {
         this.catTitle = this.textifyPipe.transform(param.category);
+        this.titleService.setTitle(this.catTitle);
         this.skillsService.getSkillsData().subscribe(
           (data) => {
             const categoriesFiltered = data.filter((element) => element.title === this.catTitle);
@@ -52,7 +53,6 @@ export class SkillComponent {
               this.popupService.showPopup('Wrong route path!');
               this.router.navigate([ROUTES_PATH.skills]);
             } else {
-              this.titleService.setTitle(this.catTitle);
               this.subCategories = categoriesFiltered[0].subCategories;
               this.setInitialValues();
               this.cdRef.markForCheck();

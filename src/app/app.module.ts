@@ -23,8 +23,8 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
   ],
   providers: [
-    DataSharingService,
     Title,
+    DataSharingService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
