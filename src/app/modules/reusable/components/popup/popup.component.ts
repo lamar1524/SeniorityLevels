@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-
-import { DataSharingService } from '@shared/services';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { MAT_SNACK_BAR_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-error-popup',
@@ -9,9 +8,5 @@ import { DataSharingService } from '@shared/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PopupComponent {
-  private readonly message: string;
-
-  constructor(private dataSharingService: DataSharingService) {
-    this.message = this.dataSharingService.getPopupMessage();
-  }
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: string) {}
 }

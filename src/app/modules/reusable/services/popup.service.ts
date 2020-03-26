@@ -11,9 +11,9 @@ export class PopupService {
   constructor(private snackBar: MatSnackBar, private dataSharingService: DataSharingService) {}
 
   showPopup(message: string) {
-    this.dataSharingService.setPopupMessage(message);
     this.snackBar.openFromComponent(PopupComponent, {
       duration: 3000,
+      data: message,
     });
   }
 }
