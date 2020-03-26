@@ -9,11 +9,12 @@ import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LevelSelectComponent {
-  @Output() chooseLevel = new EventEmitter<seniorityEnum>();
+  @Output() chooseLevel: EventEmitter<seniorityEnum>;
   options: seniorityEnum[];
   selectedValue: seniorityEnum;
 
   constructor() {
+    this.chooseLevel = new EventEmitter<seniorityEnum>();
     this.options = [seniorityEnum.junior, seniorityEnum.middle, seniorityEnum.senior];
     this.selectedValue = seniorityEnum.junior;
   }
