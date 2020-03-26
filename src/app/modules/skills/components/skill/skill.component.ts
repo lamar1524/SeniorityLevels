@@ -2,16 +2,16 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'firebase';
-import { filter, finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
-import { PopupService } from '@modules/reusable/services/popup.service';
-import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
-import { SlugTextifyPipe } from '@modules/skills/pipes/slug-textify';
-import { SkillsService } from '@modules/skills/services/skills.service';
-import { DataSharingService } from '@shared/services/data-sharing.service';
+import { PopupService } from '@modules/reusable';
+import { DataSharingService } from '@shared/services';
+import { User } from 'firebase';
+import { filter, finalize } from 'rxjs/operators';
+import { seniorityEnum } from '../../enums';
+import { SlugTextifyPipe } from '../../pipes';
+import { SkillsService } from '../../services';
 
 @Component({
   selector: 'app-skill',
@@ -50,7 +50,7 @@ export class SkillComponent {
           (data) => {
             const categoriesFiltered = data.filter((element) => element.title === this.catTitle);
             if (categoriesFiltered.length < 1) {
-              this.popupService.showPopup('Wrong route path!');
+              this.popupService.error('Wrong route path!');
               this.router.navigate([ROUTES_PATH.skills]);
             } else {
               this.subCategories = categoriesFiltered[0].subCategories;
@@ -59,12 +59,12 @@ export class SkillComponent {
             }
           },
           (error) => {
-            this.popupService.showPopup(error.message);
+            this.popupService.error(error.message);
           },
         );
       },
       (error) => {
-        this.popupService.showPopup(error.message);
+        this.popupService.error(error.message);
         this.router.navigate([ROUTES_PATH.skills]);
       },
     );
@@ -87,7 +87,7 @@ export class SkillComponent {
           this.chooseSubCategory(this.subCategories[0], 0);
         },
         (error) => {
-          this.popupService.showPopup(error.message);
+          this.popupService.error(error.message);
         },
       );
   }
@@ -111,7 +111,7 @@ export class SkillComponent {
           }
         },
         (error) => {
-          this.popupService.showPopup(error.message);
+          this.popupService.error(error.message);
         },
       );
   }
@@ -131,13 +131,14 @@ export class SkillComponent {
       .pipe(
         finalize(() => {
           this.clickable = true;
+          this.popupService.error('You successfully saved your progress');
           this.cdRef.markForCheck();
         }),
       )
       .subscribe(
         () => {},
         (error) => {
-          this.popupService.showPopup(error.message);
+          this.popupService.error(error.message);
         },
       );
   }

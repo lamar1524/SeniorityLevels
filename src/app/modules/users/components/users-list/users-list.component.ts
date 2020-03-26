@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { ILinkedUser, IUser } from '@core/interfaces';
-import { IRoutesConst } from '@core/interfaces';
-import { PopupService } from '@modules/reusable/services/popup.service';
-import { DISPLAYED_COLUMNS } from '@modules/users/consts/users.consts';
-import { UsersService } from '@modules/users/services/users.service';
+import { ILinkedUser, IRoutesConst, IUser } from '@core/interfaces';
+import { PopupService } from '@modules/reusable';
+import { DISPLAYED_COLUMNS } from '../../consts';
+import { UsersService } from '../../services';
 
 @Component({
   selector: 'app-users-list',
@@ -30,7 +29,7 @@ export class UsersListComponent {
         this.cdRef.markForCheck();
       },
       (error) => {
-        this.popupService.showPopup(error.message);
+        this.popupService.error(error.message);
       },
     );
     this.displayedColumns = DISPLAYED_COLUMNS;

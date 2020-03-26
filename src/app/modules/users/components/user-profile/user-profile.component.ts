@@ -4,10 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISubCategoryValue, IUser } from '@core/interfaces';
-import { PopupService } from '@modules/reusable/services/popup.service';
-import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
-import { SkillsService } from '@modules/skills/services/skills.service';
-import { UsersService } from '@modules/users/services/users.service';
+import { popupStateEnum, PopupService } from '@modules/reusable';
+import { seniorityEnum, SkillsService } from '@modules/skills';
+import { UsersService } from '../../services';
 
 @Component({
   selector: 'app-user-profile',
@@ -41,7 +40,7 @@ export class UserProfileComponent {
     this.usersService.getUserByKey(this.userKey).subscribe(
       (details) => {
         if (details.values === null) {
-          this.popupService.showPopup('User not found');
+          this.popupService.error('User not found');
           this.router.navigate([this.routes.usersList]);
         } else {
           this.userDetails = details;
@@ -54,13 +53,14 @@ export class UserProfileComponent {
               this.cdRef.markForCheck();
             },
             (error) => {
-              this.popupService.showPopup(error.message);
+              this.popupService.error(error.message);
             },
           );
         }
+
       },
       (error) => {
-        this.popupService.showPopup(error.message);
+        this.popupService.error(error.message);
       },
     );
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';

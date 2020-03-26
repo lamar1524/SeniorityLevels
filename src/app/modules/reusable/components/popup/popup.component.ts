@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { MAT_SNACK_BAR_DATA } from '@angular/material';
 
-import { DataSharingService } from '@shared/services/data-sharing.service';
+import { popupStateEnum } from '../../enums';
 
 @Component({
   selector: 'app-error-popup',
@@ -9,9 +10,13 @@ import { DataSharingService } from '@shared/services/data-sharing.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PopupComponent {
-  private readonly message: string;
+  classObj;
 
-  constructor(private dataSharingService: DataSharingService) {
-    this.message = this.dataSharingService.getPopupMessage();
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) {
+    this.classObj = {
+      'text--red': this.data.type === popupStateEnum.error,
+      'text--white': this.data.type === popupStateEnum.info,
+      'text--green': this.data.type === popupStateEnum.success,
+    };
   }
 }

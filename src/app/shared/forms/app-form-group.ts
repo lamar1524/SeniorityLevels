@@ -1,6 +1,6 @@
 import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
 
-import { AppFormControl } from '@shared/forms/app-form-control';
+import { AppFormControl } from './app-form-control';
 
 export class AppFormGroup extends FormGroup {
   constructor(

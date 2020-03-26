@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { AuthenticationService } from '@modules/authentication';
-import { PopupService } from '@modules/reusable/services/popup.service';
+import { PopupService } from '@modules/reusable';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { finalize } from 'rxjs/operators';
+import { AuthenticationService } from '../../services';
 
 @Component({
   selector: 'app-login',
@@ -47,7 +47,7 @@ export class LoginComponent {
       .pipe(finalize(() => this.loginForm.enable()))
       .subscribe(
         () => this.handleCredentialsSuccess(),
-        (error) => this.popupService.showPopup(error.message),
+        (error) => this.popupService.error(error.message),
       );
   };
 
@@ -60,12 +60,12 @@ export class LoginComponent {
             this.router.navigate([this.routes.users]);
           },
           (error) => {
-            this.popupService.showPopup(error.message);
+            this.popupService.error(error.message);
           },
         );
       },
       (error) => {
-        this.popupService.showPopup(error.message);
+        this.popupService.error(error.message);
       },
     );
   }

@@ -7,7 +7,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TokenInterceptor } from '@core/interceptors/token.interceptor';
-import { DataSharingService } from '@shared/services/data-sharing.service';
+import { DataSharingService } from '@shared/services';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

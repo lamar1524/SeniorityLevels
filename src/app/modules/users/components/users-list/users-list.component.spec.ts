@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IUser } from '@core/interfaces';
 import { MaterialModule } from '@core/material/material.module';
-import { DISPLAYED_COLUMNS } from '@modules/users/consts/users.consts';
-import { UsersService } from '@modules/users/services/users.service';
-import { UsersListComponent } from './users-list.component';
+import { UsersListComponent } from '..';
+import { DISPLAYED_COLUMNS } from '../../consts';
+import { UsersService } from '../../services';
 
 describe('UsersListComponent', () => {
   let component: UsersListComponent;
@@ -24,6 +25,10 @@ describe('UsersListComponent', () => {
           useValue: {
             getUsersList: () => of([{}] as IUser[]),
           },
+        },
+        {
+          provide: AngularFireAuth,
+          useValue: {},
         },
       ],
     }).compileComponents();
