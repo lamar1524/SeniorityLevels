@@ -36,7 +36,7 @@ export class UserComponent {
           this.getProgressOf(this.userDetails.uid);
         },
         (error) => {
-          this.popupService.showPopup(error.message);
+          this.popupService.error(error.message);
         },
       );
     this.progress = {
@@ -57,7 +57,7 @@ export class UserComponent {
         this.cdRef.markForCheck();
       },
       (error) => {
-        this.popupService.showPopup(error.message);
+        this.popupService.error(error.message);
       },
     );
   }

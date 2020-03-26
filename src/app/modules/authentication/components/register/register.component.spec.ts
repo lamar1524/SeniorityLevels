@@ -34,7 +34,8 @@ describe('RegisterComponent', () => {
         {
           provide: PopupService,
           useValue: {
-            showPopup: () => {},
+            success: () => {},
+            error: () => {},
           },
         },
       ],

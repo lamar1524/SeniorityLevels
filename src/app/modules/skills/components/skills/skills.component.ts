@@ -22,7 +22,7 @@ export class SkillsComponent {
         this.data = res;
       },
       (error) => {
-        this.popupService.showPopup(error.message);
+        this.popupService.error(error.message);
       },
     );
   }

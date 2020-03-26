@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { PopupService } from '@modules/reusable';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from '../../services';
 
 @Component({
@@ -78,18 +78,18 @@ export class RegisterComponent {
           this.authService.provideAdditionalUserData(this.formData, user.user.uid).subscribe(
             () => {
               this.registerForm.enable();
-              this.popupService.showPopup('You successfully registered');
+              this.popupService.success('You successfully registered');
               this.router.navigate([this.routes.home]);
             },
             (error) => {
               this.registerForm.enable();
-              this.popupService.showPopup(error.message);
+              this.popupService.error(error.message);
             },
           );
         },
         ({ message }) => {
           this.registerForm.enable();
-          this.popupService.showPopup(message);
+          this.popupService.error(message);
         },
       );
   };

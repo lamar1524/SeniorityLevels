@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISubCategoryValue, IUser } from '@core/interfaces';
-import { PopupService } from '@modules/reusable';
+import { popupStateEnum, PopupService } from '@modules/reusable';
 import { seniorityEnum, SkillsService } from '@modules/skills';
 import { UsersService } from '../../services';
 
@@ -44,12 +44,12 @@ export class UserProfileComponent {
             this.cdRef.markForCheck();
           },
           (error) => {
-            this.popupService.showPopup(error.message);
+            this.popupService.error(error.message);
           },
         );
       },
       (error) => {
-        this.popupService.showPopup(error.message);
+        this.popupService.error(error.message);
       },
     );
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';

@@ -1,3 +1,17 @@
+@import '../../../../../styles/variables';
+
 p {
   text-align: center;
+}
+
+.text--red {
+  color: $warn;
+}
+
+.text--info {
+  color: $primary;
+}
+
+.text--green {
+  color: $accept;
 }

@@ -25,7 +25,7 @@ export class UsersListComponent {
         this.cdRef.markForCheck();
       },
       (error) => {
-        this.popupService.showPopup(error.message);
+        this.popupService.error(error.message);
       },
     );
     this.displayedColumns = DISPLAYED_COLUMNS;
