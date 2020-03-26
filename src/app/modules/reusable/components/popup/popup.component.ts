@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { DataSharingService } from '@shared/services/data-sharing.service';
+import { DataSharingService } from '@shared/services';
 
 @Component({
   selector: 'app-error-popup',

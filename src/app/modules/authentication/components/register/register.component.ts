@@ -6,8 +6,7 @@ import { finalize } from 'rxjs/operators';
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
-import { PopupComponent } from '@modules/reusable/components';
-import { PopupService } from '@modules/reusable/services/popup.service';
+import { PopupService } from '@modules/reusable';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 

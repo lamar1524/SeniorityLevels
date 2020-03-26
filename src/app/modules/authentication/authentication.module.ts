@@ -2,11 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { MaterialModule } from '@core/material/material.module';
-import { SharedUiModule } from '@modules/reusable/shared-ui.module';
+import { MaterialModule } from '@core/material';
+import { AuthenticationService, LoginComponent, RegisterComponent } from '@modules/authentication';
+import { SharedUiModule } from '@modules/reusable';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
-import { LoginComponent, RegisterComponent } from './components';
-import { AuthenticationService } from './services/authentication.service';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],

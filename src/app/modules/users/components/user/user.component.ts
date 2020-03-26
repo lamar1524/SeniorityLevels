@@ -4,10 +4,10 @@ import { User } from 'firebase';
 import { filter } from 'rxjs/operators';
 
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
-import { PopupService } from '@modules/reusable/services/popup.service';
-import { SkillsService } from '@modules/skills/services/skills.service';
-import { UsersService } from '@modules/users/services/users.service';
-import { DataSharingService } from '@shared/services/data-sharing.service';
+import { PopupService } from '@modules/reusable';
+import { SkillsService } from '@modules/skills';
+import { UsersService } from '@modules/users';
+import { DataSharingService } from '@shared/services';
 
 @Component({
   selector: 'app-user',

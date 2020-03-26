@@ -6,11 +6,9 @@ import { filter, finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
-import { PopupService } from '@modules/reusable/services/popup.service';
-import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
-import { SlugTextifyPipe } from '@modules/skills/pipes/slug-textify';
-import { SkillsService } from '@modules/skills/services/skills.service';
-import { DataSharingService } from '@shared/services/data-sharing.service';
+import { PopupService } from '@modules/reusable';
+import { seniorityEnum, SkillsService, SlugTextifyPipe } from '@modules/skills';
+import { DataSharingService } from '@shared/services';
 
 @Component({
   selector: 'app-skill',

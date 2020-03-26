@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 
-import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
+import { seniorityEnum } from '@modules/skills';
 
 @Component({
   selector: 'app-level-select',
