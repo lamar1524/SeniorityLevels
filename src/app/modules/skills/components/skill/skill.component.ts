@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
@@ -38,11 +39,13 @@ export class SkillComponent {
     @Inject(DOCUMENT) private document: Document,
     private textifyPipe: SlugTextifyPipe,
     private popupService: PopupService,
+    private titleService: Title
   ) {
     this.routes = ROUTES_PATH;
     this.activatedRoute.params.subscribe(
       (param) => {
         this.catTitle = this.textifyPipe.transform(param.category);
+        this.titleService.setTitle(this.catTitle);
         this.skillsService.getSkillsData().subscribe(
           (data) => {
             const categoriesFiltered = data.filter((element) => element.title === this.catTitle);

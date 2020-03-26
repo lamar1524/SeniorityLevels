@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISubCategoryValue, IUser } from '@core/interfaces';
@@ -28,6 +29,8 @@ export class UserProfileComponent {
     private skillsService: SkillsService,
     private cdRef: ChangeDetectorRef,
     private popupService: PopupService,
+    private router: Router,
+    private titleService: Title,
   ) {
     this.routes = ROUTES_PATH;
     this.levelsLoaded = false;
@@ -36,17 +39,25 @@ export class UserProfileComponent {
     this.userKey = this.route.snapshot.paramMap.get('key');
     this.usersService.getUserByKey(this.userKey).subscribe(
       (details) => {
-        this.userDetails = details;
-        this.skillsService.getAllSkillsWithTitles(this.userKey).subscribe(
-          (result) => {
-            this.categories = this.skillsService.getSummaryProgress(result);
-            this.levelsLoaded = true;
-            this.cdRef.markForCheck();
-          },
-          (error) => {
-            this.popupService.error(error.message);
-          },
-        );
+        if (details.values === null) {
+          this.popupService.error('User not found');
+          this.router.navigate([this.routes.usersList]);
+        } else {
+          this.userDetails = details;
+          this.titleService.setTitle(`${this.userDetails.values.firstName} ${this.userDetails.values.lastName}`);
+          this.levelsLoaded = true;
+          this.cdRef.markForCheck();
+          this.skillsService.getAllSkillsWithTitles(this.userKey).subscribe(
+            (result) => {
+              this.categories = this.skillsService.getSummaryProgress(result);
+              this.cdRef.markForCheck();
+            },
+            (error) => {
+              this.popupService.error(error.message);
+            },
+          );
+        }
+
       },
       (error) => {
         this.popupService.error(error.message);

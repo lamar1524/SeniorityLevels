@@ -6,7 +6,7 @@ import { of, Observable } from 'rxjs';
 import UserCredential = firebase.auth.UserCredential;
 
 import { IUserValues } from '@core/interfaces';
-import { AuthenticationService } from '.';
+import { AuthenticationService } from './authentication.service';
 
 describe('AuthenticationService', () => {
   let service: AuthenticationService;

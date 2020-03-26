@@ -17,7 +17,11 @@ export class UsersListComponent {
   readonly displayedColumns: string[];
   users: ILinkedUser[];
 
-  constructor(private usersService: UsersService, private cdRef: ChangeDetectorRef, private popupService: PopupService) {
+  constructor(
+    private usersService: UsersService,
+    private cdRef: ChangeDetectorRef,
+    private popupService: PopupService,
+  ) {
     this.routes = ROUTES_PATH;
     this.usersService.getUsersList().subscribe(
       (response) => {
