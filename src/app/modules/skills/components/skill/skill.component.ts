@@ -1,15 +1,17 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'firebase';
-import { throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
-import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
-import { SlugTextifyPipe } from '@modules/skills/pipes/slug-textify';
-import { SkillsService } from '@modules/skills/services/skills.service';
-import { DataSharingService } from '@shared/services/data-sharing.service';
+import { PopupService } from '@modules/reusable';
+import { DataSharingService } from '@shared/services';
+import { User } from 'firebase';
+import { filter, finalize } from 'rxjs/operators';
+import { seniorityEnum } from '../../enums';
+import { SlugTextifyPipe } from '../../pipes';
+import { SkillsService } from '../../services';
 
 @Component({
   selector: 'app-skill',
@@ -36,22 +38,33 @@ export class SkillComponent {
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
     private textifyPipe: SlugTextifyPipe,
+    private popupService: PopupService,
+    private titleService: Title
   ) {
+    this.routes = ROUTES_PATH;
     this.activatedRoute.params.subscribe(
       (param) => {
         this.catTitle = this.textifyPipe.transform(param.category);
-        this.skillsService.getSkillsData().subscribe((data) => {
-          const categoriesFiltered = data.filter((element) => element.title === this.catTitle);
-          if (categoriesFiltered.length < 1) {
-            this.router.navigate([ROUTES_PATH.skills]);
-          } else {
-            this.subCategories = categoriesFiltered[0].subCategories;
-            this.setInitialValues();
-            this.cdRef.markForCheck();
-          }
-        });
+        this.titleService.setTitle(this.catTitle);
+        this.skillsService.getSkillsData().subscribe(
+          (data) => {
+            const categoriesFiltered = data.filter((element) => element.title === this.catTitle);
+            if (categoriesFiltered.length < 1) {
+              this.popupService.error('Wrong route path!');
+              this.router.navigate([ROUTES_PATH.skills]);
+            } else {
+              this.subCategories = categoriesFiltered[0].subCategories;
+              this.setInitialValues();
+              this.cdRef.markForCheck();
+            }
+          },
+          (error) => {
+            this.popupService.error(error.message);
+          },
+        );
       },
-      () => {
+      (error) => {
+        this.popupService.error(error.message);
         this.router.navigate([ROUTES_PATH.skills]);
       },
     );
@@ -62,36 +75,45 @@ export class SkillComponent {
   }
 
   setInitialValues() {
-    this.routes = ROUTES_PATH;
     this.currentlyDisplayedLevel = seniorityEnum.junior;
     this.clickable = true;
-    this.dataSharingService.getUser().subscribe(
-      (user) => {
-        this.currentUser = user;
-        this.cdRef.markForCheck();
-        this.chooseSubCategory(this.subCategories[0], 0);
-      },
-      (error) => {
-        throwError(error);
-      },
-    );
+    this.dataSharingService
+      .getUser()
+      .pipe(filter((user) => user !== null))
+      .subscribe(
+        (user) => {
+          this.currentUser = user;
+          this.cdRef.markForCheck();
+          this.chooseSubCategory(this.subCategories[0], 0);
+        },
+        (error) => {
+          this.popupService.error(error.message);
+        },
+      );
   }
 
   chooseSubCategory(subCat: ISubCategoryDescription, index: number) {
     this.document.querySelectorAll('.table__label').forEach((element) => {
       element.classList.remove('u-text--black');
     });
-    this.skillsService.getSkillsBySubCategory(this.catTitle, subCat.title, this.currentUser.uid).subscribe(
-      (res) => {
-        this.levels = res;
-        this.chosenSubCat = subCat;
-        this.cdRef.markForCheck();
-        this.document.querySelectorAll('.table__label')[index].classList.add('u-text--black');
-      },
-      (error) => {
-        throwError(error);
-      },
-    );
+    this.clickable = false;
+    this.skillsService
+      .getSkillsBySubCategory(this.catTitle, subCat.title, this.currentUser.uid)
+      .pipe(finalize(() => (this.clickable = true)))
+      .subscribe(
+        (res) => {
+          this.levels = res;
+          this.chosenSubCat = subCat;
+          this.cdRef.markForCheck();
+          const element = this.document.querySelectorAll('.table__label')[index];
+          if (element !== undefined) {
+            element.classList.add('u-text--black');
+          }
+        },
+        (error) => {
+          this.popupService.error(error.message);
+        },
+      );
   }
 
   setSkill(level: string) {
@@ -104,39 +126,25 @@ export class SkillComponent {
 
   sendSkill() {
     this.clickable = false;
-    this.skillsService.setUsersSkills(this.catTitle, this.chosenSubCat.title, this.levels, this.currentUser.uid).subscribe(
-      () => {
-        this.clickable = true;
-      },
-      (error) => {
-        this.clickable = false;
-        throwError(error);
-      },
-    );
+    this.skillsService
+      .setUsersSkills(this.catTitle, this.chosenSubCat.title, this.levels, this.currentUser.uid)
+      .pipe(
+        finalize(() => {
+          this.clickable = true;
+          this.popupService.error('You successfully saved your progress');
+          this.cdRef.markForCheck();
+        }),
+      )
+      .subscribe(
+        () => {},
+        (error) => {
+          this.popupService.error(error.message);
+        },
+      );
   }
 
-  requirementsUp() {
-    switch (this.currentlyDisplayedLevel) {
-      case seniorityEnum.junior: {
-        this.currentlyDisplayedLevel = seniorityEnum.middle;
-        break;
-      }
-
-      case seniorityEnum.middle: {
-        this.currentlyDisplayedLevel = seniorityEnum.senior;
-        break;
-      }
-
-      case seniorityEnum.senior: {
-        this.currentlyDisplayedLevel = seniorityEnum.junior;
-        break;
-      }
-
-      default: {
-        this.currentlyDisplayedLevel = seniorityEnum.junior;
-        break;
-      }
-    }
+  chooseLevel(level: seniorityEnum) {
+    this.currentlyDisplayedLevel = level;
     this.cdRef.markForCheck();
   }
 }

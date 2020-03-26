@@ -3,8 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
 
 import { AuthenticationService } from '@modules/authentication';
-import { NavigationComponent } from '@modules/main/components';
-import { MainComponent } from './main.component';
+import { MainComponent } from '..';
+import { NavigationComponent } from '..';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -17,9 +17,9 @@ describe('MainComponent', () => {
       providers: [
         {
           provide: AuthenticationService,
-          useValue: {}
-        }
-      ]
+          useValue: {},
+        },
+      ],
     }).compileComponents();
   }));
 

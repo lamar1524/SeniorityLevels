@@ -1,9 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { DataSharingService } from '@shared/services/data-sharing.service';
+import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
 import { User } from 'firebase';
+import { filter } from 'rxjs/operators';
 
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
-import { UsersService } from '@modules/users/services/users.service';
+import { PopupService } from '@modules/reusable';
+import { SkillsService } from '@modules/skills';
+import { DataSharingService } from '@shared/services';
+import { UsersService } from '../../services';
 
 @Component({
   selector: 'app-user',
@@ -16,19 +20,45 @@ export class UserComponent {
   private progress: ISeniorityCount;
   data: ICategoryProgress[];
 
-  constructor(private usersService: UsersService, private dataSharingService: DataSharingService, private cdRef: ChangeDetectorRef) {
-    this.dataSharingService.getUser().subscribe((user) => {
-      this.userDetails = user;
-      this.cdRef.markForCheck();
-    });
+  constructor(
+    private usersService: UsersService,
+    private skillsService: SkillsService,
+    private dataSharingService: DataSharingService,
+    private popupService: PopupService,
+    private cdRef: ChangeDetectorRef,
+  ) {
+    this.dataSharingService
+      .getUser()
+      .pipe(filter((user) => user !== null))
+      .subscribe(
+        (user) => {
+          this.userDetails = user;
+          this.getProgressOf(this.userDetails.uid);
+        },
+        (error) => {
+          this.popupService.error(error.message);
+        },
+      );
     this.progress = {
-      junior: 82,
-      middle: 15,
-      senior: 3,
+      junior: 0,
+      middle: 0,
+      senior: 0,
     };
   }
 
   get contentLoaded() {
     return !!this.userDetails;
+  }
+
+  getProgressOf(userId: string) {
+    this.skillsService.getAllSkillsValues(userId).subscribe(
+      (res) => {
+        this.progress = this.skillsService.getProgressOf(res, CATEGORIES_AMOUNT.total);
+        this.cdRef.markForCheck();
+      },
+      (error) => {
+        this.popupService.error(error.message);
+      },
+    );
   }
 }

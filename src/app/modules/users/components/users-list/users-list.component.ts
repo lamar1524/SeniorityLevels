@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { ILinkedUser, IUser } from '@core/interfaces';
-import { IRoutesConst } from '@core/interfaces';
-import { DISPLAYED_COLUMNS } from '@modules/users/consts/users.consts';
-import { UsersService } from '@modules/users/services/users.service';
+import { ILinkedUser, IRoutesConst, IUser } from '@core/interfaces';
+import { PopupService } from '@modules/reusable';
+import { DISPLAYED_COLUMNS } from '../../consts';
+import { UsersService } from '../../services';
 
 @Component({
   selector: 'app-users-list',
@@ -17,12 +17,21 @@ export class UsersListComponent {
   readonly displayedColumns: string[];
   users: ILinkedUser[];
 
-  constructor(private usersService: UsersService, private cdRef: ChangeDetectorRef) {
+  constructor(
+    private usersService: UsersService,
+    private cdRef: ChangeDetectorRef,
+    private popupService: PopupService,
+  ) {
     this.routes = ROUTES_PATH;
-    this.usersService.getUsersList().subscribe((response) => {
-      this.users = UsersListComponent.usersToLinkedUsers(response);
-      this.cdRef.markForCheck();
-    });
+    this.usersService.getUsersList().subscribe(
+      (response) => {
+        this.users = UsersListComponent.usersToLinkedUsers(response);
+        this.cdRef.markForCheck();
+      },
+      (error) => {
+        this.popupService.error(error.message);
+      },
+    );
     this.displayedColumns = DISPLAYED_COLUMNS;
   }
 

@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MaterialModule } from '@core/material/material.module';
-import { MockComponent, MockModule } from 'ng-mocks';
+import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
-import { SubmitButtonComponent } from '@modules/authentication/components';
-import { UsersService } from '@modules/users/services/users.service';
-import { UserComponent } from './user.component';
+import { MaterialModule } from '@core/material/material.module';
+import { SharedUiModule } from '@modules/reusable/shared-ui.module';
+import { SkillsService } from '@modules/skills/services/skills.service';
+import { UserComponent } from '..';
+import { UsersService } from '../../services';
 
 describe('UserComponent', () => {
   let component: UserComponent;
@@ -16,14 +17,18 @@ describe('UserComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [UserComponent, MockComponent(SubmitButtonComponent)],
-      imports: [RouterTestingModule, MockModule(MaterialModule)],
+      declarations: [UserComponent],
+      imports: [RouterTestingModule, MockModule(MaterialModule), MockModule(SharedUiModule)],
       providers: [
         {
           provide: UsersService,
           useValue: {
             getCurrentUser: () => of({}),
           },
+        },
+        {
+          provide: SkillsService,
+          useValue: { getAllSkillsValues: () => of({}), getProgressOf: () => {} },
         },
         {
           provide: AngularFireAuth,

@@ -38,6 +38,9 @@
         <div *ngIf="password.errors.required">
           Password is required.
         </div>
+        <div *ngIf="password.errors.minlength">
+          Password must be at least 6 characters long.
+        </div>
       </div>
       <mat-form-field class="form__control form__input">
         <input placeholder="Repeat password" type="password" matInput formControlName="repeatPassword" />
@@ -53,9 +56,6 @@
       <app-submit-button [loading]="registerForm.disabled" [disabled]="registerForm.ableToSend">Register</app-submit-button>
     </form>
     <div class="register__messages">
-      <div class="register__error">
-        <span class="u-text--error mat-body"> {{ message }}</span>
-      </div>
       <div class="register__caption">
         <span [routerLink]="[routes.home]" class="mat-body u-text--link">Homepage</span>
       </div>

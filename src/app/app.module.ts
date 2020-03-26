@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TokenInterceptor } from '@core/interceptors/token.interceptor';
-import { DataSharingService } from '@shared/services/data-sharing.service';
+import { DataSharingService } from '@shared/services';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
   ],
   providers: [
+    Title,
     DataSharingService,
     {
       provide: HTTP_INTERCEPTORS,

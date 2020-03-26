@@ -19,13 +19,13 @@
         <div *ngIf="password.errors.required">
           Password is required.
         </div>
+        <div *ngIf="password.errors.minlength">
+          Password must be at least 6 characters long.
+        </div>
       </div>
       <app-submit-button [loading]="loginForm.disabled" [disabled]="loginForm.ableToSend">Login</app-submit-button>
     </form>
     <div class="login__messages">
-      <div class="login__error">
-        <span class="u-text--error mat-body">{{ errorMessage }}</span>
-      </div>
       <div class="login__caption">
         <span [routerLink]="[routes.register]" class="mat-body u-text--link"> No account yet? Register here</span>
       </div>
