@@ -4,13 +4,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockModule } from 'ng-mocks';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { MaterialModule } from '@core/material/material.module';
-import { AuthenticationService } from '@modules/authentication';
+import { PopupService } from '@modules/reusable/services';
 import { SharedUiModule } from '@modules/reusable/shared-ui.module';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { AuthenticationService } from '../../services';
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {
@@ -22,13 +22,20 @@ describe('RegisterComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [RegisterComponent],
-      imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, BrowserAnimationsModule, MockModule(SharedUiModule)],
+      imports: [ReactiveFormsModule, RouterTestingModule, BrowserAnimationsModule, MockModule(SharedUiModule)],
       providers: [
         {
           provide: AuthenticationService,
           useValue: {
             registerUser: () => {},
             provideAdditionalUserData: () => {},
+          },
+        },
+        {
+          provide: PopupService,
+          useValue: {
+            success: () => {},
+            error: () => {},
           },
         },
       ],
@@ -80,15 +87,10 @@ describe('RegisterComponent', () => {
     });
 
     it('should call registerUser method', () => {
-      spyOn(authService, 'registerUser').and.returnValue(of({}));
+      spyOn(authService, 'registerUser').and.returnValue(of({ user: { uid: 1 } }));
+      spyOn(authService, 'provideAdditionalUserData').and.returnValue(of({}) as any);
       component.sendCredentials();
       expect(authService.registerUser).toHaveBeenCalledWith(component.email.value, component.password.value);
-    });
-
-    it('should set error message on error thrown', () => {
-      spyOn(authService, 'registerUser').and.returnValue(throwError({ message: 'error' }));
-      component.sendCredentials();
-      expect(component.message).toEqual('error');
     });
   });
 });

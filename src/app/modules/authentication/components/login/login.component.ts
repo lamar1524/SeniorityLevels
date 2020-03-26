@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
-import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { AuthenticationService } from '@modules/authentication';
+import { PopupService } from '@modules/reusable';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { finalize } from 'rxjs/operators';
+import { AuthenticationService } from '../../services';
 
 @Component({
   selector: 'app-login',
@@ -18,14 +18,17 @@ import { AppFormControl, AppFormGroup } from '@shared/forms';
 export class LoginComponent {
   readonly loginForm: AppFormGroup;
   readonly routes: IRoutesConst;
-  errorMessage: string;
 
-  constructor(private router: Router, private cdRef: ChangeDetectorRef, private authService: AuthenticationService) {
+  constructor(
+    private router: Router,
+    private cdRef: ChangeDetectorRef,
+    private authService: AuthenticationService,
+    private popupService: PopupService,
+  ) {
     this.loginForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
       password: new AppFormControl('', [Validators.required, Validators.minLength(6)]),
     });
-    this.errorMessage = '';
     this.routes = ROUTES_PATH;
   }
 
@@ -44,7 +47,7 @@ export class LoginComponent {
       .pipe(finalize(() => this.loginForm.enable()))
       .subscribe(
         () => this.handleCredentialsSuccess(),
-        (error) => this.handleCredentialsError(error.message),
+        (error) => this.popupService.error(error.message),
       );
   };
 
@@ -57,18 +60,13 @@ export class LoginComponent {
             this.router.navigate([this.routes.users]);
           },
           (error) => {
-            throwError(error);
+            this.popupService.error(error.message);
           },
         );
       },
       (error) => {
-        this.handleCredentialsError(error.message);
+        this.popupService.error(error.message);
       },
     );
-  }
-
-  handleCredentialsError(message) {
-    this.errorMessage = message;
-    this.cdRef.markForCheck();
   }
 }

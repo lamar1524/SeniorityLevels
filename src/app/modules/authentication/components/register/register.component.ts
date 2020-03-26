@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
-import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { AuthenticationService } from '@modules/authentication';
+import { PopupService } from '@modules/reusable';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { finalize } from 'rxjs/operators';
+import { AuthenticationService } from '../../services';
 
 @Component({
   selector: 'app-register',
@@ -18,10 +18,14 @@ import { AppFormControl, AppFormGroup } from '@shared/forms';
 })
 export class RegisterComponent {
   registerForm: AppFormGroup;
-  message: string;
   routes: IRoutesConst;
 
-  constructor(private authService: AuthenticationService, private chRef: ChangeDetectorRef, private router: Router) {
+  constructor(
+    private authService: AuthenticationService,
+    private chRef: ChangeDetectorRef,
+    private router: Router,
+    private popupService: PopupService,
+  ) {
     this.registerForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
       firstName: new AppFormControl('', [Validators.required]),
@@ -29,7 +33,6 @@ export class RegisterComponent {
       password: new AppFormControl('', [Validators.required, Validators.minLength(6)]),
       repeatPassword: new AppFormControl('', [Validators.required, equalityValidator('password')]),
     });
-    this.message = '';
     this.routes = ROUTES_PATH;
   }
 
@@ -75,18 +78,18 @@ export class RegisterComponent {
           this.authService.provideAdditionalUserData(this.formData, user.user.uid).subscribe(
             () => {
               this.registerForm.enable();
+              this.popupService.success('You successfully registered');
               this.router.navigate([this.routes.home]);
             },
             (error) => {
               this.registerForm.enable();
-              throwError(error);
+              this.popupService.error(error.message);
             },
           );
         },
         ({ message }) => {
           this.registerForm.enable();
-          this.message = message;
-          this.chRef.markForCheck();
+          this.popupService.error(message);
         },
       );
   };

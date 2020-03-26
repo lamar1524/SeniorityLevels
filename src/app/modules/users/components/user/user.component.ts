@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
-import { DataSharingService } from '@shared/services/data-sharing.service';
 import { User } from 'firebase';
-import { throwError } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
-import { SkillsService } from '@modules/skills/services/skills.service';
-import { UsersService } from '@modules/users/services/users.service';
+import { PopupService } from '@modules/reusable';
+import { SkillsService } from '@modules/skills';
+import { DataSharingService } from '@shared/services';
+import { UsersService } from '../../services';
 
 @Component({
   selector: 'app-user',
@@ -24,15 +24,21 @@ export class UserComponent {
     private usersService: UsersService,
     private skillsService: SkillsService,
     private dataSharingService: DataSharingService,
+    private popupService: PopupService,
     private cdRef: ChangeDetectorRef,
   ) {
     this.dataSharingService
       .getUser()
       .pipe(filter((user) => user !== null))
-      .subscribe((user) => {
-        this.userDetails = user;
-        this.getProgressOf(this.userDetails.uid);
-      });
+      .subscribe(
+        (user) => {
+          this.userDetails = user;
+          this.getProgressOf(this.userDetails.uid);
+        },
+        (error) => {
+          this.popupService.error(error.message);
+        },
+      );
     this.progress = {
       junior: 0,
       middle: 0,
@@ -51,7 +57,7 @@ export class UserComponent {
         this.cdRef.markForCheck();
       },
       (error) => {
-        throwError(error);
+        this.popupService.error(error.message);
       },
     );
   }

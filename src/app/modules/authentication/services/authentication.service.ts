@@ -9,7 +9,7 @@ import Reference = firebase.database.Reference;
 import UserCredential = firebase.auth.UserCredential;
 
 import { IUserValues } from '@core/interfaces';
-import { DataSharingService } from '@shared/services/data-sharing.service';
+import { DataSharingService } from '@shared/services';
 
 @Injectable({
   providedIn: 'root',

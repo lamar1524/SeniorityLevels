@@ -5,7 +5,8 @@ import {
   MatInputModule,
   MatProgressBarModule,
   MatProgressSpinnerModule, MatSelectModule,
-  MatTableModule,
+  MatSnackBarModule,
+  MatTableModule
 } from '@angular/material';
 
 const materialModules = [
@@ -15,7 +16,8 @@ const materialModules = [
   MatTableModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
-  MatSelectModule
+  MatSelectModule,
+  MatSnackBarModule
 ];
 
 @NgModule({

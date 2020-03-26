@@ -5,14 +5,13 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { User } from 'firebase';
 import { MockModule } from 'ng-mocks';
-import { of, throwError, Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import UserCredential = firebase.auth.UserCredential;
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { MaterialModule } from '@core/material/material.module';
-import { AuthenticationService } from '@modules/authentication';
-import { SharedUiModule } from '@modules/reusable/shared-ui.module';
+import { SharedUiModule } from '@modules/reusable';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { AuthenticationService } from '../../services';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -24,7 +23,7 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [ReactiveFormsModule, MaterialModule, RouterTestingModule, BrowserAnimationsModule, MockModule(SharedUiModule)],
+      imports: [ReactiveFormsModule, RouterTestingModule, BrowserAnimationsModule, MockModule(SharedUiModule)],
       providers: [
         {
           provide: AuthenticationService,
@@ -94,13 +93,6 @@ describe('LoginComponent', () => {
       component.sendCredentials();
       expect(component.handleCredentialsSuccess).toHaveBeenCalled();
     });
-
-    it('should call handleCredentialsError method', () => {
-      spyOn(authService, 'signIn').and.returnValue(throwError(''));
-      spyOn(component, 'handleCredentialsError');
-      component.sendCredentials();
-      expect(component.handleCredentialsError).toHaveBeenCalled();
-    });
   });
 
   describe('handleCredentialsSuccess method', () => {
@@ -113,26 +105,11 @@ describe('LoginComponent', () => {
       expect(authService.getUserRemotely).toHaveBeenCalled();
     });
 
-    it('should handle throwError on getUserRemotely', () => {
-      spyOn(authService, 'getUserRemotely').and.returnValue(throwError(''));
-      spyOn(component, 'handleCredentialsError');
-      component.handleCredentialsSuccess();
-      expect(component.handleCredentialsError).toHaveBeenCalled();
-    });
-
     it('should call getTokenFromUser', () => {
       spyOn(authService, 'getUserRemotely').and.returnValue(of({}) as Observable<User>);
       spyOn(authService, 'getTokenFromUser').and.returnValue(of({}) as Observable<string>);
       component.handleCredentialsSuccess();
       expect(authService.getTokenFromUser).toHaveBeenCalled();
-    });
-  });
-
-  describe('handleCredentialsError method', () => {
-    it('should set errorMessage value', () => {
-      const message = 'Test';
-      component.handleCredentialsError(message);
-      expect(component.errorMessage).toEqual(message);
     });
   });
 });

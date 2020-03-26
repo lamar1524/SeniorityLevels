@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { throwError } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
-import { ICategoryProgress, IRoutesConst, ISeniorityValues, ISubCategoryValue, IUser } from '@core/interfaces';
-import { seniorityEnum } from '@modules/skills/enums/seniority.enum';
-import { SkillsService } from '@modules/skills/services/skills.service';
-import { UsersService } from '@modules/users/services/users.service';
+import { IRoutesConst, ISubCategoryValue, IUser } from '@core/interfaces';
+import { popupStateEnum, PopupService } from '@modules/reusable';
+import { seniorityEnum, SkillsService } from '@modules/skills';
+import { UsersService } from '../../services';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,37 +16,53 @@ import { UsersService } from '@modules/users/services/users.service';
 })
 export class UserProfileComponent {
   private readonly userKey: string;
-  private readonly imgSrc: string;
   private readonly routes: IRoutesConst;
   private categories: ISubCategoryValue[];
   private chosenLevel: seniorityEnum;
   private levelsLoaded: boolean;
   private userDetails: IUser;
+  readonly imgSrc: string;
 
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
     private skillsService: SkillsService,
     private cdRef: ChangeDetectorRef,
+    private popupService: PopupService,
+    private router: Router,
+    private titleService: Title,
   ) {
     this.routes = ROUTES_PATH;
     this.levelsLoaded = false;
     this.chosenLevel = seniorityEnum.junior;
     this.categories = [];
     this.userKey = this.route.snapshot.paramMap.get('key');
-    this.usersService.getUserByKey(this.userKey).subscribe((details) => {
-      this.userDetails = details;
-      this.skillsService.getAllSkillsWithTitles(this.userKey).subscribe(
-        (result) => {
-          this.categories = this.skillsService.getSummaryProgress(result);
+    this.usersService.getUserByKey(this.userKey).subscribe(
+      (details) => {
+        if (details.values === null) {
+          this.popupService.error('User not found');
+          this.router.navigate([this.routes.usersList]);
+        } else {
+          this.userDetails = details;
+          this.titleService.setTitle(`${this.userDetails.values.firstName} ${this.userDetails.values.lastName}`);
           this.levelsLoaded = true;
           this.cdRef.markForCheck();
-        },
-        (error) => {
-          throwError(error);
-        },
-      );
-    });
+          this.skillsService.getAllSkillsWithTitles(this.userKey).subscribe(
+            (result) => {
+              this.categories = this.skillsService.getSummaryProgress(result);
+              this.cdRef.markForCheck();
+            },
+            (error) => {
+              this.popupService.error(error.message);
+            },
+          );
+        }
+
+      },
+      (error) => {
+        this.popupService.error(error.message);
+      },
+    );
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';
   }
 

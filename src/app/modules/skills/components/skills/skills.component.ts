@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { throwError } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { SkillsService } from '@modules/skills/services/skills.service';
+import { PopupService } from '@modules/reusable';
+import { SkillsService } from '../../services';
 
 @Component({
   selector: 'app-skills',
@@ -15,14 +15,14 @@ export class SkillsComponent {
   private data;
   private readonly routes: IRoutesConst;
 
-  constructor(private skillsService: SkillsService) {
+  constructor(private skillsService: SkillsService, private popupService: PopupService) {
     this.routes = ROUTES_PATH;
     this.skillsService.getSkillsData().subscribe(
       (res) => {
         this.data = res;
       },
       (error) => {
-        throwError(error);
+        this.popupService.error(error.message);
       },
     );
   }
