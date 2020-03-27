@@ -39,7 +39,7 @@ export class SkillComponent {
     @Inject(DOCUMENT) private document: Document,
     private textifyPipe: SlugTextifyPipe,
     private popupService: PopupService,
-    private titleService: Title
+    private titleService: Title,
   ) {
     this.routes = ROUTES_PATH;
     this.activatedRoute.params.subscribe(
@@ -94,7 +94,7 @@ export class SkillComponent {
 
   chooseSubCategory(subCat: ISubCategoryDescription, index: number) {
     this.document.querySelectorAll('.table__label').forEach((element) => {
-      element.classList.remove('u-text--black');
+      element.classList.remove('u-text--hover');
     });
     this.clickable = false;
     this.skillsService
@@ -107,7 +107,7 @@ export class SkillComponent {
           this.cdRef.markForCheck();
           const element = this.document.querySelectorAll('.table__label')[index];
           if (element !== undefined) {
-            element.classList.add('u-text--black');
+            element.classList.add('u-text--hover');
           }
         },
         (error) => {
@@ -131,7 +131,7 @@ export class SkillComponent {
       .pipe(
         finalize(() => {
           this.clickable = true;
-          this.popupService.error('You successfully saved your progress');
+          this.popupService.success('You successfully saved your progress');
           this.cdRef.markForCheck();
         }),
       )

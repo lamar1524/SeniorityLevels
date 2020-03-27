@@ -6,7 +6,8 @@
   @include center-one-element(column);
 
   .back__button {
-    background-color: $secondary;
+    background-color: $gray;
+    color: #000;
     height: 50px;
     left: 15px;
     position: absolute;
@@ -15,7 +16,6 @@
   }
 
   .profile__wrapper {
-    background-color: #fff;
     border-radius: $box-border-radius;
     padding: 10px;
     width: 75%;

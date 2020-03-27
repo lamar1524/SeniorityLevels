@@ -1,3 +1,6 @@
+@import './variables';
+@import '~@angular/material/theming';
+
 .u-text--link {
   color: $link;
 
@@ -11,7 +14,29 @@
 }
 
 .u-text--black {
-  color: $black;
+  color: #000;
+}
+
+.u-text--hover {
+  color: mat-color(mat-palette($mat-indigo));
+}
+
+.u-text-to-hover {
+  &:hover {
+    color: mat-color(mat-palette($mat-indigo));
+  }
+}
+
+.dark-theme {
+  .u-text--hover {
+    color: mat-color(mat-palette($mat-pink));
+  }
+
+  .u-text-to-hover {
+    &:hover {
+      color: mat-color(mat-palette($mat-pink));
+    }
+  }
 }
 
 .u-text--link--light {
@@ -24,4 +49,10 @@
 
 .u-text--error {
   color: $warn;
+}
+
+.dark-theme {
+  .u-text--link {
+    color: mat-color(mat-palette($mat-pink));
+  }
 }
