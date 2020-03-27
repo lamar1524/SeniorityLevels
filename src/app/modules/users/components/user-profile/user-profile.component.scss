@@ -11,7 +11,7 @@
     height: 50px;
     left: 15px;
     position: absolute;
-    top: calc(15px + #{$nav-height});
+    top: 15px;
     width: 50px;
   }
 
@@ -63,6 +63,10 @@
 
   @include break(map-get($breakpoints, sm)) {
     min-height: calc(100vh - #{$nav-height});
+
+    .back__button {
+      top: calc(15px + #{$nav-height});
+    }
 
     .profile__wrapper {
       width: 300px;

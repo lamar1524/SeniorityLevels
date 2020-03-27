@@ -17,11 +17,11 @@
   color: #000;
 }
 
-.u-text--hover {
+.u-text--to-hover {
   color: mat-color(mat-palette($mat-indigo));
 }
 
-.u-text-to-hover {
+.u-text--hover {
   &:hover {
     color: mat-color(mat-palette($mat-indigo));
   }
@@ -48,11 +48,11 @@
     color: mat-color(mat-palette($mat-pink));
   }
 
-  .u-text--hover {
+  .u-text--to-hover {
     color: mat-color(mat-palette($mat-pink));
   }
 
-  .u-text-to-hover {
+  .u-text--hover {
     &:hover {
       color: mat-color(mat-palette($mat-pink));
     }

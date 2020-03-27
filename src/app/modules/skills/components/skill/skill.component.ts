@@ -94,7 +94,7 @@ export class SkillComponent {
 
   chooseSubCategory(subCat: ISubCategoryDescription, index: number) {
     this.document.querySelectorAll('.table__label').forEach((element) => {
-      element.classList.remove('u-text--hover');
+      element.classList.remove('u-text--to-hover');
     });
     this.clickable = false;
     this.skillsService
@@ -107,7 +107,7 @@ export class SkillComponent {
           this.cdRef.markForCheck();
           const element = this.document.querySelectorAll('.table__label')[index];
           if (element !== undefined) {
-            element.classList.add('u-text--hover');
+            element.classList.add('u-text--to-hover');
           }
         },
         (error) => {

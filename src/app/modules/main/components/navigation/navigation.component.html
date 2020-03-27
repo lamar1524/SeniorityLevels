@@ -5,16 +5,16 @@
 </button>
 <div class="nav u-background-primary">
   <div class="nav__link u-text--link--light">
-    <button mat-button [routerLink]="[routes.userProfile]" (click)="toggleNav()">Profile</button>
+    <button class="link__button" mat-button [routerLink]="[routes.userProfile]" (click)="toggleNav()">Profile</button>
   </div>
   <div class="nav__link u-text--link--light">
-    <button mat-button [routerLink]="[routes.skills]" (click)="toggleNav()">Skills</button>
+    <button class="link__button" mat-button [routerLink]="[routes.skills]" (click)="toggleNav()">Skills</button>
   </div>
   <div class="nav__link u-text--link--light">
-    <button mat-button [routerLink]="[routes.usersList]" (click)="toggleNav()">Users list</button>
+    <button class="link__button" mat-button [routerLink]="[routes.usersList]" (click)="toggleNav()">Users list</button>
   </div>
   <div class="nav__link u-text--link--light">
-    <button mat-button (click)="toggleTheme()">Change theme</button>
+    <button class="link__button" mat-button (click)="toggleTheme()">Change theme</button>
   </div>
-  <div class="nav__link u-text--link--light"><button mat-button (click)="logout()">Logout</button></div>
+  <div class="nav__link u-text--link--light"><button class="link__button" mat-button (click)="logout()">Logout</button></div>
 </div>

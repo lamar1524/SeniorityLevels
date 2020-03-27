@@ -22,10 +22,6 @@
   .category__button {
     height: 40px;
     width: 200px;
-
-    &:hover {
-      color: $pgs;
-    }
   }
 
   @include break(map-get($breakpoints, md)) {

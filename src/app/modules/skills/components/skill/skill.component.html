@@ -8,8 +8,8 @@
   </div>
   <div class="table" *ngIf="contentLoaded">
     <div class="table__column table__labels">
-      <div class="table__row table__label" [ngClass]="{ 'u-text--hover': i === 0 }" *ngFor="let subCat of subCategories; index as i">
-        <span class="u-text-to-hover" (click)="chooseSubCategory(subCat, i)">{{ subCat.title }}</span>
+      <div class="table__row table__label" [ngClass]="{ 'u-text--to-hover': i === 0 }" *ngFor="let subCat of subCategories; index as i">
+        <span class="u-text--hover" (click)="chooseSubCategory(subCat, i)">{{ subCat.title }}</span>
       </div>
     </div>
     <div class="table__column table__content" [ngClass]="{ 'content--active': levels[currentlyDisplayedLevel] }">

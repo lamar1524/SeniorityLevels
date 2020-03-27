@@ -13,7 +13,7 @@
     height: 50px;
     left: 15px;
     position: absolute;
-    top: calc(15px + #{$nav-height});
+    top: 15px;
     width: 50px;
   }
 
@@ -22,7 +22,8 @@
   }
 
   .table {
-    border-right: 0;
+    background-color: $gray;
+    color: #000;
     display: grid;
     grid-template-areas: 'labels content';
     grid-template-columns: repeat(2, 50%);
@@ -41,6 +42,7 @@
   }
 
   .table__labels {
+    border-right: 1px solid #707070;
     grid-area: labels;
   }
 
@@ -53,7 +55,6 @@
   }
 
   .table__row {
-    border-collapse: separate;
     display: block;
     height: fit-content;
     padding: 10px 5px;
@@ -67,5 +68,9 @@
     margin: 0 auto;
     min-height: calc(100vh - #{$nav-height});
     width: 50vw;
+
+    .back__button {
+      top: calc(15px + #{$nav-height});
+    }
   }
 }
