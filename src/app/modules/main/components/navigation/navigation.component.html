@@ -3,18 +3,18 @@
     <span class="hamburger__inner"></span>
   </span>
 </button>
-<div class="nav">
+<div class="nav u-background-primary">
   <div class="nav__link u-text--link--light">
-    <span [routerLink]="[routes.userProfile]" (click)="toggleNav()">Profile</span>
+    <button mat-button [routerLink]="[routes.userProfile]" (click)="toggleNav()">Profile</button>
   </div>
   <div class="nav__link u-text--link--light">
-    <span [routerLink]="[routes.skills]" (click)="toggleNav()">Skills</span>
+    <button mat-button [routerLink]="[routes.skills]" (click)="toggleNav()">Skills</button>
   </div>
   <div class="nav__link u-text--link--light">
-    <span [routerLink]="[routes.usersList]" (click)="toggleNav()">Users list</span>
+    <button mat-button [routerLink]="[routes.usersList]" (click)="toggleNav()">Users list</button>
   </div>
   <div class="nav__link u-text--link--light">
-    <span (click)="toggleTheme()">Change theme</span>
+    <button mat-button (click)="toggleTheme()">Change theme</button>
   </div>
-  <div class="nav__link u-text--link--light"><span (click)="logout()">Logout</span></div>
+  <div class="nav__link u-text--link--light"><button mat-button (click)="logout()">Logout</button></div>
 </div>

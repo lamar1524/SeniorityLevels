@@ -27,18 +27,6 @@
   }
 }
 
-.dark-theme {
-  .u-text--hover {
-    color: mat-color(mat-palette($mat-pink));
-  }
-
-  .u-text-to-hover {
-    &:hover {
-      color: mat-color(mat-palette($mat-pink));
-    }
-  }
-}
-
 .u-text--link--light {
   color: $light-link;
 
@@ -51,8 +39,26 @@
   color: $warn;
 }
 
+.u-background-primary {
+  background-color: mat-color(mat-palette($mat-indigo));
+}
+
 .dark-theme {
   .u-text--link {
     color: mat-color(mat-palette($mat-pink));
+  }
+
+  .u-text--hover {
+    color: mat-color(mat-palette($mat-pink));
+  }
+
+  .u-text-to-hover {
+    &:hover {
+      color: mat-color(mat-palette($mat-pink));
+    }
+  }
+
+  .u-background-primary {
+    background-color: mat-color(mat-palette($mat-pink));
   }
 }

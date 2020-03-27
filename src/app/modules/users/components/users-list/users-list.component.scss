@@ -2,7 +2,7 @@
 @import '../../../../../styles/mixins';
 
 .container {
-  height: 100vh;
+  min-height: 100vh;
   @include center-one-element(column);
 
   .users__header {
@@ -43,6 +43,8 @@
   }
 
   @include break(map-get($breakpoints, md)) {
+    min-height: calc(100vh - #{$nav-height});
+
     .users__table {
       width: 60%;
     }

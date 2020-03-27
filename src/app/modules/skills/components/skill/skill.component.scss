@@ -13,7 +13,7 @@
     height: 50px;
     left: 15px;
     position: absolute;
-    top: 15px;
+    top: calc(15px + #{$nav-height});
     width: 50px;
   }
 
@@ -65,6 +65,7 @@
 
   @include break(map-get($breakpoints, md)) {
     margin: 0 auto;
+    min-height: calc(100vh - #{$nav-height});
     width: 50vw;
   }
 }

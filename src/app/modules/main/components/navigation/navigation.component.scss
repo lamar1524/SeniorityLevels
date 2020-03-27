@@ -75,7 +75,6 @@
 
 .nav {
   align-items: center;
-  background-color: $nav-background;
   display: flex;
   flex-direction: column;
   font-size: 2rem;
@@ -102,12 +101,17 @@
 }
 
 @include break(map-get($breakpoints, md)) {
-  .nav {
-    transform: translateX(250px);
-    width: 250px;
+  .hamburger {
+    display: none;
   }
 
-  .nav--active {
+  .nav {
+    flex-direction: row;
+    height: $nav-height;
+    justify-content: flex-start;
+    padding-left: 15px;
+    position: static;
     transform: translateX(0);
+    width: 100%;
   }
 }
