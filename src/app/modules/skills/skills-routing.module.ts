@@ -8,13 +8,14 @@ import { SkillsComponent, SkillComponent } from '@modules/skills/components';
 
 const routes: Routes = [
   {
-    path: ROUTES.home,
+    path: ROUTES.home.path,
     component: SkillsComponent,
     canActivate: [AuthorizationGuard],
-    data: {title: 'Choose skill to fill up'}, resolve: [TitleResolve]
+    data: { title: ROUTES.skills.title },
+    resolve: [TitleResolve],
   },
   {
-    path: `${ROUTES.skill}/:category`,
+    path: `${ROUTES.skill.path}/:category`,
     component: SkillComponent,
     canActivate: [AuthorizationGuard],
   },
