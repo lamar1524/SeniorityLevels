@@ -1,15 +1,16 @@
-import { IRoutesConst } from '@core/interfaces/routes.interface';
+import { IRoutesConst, IRoutesHeader } from '@core/interfaces/routes.interface';
 
-export const ROUTES: IRoutesConst = {
-  home: '',
-  register: 'register',
-  dashboard: 'dashboard',
-  users: 'users',
-  usersList: 'list',
-  userProfile: 'profile',
-  otherUserProfile: 'user',
-  skills: 'skills',
-  skill: 'skill'
+export const ROUTES: IRoutesHeader = {
+  home: { title: '', path: '' },
+  login: { title: 'Login', path: '' },
+  register: { title: 'Register', path: 'register' },
+  dashboard: { title: '', path: 'dashboard' },
+  users: { title: 'Users', path: 'users' },
+  usersList: { title: 'Users list', path: 'list' },
+  userProfile: { title: 'Users profile', path: 'profile' },
+  otherUserProfile: { title: '', path: 'user' },
+  skills: { title: 'Fill up your skills', path: 'skills' },
+  skill: { title: '', path: 'skill' },
 };
 
 export const ROUTES_PATH: IRoutesConst = {
@@ -20,5 +21,5 @@ export const ROUTES_PATH: IRoutesConst = {
   userProfile: '/dashboard/users/profile',
   otherUserProfile: '/dashboard/users/user/',
   skills: '/dashboard/skills',
-  skill: '/dashboard/skills/skill/'
+  skill: '/dashboard/skills/skill/',
 };

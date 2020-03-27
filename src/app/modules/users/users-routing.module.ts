@@ -7,22 +7,22 @@ import { TitleResolve } from '@core/resolvers/title.resolve';
 import { UsersListComponent, UserComponent, UserProfileComponent } from './components';
 
 const routes: Routes = [
-  { path: '', redirectTo: ROUTES.userProfile, pathMatch: 'full' },
+  { path: '', redirectTo: ROUTES.userProfile.path, pathMatch: 'full' },
   {
-    path: ROUTES.usersList,
+    path: ROUTES.usersList.path,
     component: UsersListComponent,
     canActivate: [AuthorizationGuard],
-    data: { title: 'Users list' },
+    data: { title: ROUTES.usersList.title },
     resolve: [TitleResolve],
   },
   {
-    path: ROUTES.userProfile,
+    path: ROUTES.userProfile.path,
     component: UserComponent,
     canActivate: [AuthorizationGuard],
-    data: { title: 'Your profile' },
+    data: { title: ROUTES.userProfile.title },
     resolve: [TitleResolve],
   },
-  { path: `${ROUTES.otherUserProfile}/:key`, component: UserProfileComponent, canActivate: [AuthorizationGuard] },
+  { path: `${ROUTES.otherUserProfile.path}/:key`, component: UserProfileComponent, canActivate: [AuthorizationGuard] },
 ];
 
 @NgModule({

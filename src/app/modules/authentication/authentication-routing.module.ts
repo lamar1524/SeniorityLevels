@@ -6,8 +6,8 @@ import { TitleResolve } from '@core/resolvers';
 import { LoginComponent, RegisterComponent } from './components';
 
 const routes: Routes = [
-  { path: ROUTES.home, component: LoginComponent, data: {title: 'Login'}, resolve: [TitleResolve] },
-  { path: ROUTES.register, component: RegisterComponent, data: {title: 'Register'}, resolve: [TitleResolve]},
+  { path: ROUTES.login.path, component: LoginComponent, data: { title: ROUTES.login.path }, resolve: [TitleResolve] },
+  { path: ROUTES.register.path, component: RegisterComponent, data: { title: ROUTES.register.title }, resolve: [TitleResolve] },
 ];
 
 @NgModule({
