@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
+import { DataSharingService } from '@shared/services';
 
 @Component({
   selector: 'app-navigation',
@@ -15,7 +16,12 @@ import { AuthenticationService } from '@modules/authentication';
 export class NavigationComponent {
   readonly routes: IRoutesConst;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private authService: AuthenticationService, private router: Router) {
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private authService: AuthenticationService,
+    private router: Router,
+    private dataSharingService: DataSharingService,
+  ) {
     this.routes = ROUTES_PATH;
   }
 
@@ -28,4 +34,6 @@ export class NavigationComponent {
     this.authService.logout();
     this.router.navigate([ROUTES_PATH.home]);
   }
+
+  toggleTheme = () => this.dataSharingService.toggleTheme();
 }

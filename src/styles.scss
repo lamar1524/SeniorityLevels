@@ -1,6 +1,7 @@
 @import './styles/variables';
 @import './styles/utilities';
 @import './styles/mixins';
+@import './styles/theme';
 
 @font-face {
   font-family: 'Roboto';
@@ -19,5 +20,15 @@
 }
 
 body {
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  margin: 0;
 }

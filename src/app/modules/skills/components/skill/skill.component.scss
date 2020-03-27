@@ -1,12 +1,15 @@
 @import '../../../../../styles/variables';
 @import '../../../../../styles/mixins';
+@import '~@angular/material/theming';
 
 .container {
+  min-height: 100vh;
   padding: 25px;
   user-select: none;
 
   .back__button {
-    background-color: $secondary;
+    background-color: $gray;
+    color: #000;
     height: 50px;
     left: 15px;
     position: absolute;
@@ -18,44 +21,27 @@
     text-align: center;
   }
 
-  .current-level {
-    &:hover {
-      color: $pgs;
-      cursor: pointer;
-    }
-  }
-
   .table {
-    border: 1px solid $secondary;
     border-right: 0;
     display: grid;
     grid-template-areas: 'labels content';
     grid-template-columns: repeat(2, 50%);
     min-width: 300px;
+    @include form-shadow($blur-color);
   }
 
   .table__column {
-    border-right: 1px solid $secondary;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
 
   .content--active {
-    background-color: $accept;
+    color: $accept;
   }
 
   .table__labels {
-    background-color: $pgs;
-    color: $primary;
     grid-area: labels;
-
-    .table__row {
-      &:hover {
-        color: $black;
-        cursor: pointer;
-      }
-    }
   }
 
   .table__content {
@@ -64,15 +50,14 @@
     .table__spinner {
       margin: auto;
     }
-
   }
 
   .table__row {
     border-collapse: separate;
     display: block;
-    height: 100%;
+    height: fit-content;
     padding: 10px 5px;
-    
+
     &:hover {
       cursor: pointer;
     }
