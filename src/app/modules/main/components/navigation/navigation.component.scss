@@ -114,9 +114,20 @@
     height: $nav-height;
     justify-content: flex-start;
     padding-left: 15px;
+    padding-right: 15px;
     position: static;
     transform: translateX(0);
     width: 100%;
+
+    .profile__wrapper,
+    .theme__wrapper,
+    .logout__wrapper {
+      margin-right: 0;
+    }
+
+    .profile__wrapper {
+      margin-left: auto;
+    }
   }
 
   .nav__link {
