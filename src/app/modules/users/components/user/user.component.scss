@@ -5,10 +5,12 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - #{$hamburger-height});
   justify-content: flex-start;
   padding: 15px;
+  position: absolute;
   text-align: center;
+  top: $hamburger-height;
   width: 100%;
 
   .profile__introduction {
@@ -39,6 +41,7 @@
   }
 
   @include break(map-get($breakpoints, md)) {
+    height: calc(100vh - #{$nav-height});
     margin: 0 auto;
     width: 50vw;
   }

@@ -2,27 +2,30 @@
 @import '../../../../../styles/mixins';
 @import '~@angular/material/theming';
 
-.container {
-  min-height: 100vh;
-  padding: 25px;
-  user-select: none;
+.back__button {
+  background-color: $gray;
+  color: #000;
+  height: 50px;
+  left: 15px;
+  position: absolute;
+  top: 15px;
+  width: 50px;
+}
 
-  .back__button {
-    background-color: $gray;
-    color: #000;
-    height: 50px;
-    left: 15px;
-    position: absolute;
-    top: 15px;
-    width: 50px;
-  }
+.container {
+  min-height: calc(100vh - #{$hamburger-height});
+  padding: 25px;
+  position: absolute;
+  top: $hamburger-height;
+  user-select: none;
 
   .header {
     text-align: center;
   }
 
   .table {
-    border-right: 0;
+    background-color: $gray;
+    color: #000;
     display: grid;
     grid-template-areas: 'labels content';
     grid-template-columns: repeat(2, 50%);
@@ -41,6 +44,7 @@
   }
 
   .table__labels {
+    border-right: 1px solid #707070;
     grid-area: labels;
   }
 
@@ -53,7 +57,6 @@
   }
 
   .table__row {
-    border-collapse: separate;
     display: block;
     height: fit-content;
     padding: 10px 5px;
@@ -65,6 +68,11 @@
 
   @include break(map-get($breakpoints, md)) {
     margin: 0 auto;
+    min-height: calc(100vh - #{$nav-height});
     width: 50vw;
+
+    .back__button {
+      top: calc(15px + #{$nav-height});
+    }
   }
 }

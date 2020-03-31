@@ -1,3 +1,6 @@
+@import './theme';
+@import '~@angular/material/theming';
+
 // Colors
 $link: #6d2fca;
 $light-link: #f7f1ff;
@@ -9,10 +12,12 @@ $pgs: #ff6b44;
 $blur-color: #707070;
 $nav-background: #777;
 $hamburger-line: #000;
+$hamburger-height: 50px;
 
 // Values
 $input-width: 75%;
 $box-border-radius: 15px;
+$nav-height: 75px;
 
 // Breakpoints
 $breakpoints: (

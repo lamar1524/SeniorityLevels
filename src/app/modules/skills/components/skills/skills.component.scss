@@ -2,8 +2,10 @@
 @import '../../../../../styles/mixins';
 
 .container {
-  min-height: 100vh;
+  min-height: calc(100vh - #{$hamburger-height});
   padding: 25px 20px;
+  position: absolute;
+  top: $hamburger-height;
 
   .categories__wrapper {
     text-align: center;
@@ -22,14 +24,11 @@
   .category__button {
     height: 40px;
     width: 200px;
-
-    &:hover {
-      color: $pgs;
-    }
   }
 
   @include break(map-get($breakpoints, md)) {
     margin: 0 auto;
+    min-height: calc(100vh - #{$nav-height});
     width: 50%;
   }
 }

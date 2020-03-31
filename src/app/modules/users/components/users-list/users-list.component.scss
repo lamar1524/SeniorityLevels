@@ -2,8 +2,14 @@
 @import '../../../../../styles/mixins';
 
 .container {
-  height: 100vh;
-  @include center-one-element(column);
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: calc(100vh - #{$hamburger-height});
+  position: absolute;
+  top: $hamburger-height;
+  width: 100%;
 
   .users__header {
     text-align: center;
@@ -43,6 +49,8 @@
   }
 
   @include break(map-get($breakpoints, md)) {
+    min-height: calc(100vh - #{$nav-height});
+
     .users__table {
       width: 60%;
     }

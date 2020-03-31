@@ -1,19 +1,21 @@
 @import '../../../../../styles/mixins';
 @import '../../../../../styles/variables';
 
-.container {
-  min-height: 100vh;
-  @include center-one-element(column);
+.back__button {
+  background-color: $gray;
+  color: #000;
+  height: 50px;
+  left: 15px;
+  position: absolute;
+  top: 15px;
+  width: 50px;
+}
 
-  .back__button {
-    background-color: $gray;
-    color: #000;
-    height: 50px;
-    left: 15px;
-    position: absolute;
-    top: 15px;
-    width: 50px;
-  }
+.container {
+  min-height: calc(100vh - #{$hamburger-height});
+  position: absolute;
+  top: $hamburger-height;
+  @include center-one-element(column);
 
   .profile__wrapper {
     border-radius: $box-border-radius;
@@ -62,6 +64,12 @@
   }
 
   @include break(map-get($breakpoints, sm)) {
+    min-height: calc(100vh - #{$nav-height});
+
+    .back__button {
+      top: calc(15px + #{$nav-height});
+    }
+
     .profile__wrapper {
       width: 300px;
     }

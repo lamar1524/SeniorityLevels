@@ -3,7 +3,7 @@
         <h2>Feel free to fill up your skills below</h2>
     </div>
     <div class="categories__wrapper" *ngIf="contentLoaded">
-        <div class="category" *ngFor="let category of data">
+        <div class="category  u-text--hover" *ngFor="let category of data">
             <button class="category__button" mat-stroked-button [routerLink]="[routes.skill + (category.title | slugify)]">
                 {{ category.title }}
             </button>
