@@ -6,7 +6,10 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  min-height: 100vh;
+  min-height: calc(100vh - #{$hamburger-height});
+  position: absolute;
+  top: $hamburger-height;
+  width: 100%;
 
   .users__header {
     text-align: center;

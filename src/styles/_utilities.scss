@@ -43,6 +43,14 @@
   background-color: mat-color(mat-palette($mat-indigo));
 }
 
+.u-theme--white-icon {
+  display: none;
+}
+
+.u-theme--black-icon {
+  display: inline-block;
+}
+
 .dark-theme {
   .u-text--link {
     color: mat-color(mat-palette($mat-pink));
@@ -60,5 +68,13 @@
 
   .u-background-primary {
     background-color: mat-color(mat-palette($mat-pink));
+  }
+
+  .u-theme--white-icon {
+    display: inline-block;
+  }
+
+  .u-theme--black-icon {
+    display: none;
   }
 }

@@ -2,20 +2,22 @@
 @import '../../../../../styles/mixins';
 @import '~@angular/material/theming';
 
-.container {
-  min-height: 100vh;
-  padding: 25px;
-  user-select: none;
+.back__button {
+  background-color: $gray;
+  color: #000;
+  height: 50px;
+  left: 15px;
+  position: absolute;
+  top: 15px;
+  width: 50px;
+}
 
-  .back__button {
-    background-color: $gray;
-    color: #000;
-    height: 50px;
-    left: 15px;
-    position: absolute;
-    top: 15px;
-    width: 50px;
-  }
+.container {
+  min-height: calc(100vh - #{$hamburger-height});
+  padding: 25px;
+  position: absolute;
+  top: $hamburger-height;
+  user-select: none;
 
   .header {
     text-align: center;

@@ -17,7 +17,10 @@
     <span class="link__button" [routerLink]="[routes.userProfile]" (click)="closeNav()">Logged as: {{(currentUser$ | async).email}}</span>
   </div>
   <div class="nav__link theme__wrapper u-text--link--light">
-    <button class="link__button" mat-button (click)="toggleTheme()"><img src="../../../../../assets/icons/moon.svg" alt="Theme toggle"></button>
+    <button class="link__button" mat-button (click)="toggleTheme()">
+      <img src="../../../../../assets/icons/moon_white.svg" alt="Theme toggle" class="u-theme--white-icon">
+      <img src="../../../../../assets/icons/moon_black.svg" alt="Theme toggle" class="u-theme--black-icon">
+    </button>
   </div>
   <div class="nav__link u-text--link--light logout__wrapper"><button class="link__button" mat-button (click)="logout()">Logout</button></div>
 </div>

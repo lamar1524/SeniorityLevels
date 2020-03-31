@@ -1,13 +1,13 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'firebase';
+import { Observable } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { DataSharingService } from '@shared/services';
-import { User } from 'firebase';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navigation',
