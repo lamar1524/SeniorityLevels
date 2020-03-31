@@ -1,14 +1,18 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
+import { AuthState } from '@modules/authentication/store';
+import { selectRegisterLoading } from '@modules/authentication/store/selectors/auth.selectors';
 import { PopupService } from '@modules/reusable';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from '../../services';
+import * as authActions from '../../store/actions';
 
 @Component({
   selector: 'app-register',
@@ -25,6 +29,7 @@ export class RegisterComponent {
     private chRef: ChangeDetectorRef,
     private router: Router,
     private popupService: PopupService,
+    private store: Store<AuthState>,
   ) {
     this.registerForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
@@ -34,6 +39,9 @@ export class RegisterComponent {
       repeatPassword: new AppFormControl('', [Validators.required, equalityValidator('password')]),
     });
     this.routes = ROUTES_PATH;
+    this.store.pipe(select(selectRegisterLoading)).subscribe((res) => {
+      res === true ? this.registerForm.disable() : this.registerForm.enable();
+    });
   }
 
   get email() {
@@ -64,7 +72,14 @@ export class RegisterComponent {
     };
   }
 
+  // Seems to work fine BUT, when I try to register to email that is already taken, error is thrown and my registerUserFail action is
+  // not being called
   sendCredentials = (): void => {
+    this.store.dispatch(authActions.registerUser({ ...this.formData, password: this.password.value }));
+  };
+
+  // Kinda backup
+  sendCredentials2 = (): void => {
     this.registerForm.disable();
     this.authService
       .registerUser(this.email.value, this.password.value)

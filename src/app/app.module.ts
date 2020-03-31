@@ -5,6 +5,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 import { TokenInterceptor } from '@core/interceptors/token.interceptor';
 import { DataSharingService } from '@shared/services';
@@ -21,6 +23,8 @@ import { AppComponent } from './app.component';
     AngularFireAuthModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
   ],
   providers: [
     Title,
