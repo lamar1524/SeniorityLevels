@@ -22,10 +22,11 @@ const AUTH_REDUCER = createReducer(
   on(authActions.registerUserSuccess, (state) => ({ ...state, registerLoading: false })),
   on(authActions.registerUserFail, (state) => ({ ...state, registerLoading: false })),
   on(authActions.loginUser, (state) => ({ ...state, loginLoading: true })),
-  on(authActions.loadUser, (state) => state),
+  on(authActions.loadUserLogin, (state) => state),
   on(authActions.loginUserSuccess, (state, { user }) => ({ ...state, loginLoading: false, userLogged: user })),
   on(authActions.loginUserFail, (state) => initialState),
   on(authActions.clearUser, (state) => initialState),
+  on(authActions.loadUserRefresh, (state) => state),
 );
 
 export function authReducer(state: AuthState | undefined, action: Action) {

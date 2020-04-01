@@ -7,7 +7,6 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { PopupService } from '@modules/reusable';
-import { DataSharingService } from '@shared/services';
 import { AuthenticationService } from '../../services';
 import * as authActions from '../actions';
 
@@ -18,7 +17,6 @@ export class AuthenticationEffects {
     private actions$: Actions,
     private popupService: PopupService,
     private router: Router,
-    private dataSharingService: DataSharingService,
   ) {}
 
   registerUser$ = createEffect(() =>
@@ -66,10 +64,9 @@ export class AuthenticationEffects {
       switchMap((action) =>
         this.authService.signIn(action.email, action.password).pipe(
           map((user) => {
-            return authActions.loadUser();
+            return authActions.loadUserLogin();
           }),
           catchError((error) => {
-            console.log(error.message);
             this.popupService.error(error.message);
             return of(authActions.loginUserFail());
           }),
@@ -78,15 +75,27 @@ export class AuthenticationEffects {
     ),
   );
 
-  loadUser$ = createEffect(() =>
+  loadUserLogin$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(authActions.loadUser),
+      ofType(authActions.loadUserLogin),
       switchMap(() =>
         this.authService.getUserRemotely().pipe(
           map((user: User) => {
-            if (this.router.url === '/') {
-              this.router.navigate([ROUTES_PATH.userProfile]);
-            }
+            this.router.navigate([ROUTES_PATH.userProfile]);
+            return authActions.loginUserSuccess({ user });
+          }),
+          catchError(() => of(authActions.loginUserFail())),
+        ),
+      ),
+    ),
+  );
+
+  loadUserRefresh$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.loadUserRefresh),
+      switchMap(() =>
+        this.authService.getUserRemotely().pipe(
+          map((user: User) => {
             return authActions.loginUserSuccess({ user });
           }),
           catchError(() => of(authActions.loginUserFail())),

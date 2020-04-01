@@ -11,20 +11,13 @@ import UserCredential = firebase.auth.UserCredential;
 
 import { IUserValues } from '@core/interfaces';
 import { AuthModuleState } from '@modules/authentication/store';
-import { selectCurrentUser } from '@modules/authentication/store/selectors';
-import { DataSharingService } from '@shared/services';
-import * as authActions from '../store/actions';
+import { clearUser } from '../store/actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(
-    private db: AngularFireDatabase,
-    private firebaseAuth: AngularFireAuth,
-    private dataSharingService: DataSharingService,
-    private store: Store<AuthModuleState>,
-  ) {}
+  constructor(private db: AngularFireDatabase, private firebaseAuth: AngularFireAuth, private store: Store<AuthModuleState>) {}
 
   signIn = (email: string, password: string): Observable<User | UserCredential> =>
     from(this.firebaseAuth.signInWithEmailAndPassword(email, password)).pipe(first());
@@ -33,12 +26,11 @@ export class AuthenticationService {
 
   logout = (): void => {
     this.firebaseAuth.signOut();
-    this.store.dispatch(authActions.clearUser());
+    this.store.dispatch(clearUser());
   };
 
   isLoggedIn = (): Observable<boolean> => {
-    this.store.dispatch(authActions.loadUser());
-    return this.store.select(selectCurrentUser).pipe(map((user) => user !== null));
+    return this.firebaseAuth.authState.pipe(map((user) => user !== null));
   };
 
   registerUser = (email: string, password: string): Observable<any> =>
