@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { AuthState } from '@modules/authentication/store';
+import { AuthModuleState } from '@modules/authentication/store';
 import { selectLoginLoading } from '@modules/authentication/store/selectors/auth.selectors';
 import { PopupService } from '@modules/reusable';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
@@ -28,7 +28,7 @@ export class LoginComponent implements OnDestroy {
     private cdRef: ChangeDetectorRef,
     private authService: AuthenticationService,
     private popupService: PopupService,
-    private store: Store<AuthState>,
+    private store: Store<AuthModuleState>,
   ) {
     this.loginForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),

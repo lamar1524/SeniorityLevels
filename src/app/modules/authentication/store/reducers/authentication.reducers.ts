@@ -1,15 +1,18 @@
 import { createReducer, on, Action } from '@ngrx/store';
+import { User } from 'firebase';
 
 import * as authActions from '../actions';
 
-export interface LoadingState {
+export interface AuthState {
   registerLoading: boolean;
   loginLoading: boolean;
+  userLogged: User;
 }
 
-export const initialState: LoadingState = {
+export const initialState: AuthState = {
   registerLoading: false,
   loginLoading: false,
+  userLogged: null,
 };
 
 const AUTH_REDUCER = createReducer(
@@ -24,6 +27,6 @@ const AUTH_REDUCER = createReducer(
   on(authActions.loginUserFail, (state) => ({ ...state, loginLoading: false })),
 );
 
-export function authReducer(state: LoadingState | undefined, action: Action) {
+export function authReducer(state: AuthState | undefined, action: Action) {
   return AUTH_REDUCER(state, action);
 }

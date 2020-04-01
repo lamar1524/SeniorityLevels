@@ -1,4 +1,4 @@
-import { AuthState } from '@modules/authentication/store';
+import { AuthModuleState } from '@modules/authentication/store';
 
-export const selectRegisterLoading = (state: AuthState) => state.auth.registerLoading;
-export const selectLoginLoading = (state: AuthState) => state.auth.loginLoading;
+export const selectRegisterLoading = (state: AuthModuleState) => state.auth.registerLoading;
+export const selectLoginLoading = (state: AuthModuleState) => state.auth.loginLoading;

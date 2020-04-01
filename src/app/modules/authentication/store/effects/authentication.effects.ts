@@ -85,7 +85,9 @@ export class AuthenticationEffects {
         this.authService.getUserRemotely().pipe(
           map((user: User) => {
             this.dataSharingService.setUser(user);
-            this.router.navigate([ROUTES_PATH.userProfile]);
+            if (this.router.url === '/') {
+              this.router.navigate([ROUTES_PATH.userProfile]);
+            }
             return authActions.loginUserSuccess();
           }),
           catchError(() => of(authActions.loginUserFail())),

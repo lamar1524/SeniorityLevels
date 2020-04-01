@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { AuthState } from '@modules/authentication/store';
+import { AuthModuleState } from '@modules/authentication/store';
 import { selectRegisterLoading } from '@modules/authentication/store/selectors/auth.selectors';
 import { PopupService } from '@modules/reusable';
 import { equalityValidator } from '@shared/equality.validator';
@@ -29,7 +29,7 @@ export class RegisterComponent implements OnDestroy {
     private chRef: ChangeDetectorRef,
     private router: Router,
     private popupService: PopupService,
-    private store: Store<AuthState>,
+    private store: Store<AuthModuleState>,
   ) {
     this.registerForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),

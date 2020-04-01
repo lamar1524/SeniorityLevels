@@ -1,5 +1,5 @@
-import { LoadingState } from '@modules/authentication/store/reducers/authentication.reducers';
+import { AuthState } from '@modules/authentication/store/reducers/authentication.reducers';
 
-export interface AuthState {
-  auth: LoadingState;
+export interface AuthModuleState {
+  auth: AuthState;
 }
