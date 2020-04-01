@@ -2,16 +2,17 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { AuthModuleState } from '@modules/authentication/store';
-import { selectRegisterLoading } from '@modules/authentication/store/selectors/auth.selectors';
 import { PopupService } from '@modules/reusable';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { AuthenticationService } from '../../services';
+import { AuthModuleState } from '../../store';
 import * as authActions from '../../store/actions';
+import { selectRegisterLoading } from '../../store/selectors';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,7 @@ import * as authActions from '../../store/actions';
 export class RegisterComponent implements OnDestroy {
   registerForm: AppFormGroup;
   routes: IRoutesConst;
-  private stateSubscription;
+  private registerForm$: Subscription;
 
   constructor(
     private authService: AuthenticationService,
@@ -39,13 +40,9 @@ export class RegisterComponent implements OnDestroy {
       repeatPassword: new AppFormControl('', [Validators.required, equalityValidator('password')]),
     });
     this.routes = ROUTES_PATH;
-    this.stateSubscription = this.store.pipe(select(selectRegisterLoading)).subscribe((res) => {
+    this.registerForm$ = this.store.pipe(select(selectRegisterLoading)).subscribe((res) => {
       res === true ? this.registerForm.disable() : this.registerForm.enable();
     });
-  }
-
-  ngOnDestroy(): void {
-    this.stateSubscription.unsubscribe();
   }
 
   get email() {
@@ -79,4 +76,8 @@ export class RegisterComponent implements OnDestroy {
   sendCredentials = (): void => {
     this.store.dispatch(authActions.registerUser({ ...this.formData, password: this.password.value }));
   };
+
+  ngOnDestroy(): void {
+    this.registerForm$.unsubscribe();
+  }
 }

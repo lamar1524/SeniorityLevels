@@ -2,15 +2,16 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { AuthModuleState } from '@modules/authentication/store';
-import { selectLoginLoading } from '@modules/authentication/store/selectors/auth.selectors';
 import { PopupService } from '@modules/reusable';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { AuthenticationService } from '../../services';
+import { AuthModuleState } from '../../store';
 import * as authActions from '../../store/actions';
+import { selectLoginLoading } from '../../store/selectors';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ import * as authActions from '../../store/actions';
 export class LoginComponent implements OnDestroy {
   readonly loginForm: AppFormGroup;
   readonly routes: IRoutesConst;
-  private stateSubscription;
+  private loginForm$: Subscription;
 
   constructor(
     private router: Router,
@@ -35,13 +36,9 @@ export class LoginComponent implements OnDestroy {
       password: new AppFormControl('', [Validators.required, Validators.minLength(6)]),
     });
     this.routes = ROUTES_PATH;
-    this.stateSubscription = this.store.select(selectLoginLoading).subscribe((res) => {
+    this.loginForm$ = this.store.select(selectLoginLoading).subscribe((res) => {
       res === true ? this.loginForm.disable() : this.loginForm.enable();
     });
-  }
-
-  ngOnDestroy(): void {
-    this.stateSubscription.unsubscribe();
   }
 
   get email() {
@@ -55,4 +52,8 @@ export class LoginComponent implements OnDestroy {
   sendCredentials = (): void => {
     this.store.dispatch(authActions.loginUser({ email: this.email.value, password: this.password.value }));
   };
+
+  ngOnDestroy(): void {
+    this.loginForm$.unsubscribe();
+  }
 }

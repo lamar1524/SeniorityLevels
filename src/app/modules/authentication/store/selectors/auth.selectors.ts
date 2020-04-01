@@ -1,4 +1,9 @@
-import { AuthModuleState } from '@modules/authentication/store';
+import { createSelector } from '@ngrx/store';
 
-export const selectRegisterLoading = (state: AuthModuleState) => state.auth.registerLoading;
-export const selectLoginLoading = (state: AuthModuleState) => state.auth.loginLoading;
+import { AuthModuleState } from '@modules/authentication/store';
+import { AuthState } from '@modules/authentication/store/reducers';
+
+export const authSelector = (state: AuthModuleState) => state.auth;
+
+export const selectRegisterLoading = createSelector(authSelector, (state: AuthState) => state.registerLoading);
+export const selectLoginLoading = createSelector(authSelector, (state: AuthState) => state.loginLoading);
