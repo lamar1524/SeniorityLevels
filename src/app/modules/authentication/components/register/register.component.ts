@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -20,9 +20,10 @@ import * as authActions from '../../store/actions';
   styleUrls: ['./register.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
   registerForm: AppFormGroup;
   routes: IRoutesConst;
+  private stateSubscription;
 
   constructor(
     private authService: AuthenticationService,
@@ -39,9 +40,13 @@ export class RegisterComponent {
       repeatPassword: new AppFormControl('', [Validators.required, equalityValidator('password')]),
     });
     this.routes = ROUTES_PATH;
-    this.store.pipe(select(selectRegisterLoading)).subscribe((res) => {
+    this.stateSubscription = this.store.pipe(select(selectRegisterLoading)).subscribe((res) => {
       res === true ? this.registerForm.disable() : this.registerForm.enable();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.stateSubscription.unsubscribe();
   }
 
   get email() {
@@ -72,40 +77,7 @@ export class RegisterComponent {
     };
   }
 
-  // Seems to work fine BUT, when I try to register to email that is already taken, error is thrown and my registerUserFail action is
-  // not being called
   sendCredentials = (): void => {
     this.store.dispatch(authActions.registerUser({ ...this.formData, password: this.password.value }));
-  };
-
-  // Kinda backup
-  sendCredentials2 = (): void => {
-    this.registerForm.disable();
-    this.authService
-      .registerUser(this.email.value, this.password.value)
-      .pipe(
-        finalize(() => {
-          this.registerForm.enable();
-        }),
-      )
-      .subscribe(
-        (user) => {
-          this.authService.provideAdditionalUserData(this.formData, user.user.uid).subscribe(
-            () => {
-              this.registerForm.enable();
-              this.popupService.success('You successfully registered');
-              this.router.navigate([this.routes.home]);
-            },
-            (error) => {
-              this.registerForm.enable();
-              this.popupService.error(error.message);
-            },
-          );
-        },
-        ({ message }) => {
-          this.registerForm.enable();
-          this.popupService.error(message);
-        },
-      );
   };
 }

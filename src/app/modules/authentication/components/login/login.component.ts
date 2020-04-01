@@ -1,13 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
+import { AuthState } from '@modules/authentication/store';
+import { selectLoginLoading } from '@modules/authentication/store/selectors/auth.selectors';
 import { PopupService } from '@modules/reusable';
+import { Store } from '@ngrx/store';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from '../../services';
+import * as authActions from '../../store/actions';
 
 @Component({
   selector: 'app-login',
@@ -15,21 +19,30 @@ import { AuthenticationService } from '../../services';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   readonly loginForm: AppFormGroup;
   readonly routes: IRoutesConst;
+  private stateSubscription;
 
   constructor(
     private router: Router,
     private cdRef: ChangeDetectorRef,
     private authService: AuthenticationService,
     private popupService: PopupService,
+    private store: Store<AuthState>,
   ) {
     this.loginForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
       password: new AppFormControl('', [Validators.required, Validators.minLength(6)]),
     });
     this.routes = ROUTES_PATH;
+    this.stateSubscription = this.store.select(selectLoginLoading).subscribe((res) => {
+      res === true ? this.loginForm.disable() : this.loginForm.enable();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.stateSubscription.unsubscribe();
   }
 
   get email() {
@@ -41,32 +54,6 @@ export class LoginComponent {
   }
 
   sendCredentials = (): void => {
-    this.loginForm.disable();
-    this.authService
-      .signIn(this.email.value, this.password.value)
-      .pipe(finalize(() => this.loginForm.enable()))
-      .subscribe(
-        () => this.handleCredentialsSuccess(),
-        (error) => this.popupService.error(error.message),
-      );
+    this.store.dispatch(authActions.loginUser({ email: this.email.value, password: this.password.value }));
   };
-
-  handleCredentialsSuccess(): void {
-    this.authService.getUserRemotely().subscribe(
-      (user) => {
-        this.authService.getTokenFromUser(user).subscribe(
-          (token) => {
-            this.authService.putTokenInSessionStorage(token);
-            this.router.navigate([this.routes.users]);
-          },
-          (error) => {
-            this.popupService.error(error.message);
-          },
-        );
-      },
-      (error) => {
-        this.popupService.error(error.message);
-      },
-    );
-  }
 }
