@@ -6,9 +6,9 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { AuthenticationService } from '@modules/authentication';
 import { PopupService } from '@modules/reusable';
 import { DataSharingService } from '@shared/services';
+import { AuthenticationService } from '../../services';
 import * as authActions from '../actions';
 
 @Injectable()
@@ -66,7 +66,7 @@ export class AuthenticationEffects {
       switchMap((action) =>
         this.authService.signIn(action.email, action.password).pipe(
           map((user) => {
-            return authActions.setUser();
+            return authActions.loadUser();
           }),
           catchError((error) => {
             console.log(error.message);
@@ -78,17 +78,16 @@ export class AuthenticationEffects {
     ),
   );
 
-  setUser$ = createEffect(() =>
+  loadUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(authActions.setUser),
+      ofType(authActions.loadUser),
       switchMap(() =>
         this.authService.getUserRemotely().pipe(
           map((user: User) => {
-            this.dataSharingService.setUser(user);
             if (this.router.url === '/') {
               this.router.navigate([ROUTES_PATH.userProfile]);
             }
-            return authActions.loginUserSuccess();
+            return authActions.loginUserSuccess({ user });
           }),
           catchError(() => of(authActions.loginUserFail())),
         ),

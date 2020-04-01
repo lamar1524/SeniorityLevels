@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
+import { select, Store } from '@ngrx/store';
 import { User } from 'firebase';
 import { filter } from 'rxjs/operators';
 
+import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
+import { AuthModuleState } from '@modules/authentication/store';
+import { selectCurrentUser } from '@modules/authentication/store/selectors';
 import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
-import { DataSharingService } from '@shared/services';
 import { UsersService } from '../../services';
 
 @Component({
@@ -23,12 +25,12 @@ export class UserComponent {
   constructor(
     private usersService: UsersService,
     private skillsService: SkillsService,
-    private dataSharingService: DataSharingService,
     private popupService: PopupService,
     private cdRef: ChangeDetectorRef,
+    private store: Store<AuthModuleState>,
   ) {
-    this.dataSharingService
-      .getUser()
+    this.store
+      .pipe(select(selectCurrentUser))
       .pipe(filter((user) => user !== null))
       .subscribe(
         (user) => {

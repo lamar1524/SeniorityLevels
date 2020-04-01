@@ -1,13 +1,17 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
+import { AuthModuleState } from '@modules/authentication/store';
+import { selectCurrentUser } from '@modules/authentication/store/selectors';
 import { PopupService } from '@modules/reusable';
+import { select, Store } from '@ngrx/store';
 import { DataSharingService } from '@shared/services';
 import { User } from 'firebase';
+import { Subscription } from 'rxjs';
 import { filter, finalize } from 'rxjs/operators';
 import { seniorityEnum } from '../../enums';
 import { SlugTextifyPipe } from '../../pipes';
@@ -20,7 +24,7 @@ import { SkillsService } from '../../services';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [SlugTextifyPipe],
 })
-export class SkillComponent {
+export class SkillComponent implements OnDestroy {
   private catTitle: string;
   private subCategories: ISubCategoryDescription[];
   private chosenSubCat: ISubCategoryDescription;
@@ -29,6 +33,7 @@ export class SkillComponent {
   private clickable: boolean;
   private currentUser: User;
   private routes: IRoutesConst;
+  private currentUserSub$: Subscription;
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -40,6 +45,7 @@ export class SkillComponent {
     private textifyPipe: SlugTextifyPipe,
     private popupService: PopupService,
     private titleService: Title,
+    private store: Store<AuthModuleState>,
   ) {
     this.routes = ROUTES_PATH;
     this.activatedRoute.params.subscribe(
@@ -77,19 +83,16 @@ export class SkillComponent {
   setInitialValues() {
     this.currentlyDisplayedLevel = seniorityEnum.junior;
     this.clickable = true;
-    this.dataSharingService
-      .getUser()
-      .pipe(filter((user) => user !== null))
-      .subscribe(
-        (user) => {
-          this.currentUser = user;
-          this.cdRef.markForCheck();
-          this.chooseSubCategory(this.subCategories[0], 0);
-        },
-        (error) => {
-          this.popupService.error(error.message);
-        },
-      );
+    this.currentUserSub$ = this.store.pipe(select(selectCurrentUser)).subscribe(
+      (user) => {
+        this.currentUser = user;
+        this.cdRef.markForCheck();
+        this.chooseSubCategory(this.subCategories[0], 0);
+      },
+      (error) => {
+        this.popupService.error(error.message);
+      },
+    );
   }
 
   chooseSubCategory(subCat: ISubCategoryDescription, index: number) {
@@ -146,5 +149,9 @@ export class SkillComponent {
   chooseLevel(level: seniorityEnum) {
     this.currentlyDisplayedLevel = level;
     this.cdRef.markForCheck();
+  }
+
+  ngOnDestroy(): void {
+    this.currentUserSub$.unsubscribe();
   }
 }
