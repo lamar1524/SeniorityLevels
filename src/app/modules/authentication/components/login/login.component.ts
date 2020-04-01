@@ -1,15 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { AuthState } from '@modules/authentication/store';
 import { selectLoginLoading } from '@modules/authentication/store/selectors/auth.selectors';
 import { PopupService } from '@modules/reusable';
-import { Store } from '@ngrx/store';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from '../../services';
 import * as authActions from '../../store/actions';
 

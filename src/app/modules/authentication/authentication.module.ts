@@ -5,8 +5,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { MaterialModule } from '@core/material';
-import { AuthenticationEffects } from '@modules/authentication/store/effects/authentication.effects';
-import { authReducer } from '@modules/authentication/store/reducers/authentication.reducers';
+import { AuthenticationEffects } from '@modules/authentication/store/effects';
+import { authReducer } from '@modules/authentication/store/reducers';
 import { SharedUiModule } from '@modules/reusable';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { LoginComponent, RegisterComponent } from './components';

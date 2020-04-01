@@ -1,8 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from 'firebase';
 
 import { IUser, IUserRegisterData } from '@core/interfaces';
-import UserCredential = firebase.auth.UserCredential;
 
 export const registerUser = createAction('[User] Register', props<IUserRegisterData>());
 export const provideAdditionalData = createAction('[User] Provide additional data', props<IUser>());
