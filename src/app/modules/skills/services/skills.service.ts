@@ -4,7 +4,7 @@ import { from, of, Observable } from 'rxjs';
 import { filter, first, map } from 'rxjs/operators';
 
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
-import { ICategoryCount, ISeniorityCount, ISeniorityValues } from '@core/interfaces';
+import { ICategoryCount, ISeniorityCount, ISeniorityValues, ISubCategoryValue } from '@core/interfaces';
 import { default as data } from './data';
 
 @Injectable({
@@ -71,7 +71,7 @@ export class SkillsService {
     );
   }
 
-  getSummaryProgress(computes: ICategoryCount[]) {
+  getSummaryProgress(computes: ICategoryCount[]): ISubCategoryValue[] {
     return computes.map((element) => ({
       title: element.title,
       levels: this.getProgressOf(element.levels, CATEGORIES_AMOUNT[element.title]),

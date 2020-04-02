@@ -7,9 +7,9 @@ import { filter } from 'rxjs/operators';
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { AuthModuleState } from '@modules/authentication/store';
 import { selectCurrentUser } from '@modules/authentication/store';
-import { UsersModuleState } from '../../store';
-import { selectTotalSkillsProgress } from '../../store';
 import * as usersActions from '../../store/actions';
+import { UsersModuleState } from '../../store/reducers';
+import { selectTotalSkillsProgress } from '../../store/selectors';
 
 @Component({
   selector: 'app-user',
@@ -23,11 +23,7 @@ export class UserComponent implements OnDestroy {
   private progress$: Observable<ISeniorityCount>;
   data: ICategoryProgress[];
 
-  constructor(
-    private cdRef: ChangeDetectorRef,
-    private authStore: Store<AuthModuleState>,
-    private usersStore: Store<UsersModuleState>,
-  ) {
+  constructor(private cdRef: ChangeDetectorRef, private authStore: Store<AuthModuleState>, private usersStore: Store<UsersModuleState>) {
     this.user$ = this.authStore
       .pipe(select(selectCurrentUser))
       .pipe(filter((user) => user !== null))

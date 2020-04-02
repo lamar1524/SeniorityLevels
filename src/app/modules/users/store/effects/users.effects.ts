@@ -1,16 +1,26 @@
 import { Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { ROUTES_PATH } from '@constants/routes.constants';
+import { UsersService } from '@modules/users';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
-import { ISeniorityValues } from '@core/interfaces';
+import { ISeniorityValues, IUser } from '@core/interfaces';
 import { SkillsService } from '@modules/skills';
 import * as usersActions from '../actions';
 
 @Injectable()
 export class UsersEffects {
-  constructor(private actions$: Actions, private skillsService: SkillsService) {}
+  constructor(
+    private router: Router,
+    private actions$: Actions,
+    private skillsService: SkillsService,
+    private usersService: UsersService,
+    private titleService: Title,
+  ) {}
 
   loadTotalProgress$ = createEffect(() =>
     this.actions$.pipe(
@@ -21,6 +31,40 @@ export class UsersEffects {
             return usersActions.computeTotalProgressSuccess({ values: this.skillsService.getProgressOf(res, CATEGORIES_AMOUNT.total) });
           }),
           catchError(() => of(usersActions.computeTotalProgressFail())),
+        ),
+      ),
+    ),
+  );
+
+  loadOtherUserDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersActions.loadOtherUserDetails),
+      switchMap((action) =>
+        this.usersService.getUserByKey(action.userId).pipe(
+          map((res: IUser) => {
+            this.titleService.setTitle(`${res.values.firstName} ${res.values.lastName}`);
+            return usersActions.loadOtherUserSuccess({
+              user: { firstName: res.values.firstName, lastName: res.values.lastName, email: res.values.email },
+            });
+          }),
+          catchError(() => {
+            this.router.navigate([ROUTES_PATH.usersList]);
+            return of(usersActions.loadOtherUserDetailsFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  loadSkillsWithTitles$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersActions.loadSkillsWithTitles),
+      switchMap((action) =>
+        this.skillsService.getAllSkillsWithTitles(action.userId).pipe(
+          map((res) => {
+            return usersActions.loadSkillsWithTitlesSuccess({ values: this.skillsService.getSummaryProgress(res) });
+          }),
+          catchError(() => of(usersActions.loadSkillsWithTitlesFail())),
         ),
       ),
     ),
