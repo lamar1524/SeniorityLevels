@@ -1,15 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { User } from 'firebase';
+import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { AuthModuleState } from '@modules/authentication/store';
 import { selectCurrentUser } from '@modules/authentication/store/selectors';
 import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
+import { UsersModuleState } from '@modules/users/store/reducers';
+import { selectTotalSkillsProgress } from '@modules/users/store/selectors';
 import { UsersService } from '../../services';
+import * as usersActions from '../../store/actions';
 
 @Component({
   selector: 'app-user',
@@ -17,9 +20,10 @@ import { UsersService } from '../../services';
   styleUrls: ['./user.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserComponent {
+export class UserComponent implements OnDestroy {
   private userDetails: User;
-  private progress: ISeniorityCount;
+  private userSub$: Subscription;
+  private progress$: Observable<ISeniorityCount>;
   data: ICategoryProgress[];
 
   constructor(
@@ -27,40 +31,24 @@ export class UserComponent {
     private skillsService: SkillsService,
     private popupService: PopupService,
     private cdRef: ChangeDetectorRef,
-    private store: Store<AuthModuleState>,
+    private authStore: Store<AuthModuleState>,
+    private usersStore: Store<UsersModuleState>,
   ) {
-    this.store
+    this.userSub$ = this.authStore
       .pipe(select(selectCurrentUser))
       .pipe(filter((user) => user !== null))
-      .subscribe(
-        (user) => {
-          this.userDetails = user;
-          this.getProgressOf(this.userDetails.uid);
-        },
-        (error) => {
-          this.popupService.error(error.message);
-        },
-      );
-    this.progress = {
-      junior: 0,
-      middle: 0,
-      senior: 0,
-    };
+      .subscribe((user) => {
+        this.userDetails = user;
+        this.usersStore.dispatch(usersActions.loadTotalProgress({ userId: this.userDetails.uid }));
+      });
+    this.progress$ = this.usersStore.pipe(select(selectTotalSkillsProgress));
   }
 
-  get contentLoaded() {
+  get userLoaded() {
     return !!this.userDetails;
   }
 
-  getProgressOf(userId: string) {
-    this.skillsService.getAllSkillsValues(userId).subscribe(
-      (res) => {
-        this.progress = this.skillsService.getProgressOf(res, CATEGORIES_AMOUNT.total);
-        this.cdRef.markForCheck();
-      },
-      (error) => {
-        this.popupService.error(error.message);
-      },
-    );
+  ngOnDestroy(): void {
+    this.userSub$.unsubscribe();
   }
 }

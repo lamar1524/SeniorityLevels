@@ -3,15 +3,15 @@ import { User } from 'firebase';
 
 import { IUser, IUserRegisterData } from '@core/interfaces';
 
-export const registerUser = createAction('[User] Register', props<IUserRegisterData>());
-export const provideAdditionalData = createAction('[User] Provide additional data', props<IUser>());
-export const registerUserSuccess = createAction('[User] Register success');
-export const registerUserFail = createAction('[User] Register fail');
+export const registerUser = createAction('[Auth] Register', props<IUserRegisterData>());
+export const provideAdditionalData = createAction('[Auth] Provide additional data', props<IUser>());
+export const registerUserSuccess = createAction('[Auth] Register success');
+export const registerUserFail = createAction('[Auth] Register fail');
 
-export const loginUser = createAction('[User] Login', props<{ email: string; password: string }>());
-export const loadUserLogin = createAction('[User] Set logged');
-export const loginUserSuccess = createAction('[User] Login success', props<{ user: User }>());
-export const loginUserFail = createAction('[User] Login fail');
-export const clearUser = createAction('[User] Clear');
+export const loginUser = createAction('[Auth] Login', props<{ email: string; password: string }>());
+export const loadUserLogin = createAction('[Auth] Set logged');
+export const loginUserSuccess = createAction('[Auth] Login success', props<{ user: User }>());
+export const loginUserFail = createAction('[Auth] Login fail');
+export const clearUser = createAction('[Auth] Clear');
 
-export const loadUserRefresh = createAction('[User] Load user');
+export const loadUserRefresh = createAction('[Auth] Load user');

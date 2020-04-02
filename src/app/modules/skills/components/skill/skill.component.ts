@@ -33,7 +33,7 @@ export class SkillComponent implements OnDestroy {
   private clickable: boolean;
   private currentUser: User;
   private routes: IRoutesConst;
-  private currentUserSub$: Subscription;
+  private currentUser$: Subscription;
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -83,7 +83,7 @@ export class SkillComponent implements OnDestroy {
   setInitialValues() {
     this.currentlyDisplayedLevel = seniorityEnum.junior;
     this.clickable = true;
-    this.currentUserSub$ = this.store.pipe(select(selectCurrentUser)).subscribe(
+    this.currentUser$ = this.store.pipe(select(selectCurrentUser)).subscribe(
       (user) => {
         this.currentUser = user;
         this.cdRef.markForCheck();
@@ -152,6 +152,6 @@ export class SkillComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.currentUserSub$.unsubscribe();
+    this.currentUser$.unsubscribe();
   }
 }
