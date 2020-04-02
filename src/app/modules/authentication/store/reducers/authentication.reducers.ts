@@ -3,6 +3,10 @@ import { User } from 'firebase';
 
 import * as authActions from '../actions';
 
+export interface AuthModuleState {
+  auth: AuthState;
+}
+
 export interface AuthState {
   registerLoading: boolean;
   loginLoading: boolean;

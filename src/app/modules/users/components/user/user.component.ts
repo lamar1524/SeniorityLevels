@@ -6,12 +6,12 @@ import { filter } from 'rxjs/operators';
 
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { AuthModuleState } from '@modules/authentication/store';
-import { selectCurrentUser } from '@modules/authentication/store/selectors';
+import { selectCurrentUser } from '@modules/authentication/store';
 import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
-import { UsersModuleState } from '@modules/users/store/reducers';
-import { selectTotalSkillsProgress } from '@modules/users/store/selectors';
 import { UsersService } from '../../services';
+import { UsersModuleState } from '../../store';
+import { selectTotalSkillsProgress } from '../../store';
 import * as usersActions from '../../store/actions';
 
 @Component({

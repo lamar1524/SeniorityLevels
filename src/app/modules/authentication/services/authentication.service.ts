@@ -10,8 +10,8 @@ import Reference = firebase.database.Reference;
 import UserCredential = firebase.auth.UserCredential;
 
 import { IUserValues } from '@core/interfaces';
-import { AuthModuleState } from '@modules/authentication/store';
-import { clearUser } from '../store/actions';
+import * as authActions from '../store/actions';
+import { AuthModuleState } from '../store/reducers';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class AuthenticationService {
 
   logout = (): void => {
     this.firebaseAuth.signOut();
-    this.store.dispatch(clearUser());
+    this.store.dispatch(authActions.clearUser());
   };
 
   isLoggedIn = (): Observable<boolean> => {

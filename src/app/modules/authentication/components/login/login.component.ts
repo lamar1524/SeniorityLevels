@@ -9,8 +9,8 @@ import { IRoutesConst } from '@core/interfaces';
 import { PopupService } from '@modules/reusable';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { AuthenticationService } from '../../services';
-import { AuthModuleState } from '../../store';
 import * as authActions from '../../store/actions';
+import { AuthModuleState } from '../../store/reducers';
 import { selectLoginLoading } from '../../store/selectors';
 
 @Component({

@@ -1,7 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { AuthModuleState } from '../index';
-import { AuthState } from '../reducers';
+import { AuthModuleState, AuthState } from '../reducers';
 
 export const authSelector = (state: AuthModuleState) => state.auth;
 

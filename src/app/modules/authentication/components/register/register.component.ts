@@ -10,8 +10,8 @@ import { PopupService } from '@modules/reusable';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { AuthenticationService } from '../../services';
-import { AuthModuleState } from '../../store';
 import * as authActions from '../../store/actions';
+import { AuthModuleState } from '../../store/reducers';
 import { selectRegisterLoading } from '../../store/selectors';
 
 @Component({

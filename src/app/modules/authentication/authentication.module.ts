@@ -7,11 +7,11 @@ import { StoreModule } from '@ngrx/store';
 
 import { AUTHENTICATION_FEATURE } from '@constants/authentication.constants';
 import { MaterialModule } from '@core/material';
-import { AuthenticationEffects } from '@modules/authentication/store/effects';
 import { SharedUiModule } from '@modules/reusable';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { LoginComponent, RegisterComponent } from './components';
 import { AuthenticationService } from './services';
+import { AuthenticationEffects } from './store/effects';
 import { authReducer } from './store/reducers';
 
 @NgModule({

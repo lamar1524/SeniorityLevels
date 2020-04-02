@@ -5,9 +5,8 @@ import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 
 import { AuthenticationService } from '@modules/authentication';
-import { AuthModuleState } from '@modules/authentication/store';
+import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import * as authActions from '@modules/authentication/store/actions';
-import { selectCurrentUser } from '@modules/authentication/store/selectors';
 
 @Injectable({
   providedIn: 'root',

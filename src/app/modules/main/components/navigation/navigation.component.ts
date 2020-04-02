@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
-import { AuthModuleState } from '@modules/authentication/store';
-import { selectCurrentUser } from '@modules/authentication/store/selectors';
+import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { DataSharingService } from '@shared/services';
 
 @Component({
