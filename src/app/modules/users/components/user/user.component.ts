@@ -22,7 +22,7 @@ import * as usersActions from '../../store/actions';
 })
 export class UserComponent implements OnDestroy {
   private userDetails: User;
-  private userSub$: Subscription;
+  private user$: Subscription;
   private progress$: Observable<ISeniorityCount>;
   data: ICategoryProgress[];
 
@@ -34,7 +34,7 @@ export class UserComponent implements OnDestroy {
     private authStore: Store<AuthModuleState>,
     private usersStore: Store<UsersModuleState>,
   ) {
-    this.userSub$ = this.authStore
+    this.user$ = this.authStore
       .pipe(select(selectCurrentUser))
       .pipe(filter((user) => user !== null))
       .subscribe((user) => {
@@ -49,6 +49,6 @@ export class UserComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.userSub$.unsubscribe();
+    this.user$.unsubscribe();
   }
 }
