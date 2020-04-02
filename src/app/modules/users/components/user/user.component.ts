@@ -7,9 +7,6 @@ import { filter } from 'rxjs/operators';
 import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { AuthModuleState } from '@modules/authentication/store';
 import { selectCurrentUser } from '@modules/authentication/store';
-import { PopupService } from '@modules/reusable';
-import { SkillsService } from '@modules/skills';
-import { UsersService } from '../../services';
 import { UsersModuleState } from '../../store';
 import { selectTotalSkillsProgress } from '../../store';
 import * as usersActions from '../../store/actions';
@@ -27,9 +24,6 @@ export class UserComponent implements OnDestroy {
   data: ICategoryProgress[];
 
   constructor(
-    private usersService: UsersService,
-    private skillsService: SkillsService,
-    private popupService: PopupService,
     private cdRef: ChangeDetectorRef,
     private authStore: Store<AuthModuleState>,
     private usersStore: Store<UsersModuleState>,

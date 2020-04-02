@@ -1,14 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { PopupService } from '@modules/reusable';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { AuthenticationService } from '../../services';
 import * as authActions from '../../store/actions';
 import { AuthModuleState } from '../../store/reducers';
 import { selectLoginLoading } from '../../store/selectors';
@@ -24,13 +21,7 @@ export class LoginComponent implements OnDestroy {
   readonly routes: IRoutesConst;
   private loginForm$: Subscription;
 
-  constructor(
-    private router: Router,
-    private cdRef: ChangeDetectorRef,
-    private authService: AuthenticationService,
-    private popupService: PopupService,
-    private store: Store<AuthModuleState>,
-  ) {
+  constructor(private store: Store<AuthModuleState>) {
     this.loginForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
       password: new AppFormControl('', [Validators.required, Validators.minLength(6)]),

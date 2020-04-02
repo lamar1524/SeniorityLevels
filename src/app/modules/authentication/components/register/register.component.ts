@@ -1,15 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { PopupService } from '@modules/reusable';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { AuthenticationService } from '../../services';
 import * as authActions from '../../store/actions';
 import { AuthModuleState } from '../../store/reducers';
 import { selectRegisterLoading } from '../../store/selectors';
@@ -25,13 +22,7 @@ export class RegisterComponent implements OnDestroy {
   routes: IRoutesConst;
   private registerForm$: Subscription;
 
-  constructor(
-    private authService: AuthenticationService,
-    private chRef: ChangeDetectorRef,
-    private router: Router,
-    private popupService: PopupService,
-    private store: Store<AuthModuleState>,
-  ) {
+  constructor(private store: Store<AuthModuleState>) {
     this.registerForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
       firstName: new AppFormControl('', [Validators.required]),
