@@ -9,10 +9,6 @@ export interface IUser {
   values: IUserValues;
 }
 
-export interface ILinkedUser extends IUser {
-  profileLink: string;
-}
-
 export interface IUserRegisterData extends IUserValues {
   password: string;
 }

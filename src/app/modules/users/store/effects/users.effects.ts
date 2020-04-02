@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { ROUTES_PATH } from '@constants/routes.constants';
-import { UsersService } from '@modules/users';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
+import { ROUTES_PATH } from '@constants/routes.constants';
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
 import { ISeniorityValues, IUser } from '@core/interfaces';
 import { SkillsService } from '@modules/skills';
+import { UsersService } from '@modules/users';
 import * as usersActions from '../actions';
 
 @Injectable()
@@ -65,6 +65,18 @@ export class UsersEffects {
             return usersActions.loadSkillsWithTitlesSuccess({ values: this.skillsService.getSummaryProgress(res) });
           }),
           catchError(() => of(usersActions.loadSkillsWithTitlesFail())),
+        ),
+      ),
+    ),
+  );
+
+  loadUsersList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersActions.loadUsersList),
+      switchMap((action) =>
+        this.usersService.getUsersList().pipe(
+          map((list) => usersActions.loadUsersListSuccess({ users: list })),
+          catchError(() => of(usersActions.loadUsersListFail())),
         ),
       ),
     ),

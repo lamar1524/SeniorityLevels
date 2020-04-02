@@ -1,10 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { ILinkedUser, IRoutesConst, IUser } from '@core/interfaces';
-import { PopupService } from '@modules/reusable';
+import { IRoutesConst, IUser } from '@core/interfaces';
 import { DISPLAYED_COLUMNS } from '../../consts';
-import { UsersService } from '../../services';
+import * as usersActions from '../../store/actions';
+import { UsersModuleState } from '../../store/reducers';
+import { selectUsersList } from '../../store/selectors';
 
 @Component({
   selector: 'app-users-list',
@@ -15,32 +18,12 @@ import { UsersService } from '../../services';
 export class UsersListComponent {
   readonly routes: IRoutesConst;
   readonly displayedColumns: string[];
-  users: ILinkedUser[];
+  users$: Observable<IUser[]>;
 
-  constructor(
-    private usersService: UsersService,
-    private cdRef: ChangeDetectorRef,
-    private popupService: PopupService,
-  ) {
+  constructor(private store: Store<UsersModuleState>) {
     this.routes = ROUTES_PATH;
-    this.usersService.getUsersList().subscribe(
-      (response) => {
-        this.users = UsersListComponent.usersToLinkedUsers(response);
-        this.cdRef.markForCheck();
-      },
-      (error) => {
-        this.popupService.error(error.message);
-      },
-    );
+    this.store.dispatch(usersActions.loadUsersList());
+    this.users$ = this.store.pipe(select(selectUsersList));
     this.displayedColumns = DISPLAYED_COLUMNS;
-  }
-
-  static usersToLinkedUsers(tab: IUser[]): ILinkedUser[] {
-    return tab.map(
-      (element: IUser): ILinkedUser => ({
-        ...element,
-        profileLink: `${ROUTES_PATH.otherUserProfile}/${element.key}`,
-      }),
-    );
   }
 }

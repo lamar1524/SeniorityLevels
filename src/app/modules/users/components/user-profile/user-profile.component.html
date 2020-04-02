@@ -9,7 +9,7 @@
     <div class="profile__summary">
       <h3>Seniority levels:</h3>
       Currently displayed level: <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select>
-      <div class="levels" *ngIf="(loading | async) === false; else spinner">
+      <div class="levels" *ngIf="(loading$ | async) === false; else spinner">
         <div class="seniority" *ngFor="let category of categories$ | async">
           <p>{{ category?.title }} {{ (category?.levels)[chosenLevel] }}%</p>
           <mat-progress-bar class="progress__bar" mode="determinate" [value]="(category?.levels)[chosenLevel]"></mat-progress-bar>

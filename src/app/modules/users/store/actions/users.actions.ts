@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { ISeniorityCount, ISubCategoryValue, IUserValues } from '@core/interfaces';
+import { ISeniorityCount, ISubCategoryValue, IUser, IUserValues } from '@core/interfaces';
 
 export const loadTotalProgress = createAction('[Users] Load skills', props<{ userId: string }>());
 export const computeTotalProgressSuccess = createAction('[Users] Loading progress success', props<{ values: ISeniorityCount }>());
@@ -16,3 +16,7 @@ export const loadSkillsWithTitlesSuccess = createAction(
   props<{ values: ISubCategoryValue[] }>(),
 );
 export const loadSkillsWithTitlesFail = createAction('[Users] Load users skills with titles fail');
+
+export const loadUsersList = createAction('[Users] Load users list');
+export const loadUsersListSuccess = createAction('[Users] Load users list success', props<{ users: IUser[] }>());
+export const loadUsersListFail = createAction('[Users] Load users list fail');
