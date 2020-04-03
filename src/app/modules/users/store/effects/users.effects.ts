@@ -33,7 +33,6 @@ export class UsersEffects {
             return usersActions.computeTotalProgressSuccess({ values: this.skillsService.getProgressOf(res, CATEGORIES_AMOUNT.total) });
           }),
           catchError((error) => {
-            this.popupService.error(error.message);
             return of(usersActions.computeTotalProgressFail());
           }),
         ),
