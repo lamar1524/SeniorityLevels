@@ -6,12 +6,18 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { ISeniorityValues } from '@core/interfaces';
+import { PopupService } from '@modules/reusable';
 import { SkillsService } from '../../services';
 import * as skillsActions from '../../store/actions';
 
 @Injectable()
 export class SkillsEffects {
-  constructor(private actions$: Actions, private skillsService: SkillsService, private router: Router) {}
+  constructor(
+    private actions$: Actions,
+    private skillsService: SkillsService,
+    private router: Router,
+    private popupService: PopupService,
+  ) {}
 
   loadSkills$ = createEffect(() =>
     this.actions$.pipe(
@@ -19,7 +25,10 @@ export class SkillsEffects {
       switchMap((action) =>
         this.skillsService.getSkillsData().pipe(map((data) => skillsActions.loadSkillsNamesSuccess({ categories: data }))),
       ),
-      catchError(() => of(skillsActions.loadSkillsNamesFail())),
+      catchError((error) => {
+        this.popupService.error(error.message);
+        return of(skillsActions.loadSkillsNamesFail());
+      }),
     ),
   );
 
@@ -31,6 +40,7 @@ export class SkillsEffects {
           map((res) => {
             const subCategory = res.filter((element) => element.title === action.categoryName)[0];
             if (subCategory === undefined) {
+              this.popupService.error('Wrong route path!');
               this.router.navigate([ROUTES_PATH.skills]);
               return skillsActions.loadSkillValuesByNameFail();
             }
@@ -38,7 +48,8 @@ export class SkillsEffects {
               subCat: subCategory,
             });
           }),
-          catchError(() => {
+          catchError((error) => {
+            this.popupService.error(error.message);
             this.router.navigate([ROUTES_PATH.skills]);
             return of(skillsActions.loadSkillValuesByNameFail());
           }),
@@ -53,7 +64,10 @@ export class SkillsEffects {
       switchMap((action) =>
         this.skillsService.getSkillsBySubCategory(action.catTitle, action.subCatTitle, action.userId).pipe(
           map((res: ISeniorityValues) => skillsActions.loadSkillsBySubCategorySuccess({ levels: res })),
-          catchError(() => of(skillsActions.loadSkillsBySubCategoryFail())),
+          catchError((error) => {
+            this.popupService.error(error.message);
+            return of(skillsActions.loadSkillsBySubCategoryFail());
+          }),
         ),
       ),
     ),
@@ -64,8 +78,14 @@ export class SkillsEffects {
       ofType(skillsActions.sendSkillUpdate),
       switchMap((action) =>
         this.skillsService.setUsersSkills(action.catTitle, action.subCatTitle, action.levels, action.userId).pipe(
-          map((res) => skillsActions.sendSkillUpdateSuccess()),
-          catchError(() => of(skillsActions.sendSkillUpdateFail())),
+          map((res) => {
+            this.popupService.success('You successfully updated your skills');
+            return skillsActions.sendSkillUpdateSuccess();
+          }),
+          catchError((error) => {
+            this.popupService.error(error.message);
+            return of(skillsActions.sendSkillUpdateFail());
+          }),
         ),
       ),
     ),

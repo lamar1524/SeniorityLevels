@@ -8,6 +8,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
 import { ISeniorityValues, IUser } from '@core/interfaces';
+import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
 import { UsersService } from '@modules/users';
 import * as usersActions from '../actions';
@@ -20,6 +21,7 @@ export class UsersEffects {
     private skillsService: SkillsService,
     private usersService: UsersService,
     private titleService: Title,
+    private popupService: PopupService,
   ) {}
 
   loadTotalProgress$ = createEffect(() =>
@@ -30,7 +32,10 @@ export class UsersEffects {
           map((res: ISeniorityValues[]) => {
             return usersActions.computeTotalProgressSuccess({ values: this.skillsService.getProgressOf(res, CATEGORIES_AMOUNT.total) });
           }),
-          catchError(() => of(usersActions.computeTotalProgressFail())),
+          catchError((error) => {
+            this.popupService.error(error.message);
+            return of(usersActions.computeTotalProgressFail());
+          }),
         ),
       ),
     ),
@@ -47,7 +52,8 @@ export class UsersEffects {
               user: { firstName: res.values.firstName, lastName: res.values.lastName, email: res.values.email },
             });
           }),
-          catchError(() => {
+          catchError((error) => {
+            this.popupService.error(error.message);
             this.router.navigate([ROUTES_PATH.usersList]);
             return of(usersActions.loadOtherUserDetailsFail());
           }),
