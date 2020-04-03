@@ -4,20 +4,20 @@ import { from, of, Observable } from 'rxjs';
 import { filter, first, map } from 'rxjs/operators';
 
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
-import { ICategoryCount, ISeniorityCount, ISeniorityValues, ISubCategoryValue } from '@core/interfaces';
+import { ICategoryCount, ICategoryProgress, ISeniorityCount, ISeniorityValues, ISubCategoryValue } from '@core/interfaces';
 import { default as data } from './data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SkillsService {
-  private skillsData;
+  private readonly skillsData: ICategoryProgress[];
 
   constructor(private db: AngularFireDatabase) {
     this.skillsData = data;
   }
 
-  getSkillsData() {
+  getSkillsData(): Observable<ICategoryProgress[]> {
     return of(this.skillsData);
   }
 

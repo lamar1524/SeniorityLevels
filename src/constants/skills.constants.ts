@@ -11,5 +11,6 @@ export const CATEGORIES_AMOUNT = {
   Angular: 14,
   React: 12,
   Vue: 15,
-  Performance: 8
+  Performance: 8,
 };
+export const SKILLS_FEATURE = 'skills';

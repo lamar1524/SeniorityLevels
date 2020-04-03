@@ -1,9 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { IRoutesConst } from '@core/interfaces';
-import { PopupService } from '@modules/reusable';
-import { SkillsService } from '../../services';
+import { ICategoryProgress, IRoutesConst } from '@core/interfaces';
+import * as skillsActions from '../../store/actions';
+import { SkillsModuleState } from '../../store/reducers';
+import { selectSkillsCategories } from '../../store/selectors';
 
 @Component({
   selector: 'app-skills',
@@ -12,22 +15,12 @@ import { SkillsService } from '../../services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillsComponent {
-  private data;
+  private data$: Observable<ICategoryProgress[]>;
   private readonly routes: IRoutesConst;
 
-  constructor(private skillsService: SkillsService, private popupService: PopupService) {
+  constructor(private store: Store<SkillsModuleState>) {
     this.routes = ROUTES_PATH;
-    this.skillsService.getSkillsData().subscribe(
-      (res) => {
-        this.data = res;
-      },
-      (error) => {
-        this.popupService.error(error.message);
-      },
-    );
-  }
-
-  get contentLoaded() {
-    return this.data !== undefined;
+    this.store.dispatch(skillsActions.loadSkillsNames());
+    this.data$ = this.store.pipe(select(selectSkillsCategories));
   }
 }
