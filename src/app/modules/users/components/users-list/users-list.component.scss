@@ -50,6 +50,7 @@
 
   @include break(map-get($breakpoints, md)) {
     min-height: calc(100vh - #{$nav-height});
+    position: static;
 
     .users__table {
       width: 60%;

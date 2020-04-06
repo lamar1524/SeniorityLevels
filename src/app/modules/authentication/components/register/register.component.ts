@@ -1,14 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
-import { PopupService } from '@modules/reusable';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { finalize } from 'rxjs/operators';
-import { AuthenticationService } from '../../services';
+import * as authActions from '../../store/actions';
+import { AuthModuleState } from '../../store/reducers';
+import { selectRegisterLoading } from '../../store/selectors';
 
 @Component({
   selector: 'app-register',
@@ -16,16 +17,12 @@ import { AuthenticationService } from '../../services';
   styleUrls: ['./register.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy {
   registerForm: AppFormGroup;
   routes: IRoutesConst;
+  private registerForm$: Subscription;
 
-  constructor(
-    private authService: AuthenticationService,
-    private chRef: ChangeDetectorRef,
-    private router: Router,
-    private popupService: PopupService,
-  ) {
+  constructor(private store: Store<AuthModuleState>) {
     this.registerForm = new AppFormGroup({
       email: new AppFormControl('', [Validators.required, Validators.email]),
       firstName: new AppFormControl('', [Validators.required]),
@@ -34,6 +31,9 @@ export class RegisterComponent {
       repeatPassword: new AppFormControl('', [Validators.required, equalityValidator('password')]),
     });
     this.routes = ROUTES_PATH;
+    this.registerForm$ = this.store.pipe(select(selectRegisterLoading)).subscribe((res) => {
+      res === true ? this.registerForm.disable() : this.registerForm.enable();
+    });
   }
 
   get email() {
@@ -65,32 +65,10 @@ export class RegisterComponent {
   }
 
   sendCredentials = (): void => {
-    this.registerForm.disable();
-    this.authService
-      .registerUser(this.email.value, this.password.value)
-      .pipe(
-        finalize(() => {
-          this.registerForm.enable();
-        }),
-      )
-      .subscribe(
-        (user) => {
-          this.authService.provideAdditionalUserData(this.formData, user.user.uid).subscribe(
-            () => {
-              this.registerForm.enable();
-              this.popupService.success('You successfully registered');
-              this.router.navigate([this.routes.home]);
-            },
-            (error) => {
-              this.registerForm.enable();
-              this.popupService.error(error.message);
-            },
-          );
-        },
-        ({ message }) => {
-          this.registerForm.enable();
-          this.popupService.error(message);
-        },
-      );
+    this.store.dispatch(authActions.registerUser({ ...this.formData, password: this.password.value }));
   };
+
+  ngOnDestroy(): void {
+    this.registerForm$.unsubscribe();
+  }
 }

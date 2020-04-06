@@ -1,21 +1,16 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 
 import { themeEnum } from '@shared/enum/theme.enum';
-import { User } from 'firebase';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataSharingService {
-  private currentUser: BehaviorSubject<User>;
   private currentTheme: BehaviorSubject<themeEnum>;
   private readonly themeKey: string;
 
-  constructor(private firebaseAuth: AngularFireAuth) {
-    this.currentUser = new BehaviorSubject<User>(null);
+  constructor() {
     this.themeKey = 'Theme';
     if (this.getThemeFromStorage()) {
       this.currentTheme = new BehaviorSubject<themeEnum>(this.getThemeFromStorage() as themeEnum);
@@ -23,26 +18,6 @@ export class DataSharingService {
       this.setThemeInStorage(themeEnum.light);
       this.currentTheme = new BehaviorSubject<themeEnum>(themeEnum.light);
     }
-  }
-
-  getUser = (): Observable<User> => {
-    if (this.currentUser.getValue() === null) {
-      this.firebaseAuth.authState.pipe(first()).subscribe(
-        (user) => {
-          this.setUser(user);
-        },
-        () => this.setUser(null),
-      );
-    }
-    return this.currentUser.asObservable();
-  };
-
-  setUser = (user: User) => {
-    this.currentUser.next(user);
-  };
-
-  clearUser() {
-    this.currentUser.next(null);
   }
 
   getTheme = (): Observable<themeEnum> => {

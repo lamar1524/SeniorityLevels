@@ -1,18 +1,18 @@
 <button class="back__button" mat-icon-button [routerLink]="[routes.usersList]">Back</button>
-<div class="container" *ngIf="userDetails">
+<div class="container" *ngIf="userDetails$ | async">
   <div class="profile__wrapper">
     <div class="profile__introduction">
       <div class="profile__photo"><img class="photo__inner" alt="Profile picture" aria-label="Profile picture" [src]="imgSrc" /></div>
-      <span class="profile__name">{{ userDetails.values.firstName }} {{ userDetails.values.lastName }}</span>
-      <p class="profile__email">{{ userDetails.values.email }}</p>
+      <span class="profile__name">{{ (userDetails$ | async).firstName }} {{ (userDetails$ | async).lastName }}</span>
+      <p class="profile__email">{{ (userDetails$ | async).email }}</p>
     </div>
     <div class="profile__summary">
       <h3>Seniority levels:</h3>
       Currently displayed level: <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select>
-      <div class="levels" *ngIf="levelsLoaded; else spinner">
-        <div class="seniority" *ngFor="let category of categories">
-          <p>{{ category.title }} {{ category.levels[chosenLevel] }}%</p>
-          <mat-progress-bar class="progress__bar" mode="determinate" [value]="category.levels[chosenLevel]"></mat-progress-bar>
+      <div class="levels" *ngIf="(loading$ | async) === false; else spinner">
+        <div class="seniority" *ngFor="let category of categories$ | async">
+          <p>{{ category?.title }} {{ (category?.levels)[chosenLevel] }}%</p>
+          <mat-progress-bar class="progress__bar" mode="determinate" [value]="(category?.levels)[chosenLevel]"></mat-progress-bar>
         </div>
         <div *ngIf="!levelsFound">User didn't fill skills yet</div>
       </div>

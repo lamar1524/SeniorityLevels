@@ -1,12 +1,14 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { User } from 'firebase';
 import { Observable } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
+import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { DataSharingService } from '@shared/services';
 
 @Component({
@@ -24,9 +26,10 @@ export class NavigationComponent {
     private authService: AuthenticationService,
     private router: Router,
     private dataSharingService: DataSharingService,
+    private store: Store<AuthModuleState>,
   ) {
     this.routes = ROUTES_PATH;
-    this.currentUser$ = this.dataSharingService.getUser();
+    this.currentUser$ = this.store.select(selectCurrentUser);
   }
 
   toggleNav(): void {
