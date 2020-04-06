@@ -7,13 +7,13 @@ import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
+import { ICategoryProgress, IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { PopupService } from '@modules/reusable';
-import { SkillsModuleState } from '@modules/skills/store/reducers';
 import { seniorityEnum } from '../../enums';
 import { SlugTextifyPipe } from '../../pipes';
 import * as skillsActions from '../../store/actions';
+import { SkillsModuleState } from '../../store/reducers';
 import { selectClickable, selectLevels, selectSkillsSubCategories } from '../../store/selectors';
 
 @Component({
@@ -25,16 +25,14 @@ import { selectClickable, selectLevels, selectSkillsSubCategories } from '../../
 })
 export class SkillComponent implements OnDestroy {
   private catTitle: string;
-  subCategories: ISubCategoryDescription[];
+  private subCategories: ISubCategoryDescription[];
   private chosenSubCat: ISubCategoryDescription;
-  private levels$: Subscription;
+  private subscription: Subscription;
   private levels: ISeniorityValues;
   private currentlyDisplayedLevel: seniorityEnum;
   private clickable$: Observable<boolean>;
   private currentUser: User;
   private routes: IRoutesConst;
-  private currentUser$: Subscription;
-  private skillsDesc$: Subscription;
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -45,41 +43,57 @@ export class SkillComponent implements OnDestroy {
     private authStore: Store<AuthModuleState>,
     private skillsStore: Store<SkillsModuleState>,
   ) {
+    this.subscription = new Subscription();
     this.routes = ROUTES_PATH;
     this.currentlyDisplayedLevel = seniorityEnum.junior;
     this.clickable$ = this.skillsStore.pipe(select(selectClickable));
     this.activatedRoute.params.subscribe((params) => {
-      this.catTitle = this.textifyPipe.transform(params.category);
-      this.skillsStore.dispatch(skillsActions.loadSkillValuesByName({ categoryName: this.catTitle }));
-      this.skillsDesc$ = this.skillsStore
-        .pipe(select(selectSkillsSubCategories))
-        .pipe(filter((res) => res !== null))
-        .subscribe((res) => {
-          this.subCategories = res.subCategories;
-          this.chosenSubCat = this.subCategories[0];
-          this.currentUser$ = this.authStore.pipe(select(selectCurrentUser)).subscribe(
-            (user) => {
-              this.currentUser = user;
-              this.cdRef.markForCheck();
-              this.skillsStore.dispatch(
-                skillsActions.loadSkillsBySubCategory({
-                  catTitle: this.catTitle,
-                  subCatTitle: this.chosenSubCat.title,
-                  userId: this.currentUser.uid,
-                }),
-              );
-            },
-            (error) => {
-              this.popupService.error(error.message);
-            },
-          );
-        });
+      this.routeChangeHandler(params);
     });
-    this.levels$ = this.skillsStore.pipe(select(selectLevels)).subscribe((levels) => (this.levels = levels));
+    const levels$: Subscription = this.skillsStore.pipe(select(selectLevels)).subscribe((levels) => (this.levels = levels));
+    this.subscription.add(levels$);
   }
 
   get contentLoaded() {
     return this.chosenSubCat !== undefined;
+  }
+
+  routeChangeHandler(params) {
+    this.catTitle = this.textifyPipe.transform(params.category);
+    this.skillsStore.dispatch(skillsActions.loadSkillValuesByName({ categoryName: this.catTitle }));
+    const skillsDesc$: Subscription = this.skillsStore
+      .pipe(select(selectSkillsSubCategories))
+      .pipe(filter((res) => res !== null))
+      .subscribe((res: ICategoryProgress) => {
+        this.loadSubCategoriesHandler(res);
+      });
+    this.subscription.add(skillsDesc$);
+  }
+
+  loadSubCategoriesHandler(categories: ICategoryProgress) {
+    this.subCategories = categories.subCategories;
+    this.chosenSubCat = this.subCategories[0];
+    const currentUser$: Subscription = this.authStore.pipe(select(selectCurrentUser)).subscribe(
+      (user: User) => {
+        this.loadUserHandler(user);
+      },
+      (error) => {
+        this.popupService.error(error.message);
+      },
+    );
+    this.subscription.add(currentUser$);
+  }
+
+  loadUserHandler(user: User) {
+    this.currentUser = user;
+    this.cdRef.markForCheck();
+    this.skillsStore.dispatch(
+      skillsActions.loadSkillsBySubCategory({
+        catTitle: this.catTitle,
+        subCatTitle: this.chosenSubCat.title,
+        userId: this.currentUser.uid,
+      }),
+    );
   }
 
   chooseSubCategory(subCat: ISubCategoryDescription, index: number) {
@@ -111,8 +125,6 @@ export class SkillComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.currentUser$.unsubscribe();
-    this.skillsDesc$.unsubscribe();
-    this.levels$.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

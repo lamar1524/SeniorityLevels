@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 
 import { themeEnum } from '@shared/enum/theme.enum';
-import { User } from 'firebase';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
