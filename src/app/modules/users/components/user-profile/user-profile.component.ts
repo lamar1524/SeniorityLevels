@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IRoutesConst, ISubCategoryValue, IUserValues } from '@core/interfaces';
 import { seniorityEnum } from '@modules/skills';
+import { tap } from 'rxjs/operators';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
 import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoading } from '../../store/selectors';
@@ -17,11 +18,11 @@ import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoadi
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserProfileComponent {
-  private readonly userKey: string;
+  readonly userKey: string;
   private readonly routes: IRoutesConst;
   private categories$: Observable<ISubCategoryValue[]>;
   private chosenLevel: seniorityEnum;
-  private readonly levelsLoaded: boolean;
+  private levelsLoaded: boolean;
   private userDetails$: Observable<IUserValues>;
   readonly imgSrc: string;
   private loading$: Observable<boolean>;
@@ -32,10 +33,12 @@ export class UserProfileComponent {
     this.chosenLevel = seniorityEnum.junior;
     this.userKey = this.route.snapshot.paramMap.get('key');
     this.store.dispatch(usersActions.loadOtherUserDetails({ userId: this.userKey }));
-    this.userDetails$ = this.store.pipe(select(selectOtherUserDetails));
     this.store.dispatch(usersActions.loadSkillsWithTitles({ userId: this.userKey }));
-    this.categories$ = this.store.pipe(select(selectOtherUserSkillProgress));
-    this.loading$ = this.store.pipe(select(selectSkillsLoading));
+    this.userDetails$ = this.store.select(selectOtherUserDetails);
+    this.categories$ = this.store.select(selectOtherUserSkillProgress).pipe(
+      tap((skills) => skills === null ? this.levelsLoaded = false : this.levelsLoaded = true)
+    );
+    this.loading$ = this.store.select(selectSkillsLoading);
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';
   }
 

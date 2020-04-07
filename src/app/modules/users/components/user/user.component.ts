@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { User } from 'firebase';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -25,13 +25,13 @@ export class UserComponent implements OnDestroy {
 
   constructor(private cdRef: ChangeDetectorRef, private authStore: Store<AuthModuleState>, private usersStore: Store<UsersModuleState>) {
     this.user$ = this.authStore
-      .pipe(select(selectCurrentUser))
+      .select(selectCurrentUser)
       .pipe(filter((user) => user !== null))
       .subscribe((user) => {
         this.userDetails = user;
         this.usersStore.dispatch(usersActions.loadTotalProgress({ userId: this.userDetails.uid }));
       });
-    this.progress$ = this.usersStore.pipe(select(selectTotalSkillsProgress));
+    this.progress$ = this.usersStore.select(selectTotalSkillsProgress);
   }
 
   get userLoaded() {
