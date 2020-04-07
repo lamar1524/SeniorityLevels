@@ -3,12 +3,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { loginUser, AuthModuleState } from '@modules/authentication/store';
 import { Store } from '@ngrx/store';
 import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
+import { loginUser, AuthModuleState } from '@modules/authentication/store';
 import { SharedUiModule } from '@modules/reusable';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { LoginComponent } from './login.component';
