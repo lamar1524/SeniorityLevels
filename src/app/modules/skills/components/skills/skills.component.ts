@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
@@ -21,6 +21,6 @@ export class SkillsComponent {
   constructor(private store: Store<SkillsModuleState>) {
     this.routes = ROUTES_PATH;
     this.store.dispatch(skillsActions.loadSkillsNames());
-    this.data$ = this.store.pipe(select(selectSkillsCategories));
+    this.data$ = this.store.select(selectSkillsCategories);
   }
 }

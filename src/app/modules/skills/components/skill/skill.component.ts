@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { User } from 'firebase';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -46,11 +46,11 @@ export class SkillComponent implements OnDestroy {
     this.subscription = new Subscription();
     this.routes = ROUTES_PATH;
     this.currentlyDisplayedLevel = seniorityEnum.junior;
-    this.clickable$ = this.skillsStore.pipe(select(selectClickable));
+    this.clickable$ = this.skillsStore.select(selectClickable);
     this.activatedRoute.params.subscribe((params) => {
       this.routeChangeHandler(params);
     });
-    const levels$: Subscription = this.skillsStore.pipe(select(selectLevels)).subscribe((levels) => (this.levels = levels));
+    const levels$: Subscription = this.skillsStore.select(selectLevels).subscribe((levels) => (this.levels = levels));
     this.subscription.add(levels$);
   }
 
@@ -62,7 +62,7 @@ export class SkillComponent implements OnDestroy {
     this.catTitle = this.textifyPipe.transform(params.category);
     this.skillsStore.dispatch(skillsActions.loadSkillValuesByName({ categoryName: this.catTitle }));
     const skillsDesc$: Subscription = this.skillsStore
-      .pipe(select(selectSkillsSubCategories))
+      .select(selectSkillsSubCategories)
       .pipe(filter((res) => res !== null))
       .subscribe((res: ICategoryProgress) => {
         this.loadSubCategoriesHandler(res);
@@ -73,7 +73,7 @@ export class SkillComponent implements OnDestroy {
   loadSubCategoriesHandler(categories: ICategoryProgress) {
     this.subCategories = categories.subCategories;
     this.chosenSubCat = this.subCategories[0];
-    const currentUser$: Subscription = this.authStore.pipe(select(selectCurrentUser)).subscribe(
+    const currentUser$: Subscription = this.authStore.select(selectCurrentUser).subscribe(
       (user: User) => {
         this.loadUserHandler(user);
       },
