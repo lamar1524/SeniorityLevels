@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { User } from 'firebase';
-import { Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 
 import { UsersService } from './users.service';
 
@@ -18,7 +18,7 @@ describe('UsersService', () => {
           provide: AngularFireDatabase,
           useValue: {
             database: {
-              ref: () => {},
+              ref: () => ({ once: () => of({}) }),
             },
           },
         },
@@ -46,4 +46,27 @@ describe('UsersService', () => {
     });
   });
 
+  describe('getUsersList method', () => {
+    it('should return observable', () => {
+      expect(service.getUsersList() instanceof Observable).toEqual(true);
+    });
+
+    it('should call db.database.ref method', () => {
+      spyOn(db.database, 'ref').and.callThrough();
+      service.getUsersList();
+      expect(db.database.ref).toHaveBeenCalledWith('users');
+    });
+  });
+
+  describe('getUserByKey method', () => {
+    it('should return observable', () => {
+      expect(service.getUserByKey('') instanceof Observable).toEqual(true);
+    });
+
+    it('should call db.database.ref method', () => {
+      spyOn(db.database, 'ref').and.callThrough();
+      service.getUserByKey('test');
+      expect(db.database.ref).toHaveBeenCalledWith('users/test');
+    });
+  });
 });
