@@ -44,10 +44,7 @@ export class AuthenticationEffects {
       ofType(authActions.provideAdditionalData),
       switchMap((action) =>
         this.authService.provideAdditionalUserData(action.values, action.key).pipe(
-          map((user) => {
-            if (user === null) {
-              throw Error('No user found');
-            }
+          map(() => {
             this.router.navigate([ROUTES_PATH.home]);
             this.popupService.success('You successfully registered');
             return authActions.registerUserSuccess();

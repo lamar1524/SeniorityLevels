@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { User } from 'firebase';
-import { Observable } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 import SpyObj = jasmine.SpyObj;
 import createSpyObj = jasmine.createSpyObj;
@@ -85,11 +85,11 @@ describe('Authentication effects', () => {
       });
     });
 
-    it('Should return registerUserFail action', () => {
+    it('Should return registerUserFail action when error thrown', () => {
       scheduler.run(({ hot, cold, expectObservable }) => {
         actions$ = hot('--a', { a: authActions.registerUser(mockRegisterData) });
-        authService.registerUser.and.returnValue(cold('-b|', { b: null }));
-        const expected$ = '---c';
+        authService.registerUser.and.returnValue(throwError(''));
+        const expected$ = '--c';
         expectObservable(authEffects.registerUser$).toBe(expected$, { c: authActions.registerUserFail() });
       });
     });
@@ -105,11 +105,11 @@ describe('Authentication effects', () => {
       });
     });
 
-    it('should return registerUserFail action', () => {
+    it('should return registerUserFail action when error thrown', () => {
       scheduler.run(({ hot, cold, expectObservable }) => {
         actions$ = hot('--a', { a: authActions.provideAdditionalData(additionalDataMock) });
-        authService.provideAdditionalUserData.and.returnValue(cold('-b|', { b: null }));
-        const expected$ = '---c';
+        authService.provideAdditionalUserData.and.returnValue(throwError(''));
+        const expected$ = '--c';
         expectObservable(authEffects.provideAdditionalData$).toBe(expected$, { c: authActions.registerUserFail() });
       });
     });
@@ -138,6 +138,15 @@ describe('Authentication effects', () => {
         expectObservable(authEffects.loginUser$).toBe(expected$, { c: authActions.loginUserFail() });
       });
     });
+
+    it('should return loginUserFail method when error thrown', () => {
+      scheduler.run(({ hot, cold, expectObservable }) => {
+        actions$ = hot('--a', { a: authActions.loginUser(mockLoginData) });
+        authService.signIn.and.returnValue(throwError(''));
+        const expected$ = '--c';
+        expectObservable(authEffects.loginUser$).toBe(expected$, { c: authActions.loginUserFail() });
+      });
+    });
   });
 
   describe('Load logged user effect', () => {
@@ -150,11 +159,20 @@ describe('Authentication effects', () => {
       });
     });
 
-    it('Should return loginUserSuccess action', () => {
+    it('Should return loginUserFail action', () => {
       scheduler.run(({ hot, cold, expectObservable }) => {
         actions$ = hot('--a', { a: authActions.loadUserLogin() });
         authService.getUserRemotely.and.returnValue(cold('-b|', { b: null }));
         const expected$ = '---c';
+        expectObservable(authEffects.loadUserLogin$).toBe(expected$, { c: loginUserFail() });
+      });
+    });
+
+    it('Should return loginUserFail action when error thrown', () => {
+      scheduler.run(({ hot, cold, expectObservable }) => {
+        actions$ = hot('--a', { a: authActions.loadUserLogin() });
+        authService.getUserRemotely.and.returnValue(throwError(''));
+        const expected$ = '--c';
         expectObservable(authEffects.loadUserLogin$).toBe(expected$, { c: loginUserFail() });
       });
     });
