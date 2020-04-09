@@ -65,17 +65,17 @@ export class SkillComponent implements OnDestroy {
       .select(selectSkillsSubCategories)
       .pipe(filter((res) => res !== null))
       .subscribe((res: ICategoryProgress) => {
-        this.loadSubCategoriesHandler(res);
+        this.loadSubCategoriesHandler(res, this.catTitle);
       });
     this.subscription.add(skillsDesc$);
   }
 
-  loadSubCategoriesHandler(categories: ICategoryProgress) {
+  loadSubCategoriesHandler(categories: ICategoryProgress, catTitle: string) {
     this.subCategories = categories.subCategories;
     this.chosenSubCat = this.subCategories[0];
     const currentUser$: Subscription = this.authStore.select(selectCurrentUser).subscribe(
       (user: User) => {
-        this.loadUserHandler(user);
+        this.loadUserHandler(user, catTitle, categories.subCategories[0].title);
       },
       (error) => {
         this.popupService.error(error.message);
@@ -84,14 +84,14 @@ export class SkillComponent implements OnDestroy {
     this.subscription.add(currentUser$);
   }
 
-  loadUserHandler(user: User) {
+  loadUserHandler(user: User, catTitle: string, subCatTitle: string) {
     this.currentUser = user;
     this.cdRef.markForCheck();
     this.skillsStore.dispatch(
       skillsActions.loadSkillsBySubCategory({
-        catTitle: this.catTitle,
-        subCatTitle: this.chosenSubCat.title,
-        userId: this.currentUser.uid,
+        catTitle,
+        subCatTitle,
+        userId: user.uid,
       }),
     );
   }
@@ -107,14 +107,14 @@ export class SkillComponent implements OnDestroy {
     this.chosenSubCat = subCat;
   }
 
-  sendSkill(level: seniorityEnum) {
+  sendSkill(level: seniorityEnum, catTitle: string, subCatTitle: string, levels: ISeniorityValues, userId: string) {
     this.levels[level] = !this.levels[level];
     this.skillsStore.dispatch(
       skillsActions.sendSkillUpdate({
-        catTitle: this.catTitle,
-        subCatTitle: this.chosenSubCat.title,
-        levels: this.levels,
-        userId: this.currentUser.uid,
+        catTitle,
+        subCatTitle,
+        levels,
+        userId,
       }),
     );
   }

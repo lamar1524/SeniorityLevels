@@ -13,7 +13,11 @@
       </div>
     </div>
     <div class="table__column table__content" [ngClass]="{ 'content--active': levels[currentlyDisplayedLevel] }">
-      <div class="table__row" *ngIf="clickable$ | async; else spinner" (click)="sendSkill(currentlyDisplayedLevel)">
+      <div
+        class="table__row"
+        *ngIf="clickable$ | async; else spinner"
+        (click)="sendSkill(currentlyDisplayedLevel, catTitle, chosenSubCat.title, levels, currentUser.uid)"
+      >
         {{ chosenSubCat.levels[currentlyDisplayedLevel] }}
       </div>
       <ng-template #spinner><mat-spinner class="table__spinner"></mat-spinner></ng-template>
