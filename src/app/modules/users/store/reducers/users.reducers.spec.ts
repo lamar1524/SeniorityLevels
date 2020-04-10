@@ -1,6 +1,6 @@
 import { IUserValues } from '@core/interfaces';
 import * as usersActions from '../actions';
-import { initialState, usersReducer, UsersState } from '../reducers';
+import { initialState, usersReducer } from '../reducers';
 
 describe('usersReducer reducer', () => {
   describe('loadTotalProgress', () => {
@@ -19,6 +19,7 @@ describe('usersReducer reducer', () => {
       expect(usersReducer(undefined, usersActions.computeTotalProgressFail)).toEqual(expected);
     });
   });
+
   describe('loadOtherUserDetails', () => {
     it('should change loadingUsersDetails in state when loading initialized', () => {
       const expected = { ...initialState, loadingUsersDetails: true };
