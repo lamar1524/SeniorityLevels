@@ -32,7 +32,6 @@ describe('SkillsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SkillsComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
     store = TestBed.get(Store);
   });
 

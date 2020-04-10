@@ -40,17 +40,16 @@ export class SkillComponent implements OnDestroy {
     @Inject(DOCUMENT) private document: Document,
     private textifyPipe: SlugTextifyPipe,
     private popupService: PopupService,
-    private authStore: Store<AuthModuleState>,
-    private skillsStore: Store<SkillsModuleState>,
+    private store: Store<AuthModuleState | SkillsModuleState>,
   ) {
     this.subscription = new Subscription();
     this.routes = ROUTES_PATH;
     this.currentlyDisplayedLevel = seniorityEnum.junior;
-    this.clickable$ = this.skillsStore.select(selectClickable);
+    this.clickable$ = this.store.select(selectClickable);
     this.activatedRoute.params.subscribe((params) => {
       this.routeChangeHandler(params);
     });
-    const levels$: Subscription = this.skillsStore.select(selectLevels).subscribe((levels) => (this.levels = levels));
+    const levels$: Subscription = this.store.select(selectLevels).subscribe((levels) => (this.levels = levels));
     this.subscription.add(levels$);
   }
 
@@ -60,8 +59,8 @@ export class SkillComponent implements OnDestroy {
 
   routeChangeHandler(params) {
     this.catTitle = this.textifyPipe.transform(params.category);
-    this.skillsStore.dispatch(skillsActions.loadSkillValuesByName({ categoryName: this.catTitle }));
-    const skillsDesc$: Subscription = this.skillsStore
+    this.store.dispatch(skillsActions.loadSkillValuesByName({ categoryName: this.catTitle }));
+    const skillsDesc$: Subscription = this.store
       .select(selectSkillsSubCategories)
       .pipe(filter((res) => res !== null))
       .subscribe((res: ICategoryProgress) => {
@@ -73,7 +72,7 @@ export class SkillComponent implements OnDestroy {
   loadSubCategoriesHandler(categories: ICategoryProgress, catTitle: string) {
     this.subCategories = categories.subCategories;
     this.chosenSubCat = this.subCategories[0];
-    const currentUser$: Subscription = this.authStore.select(selectCurrentUser).subscribe(
+    const currentUser$: Subscription = this.store.select(selectCurrentUser).subscribe(
       (user: User) => {
         this.loadUserHandler(user, catTitle, categories.subCategories[0].title);
       },
@@ -87,7 +86,7 @@ export class SkillComponent implements OnDestroy {
   loadUserHandler(user: User, catTitle: string, subCatTitle: string) {
     this.currentUser = user;
     this.cdRef.markForCheck();
-    this.skillsStore.dispatch(
+    this.store.dispatch(
       skillsActions.loadSkillsBySubCategory({
         catTitle,
         subCatTitle,
@@ -109,7 +108,7 @@ export class SkillComponent implements OnDestroy {
 
   sendSkill(level: seniorityEnum, catTitle: string, subCatTitle: string, levels: ISeniorityValues, userId: string) {
     this.levels[level] = !this.levels[level];
-    this.skillsStore.dispatch(
+    this.store.dispatch(
       skillsActions.sendSkillUpdate({
         catTitle,
         subCatTitle,

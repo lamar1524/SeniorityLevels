@@ -19,8 +19,7 @@ import { SkillComponent } from './skill.component';
 describe('SkillComponent', () => {
   let component: SkillComponent;
   let fixture: ComponentFixture<SkillComponent>;
-  let skillsStore: Store<SkillsModuleState>;
-  let authStore: Store<AuthModuleState>;
+  let store: Store<SkillsModuleState | AuthModuleState>;
   let activeRoute: ActivatedRoute;
 
   beforeEach(() => {
@@ -50,8 +49,7 @@ describe('SkillComponent', () => {
   });
 
   beforeEach(() => {
-    skillsStore = TestBed.get(Store);
-    authStore = TestBed.get(Store);
+    store = TestBed.get(Store);
     activeRoute = TestBed.get(ActivatedRoute);
     spyOn(activeRoute.params, 'subscribe');
     fixture = TestBed.createComponent(SkillComponent);
@@ -66,24 +64,24 @@ describe('SkillComponent', () => {
     const params = { category: 'web-technology' };
 
     it('should dispatch proper action', () => {
-      spyOn(skillsStore, 'dispatch');
+      spyOn(store, 'dispatch');
       component.routeChangeHandler(params);
-      expect(skillsStore.dispatch).toHaveBeenCalledWith(loadSkillValuesByName({ categoryName: 'Web Technology' }));
+      expect(store.dispatch).toHaveBeenCalledWith(loadSkillValuesByName({ categoryName: 'Web Technology' }));
     });
 
     it('should select currentUser', () => {
-      spyOn(skillsStore, 'select').and.returnValue(of({}));
+      spyOn(store, 'select').and.returnValue(of({}));
       component.routeChangeHandler(params);
-      expect(skillsStore.select).toHaveBeenCalledWith(selectSkillsSubCategories);
+      expect(store.select).toHaveBeenCalledWith(selectSkillsSubCategories);
     });
   });
 
   describe('loadSubCategoriesHandler method', () => {
     it('should select currentUser from store', () => {
       spyOn(component, 'loadUserHandler');
-      spyOn(authStore, 'select').and.returnValue(of({}));
+      spyOn(store, 'select').and.returnValue(of({}));
       component.loadSubCategoriesHandler(data[0], 'Web Technology');
-      expect(authStore.select).toHaveBeenCalledWith(selectCurrentUser);
+      expect(store.select).toHaveBeenCalledWith(selectCurrentUser);
     });
   });
 
@@ -94,9 +92,9 @@ describe('SkillComponent', () => {
         catTitle: '',
         subCatTitle: '',
       };
-      spyOn(skillsStore, 'dispatch');
+      spyOn(store, 'dispatch');
       component.loadUserHandler({ uid: '' } as User, '', '');
-      expect(skillsStore.dispatch).toHaveBeenCalledWith(loadSkillsBySubCategory(mockObj));
+      expect(store.dispatch).toHaveBeenCalledWith(loadSkillsBySubCategory(mockObj));
     });
   });
 
@@ -123,9 +121,9 @@ describe('SkillComponent', () => {
         levels: {} as any,
         userId: '',
       };
-      spyOn(skillsStore, 'dispatch');
+      spyOn(store, 'dispatch');
       component.sendSkill(seniorityEnum.junior, '', '', {} as any, '');
-      expect(skillsStore.dispatch).toHaveBeenCalledWith(sendSkillUpdate(mockObj));
+      expect(store.dispatch).toHaveBeenCalledWith(sendSkillUpdate(mockObj));
     });
   });
 });

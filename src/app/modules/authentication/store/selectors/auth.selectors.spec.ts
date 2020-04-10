@@ -1,5 +1,6 @@
-import { AuthModuleState } from '@modules/authentication/store';
 import { User } from 'firebase';
+
+import { AuthModuleState } from '../reducers';
 import * as selectors from './auth.selectors';
 
 describe('Auth selectors', () => {
