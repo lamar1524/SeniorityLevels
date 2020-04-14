@@ -18,9 +18,9 @@ import { selectTotalSkillsProgress } from '../../store/selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserComponent implements OnDestroy {
-  private userDetails: User;
   private user$: Subscription;
-  private progress$: Observable<ISeniorityCount>;
+  userDetails: User;
+  progress$: Observable<ISeniorityCount>;
   data: ICategoryProgress[];
 
   constructor(private cdRef: ChangeDetectorRef, private authStore: Store<AuthModuleState>, private usersStore: Store<UsersModuleState>) {

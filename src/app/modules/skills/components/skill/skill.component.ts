@@ -24,15 +24,15 @@ import { selectClickable, selectLevels, selectSkillsSubCategories } from '../../
   providers: [SlugTextifyPipe],
 })
 export class SkillComponent implements OnDestroy {
-  private catTitle: string;
-  private subCategories: ISubCategoryDescription[];
-  private chosenSubCat: ISubCategoryDescription;
   private subscription: Subscription;
-  private levels: ISeniorityValues;
-  private currentlyDisplayedLevel: seniorityEnum;
-  private clickable$: Observable<boolean>;
-  private currentUser: User;
-  private routes: IRoutesConst;
+  catTitle: string;
+  subCategories: ISubCategoryDescription[];
+  chosenSubCat: ISubCategoryDescription;
+  levels: ISeniorityValues;
+  currentlyDisplayedLevel: seniorityEnum;
+  clickable$: Observable<boolean>;
+  currentUser: User;
+  routes: IRoutesConst;
 
   constructor(
     private cdRef: ChangeDetectorRef,

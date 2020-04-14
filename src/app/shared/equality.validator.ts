@@ -7,6 +7,6 @@ export function equalityValidator(firstControlName: string | string[]): Validato
     }
     const firstControl = secondControl.parent.get(firstControlName);
     const equal = firstControl.value === secondControl.value;
-    return !equal ? { equal: true } : null;
+    return !equal ? { notEqual: true } : null;
   };
 }

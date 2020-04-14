@@ -14,7 +14,7 @@
           <p>{{ category?.title }} {{ (category?.levels)[chosenLevel] }}%</p>
           <mat-progress-bar class="progress__bar" mode="determinate" [value]="(category?.levels)[chosenLevel]"></mat-progress-bar>
         </div>
-        <div *ngIf="!levelsFound">User didn't fill skills yet</div>
+        <div *ngIf="!levelsLoaded">User didn't fill skills yet</div>
       </div>
       <ng-template #spinner><mat-spinner class="spinner"></mat-spinner></ng-template>
     </div>

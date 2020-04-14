@@ -37,23 +37,23 @@ export class RegisterComponent implements OnDestroy {
   }
 
   get email() {
-    return this.registerForm.get('email');
+    return this.registerForm.get('email') as AppFormControl;
   }
 
   get firstName() {
-    return this.registerForm.get('firstName');
+    return this.registerForm.get('firstName') as AppFormControl;
   }
 
   get lastName() {
-    return this.registerForm.get('lastName');
+    return this.registerForm.get('lastName') as AppFormControl;
   }
 
   get password() {
-    return this.registerForm.get('password');
+    return this.registerForm.get('password') as AppFormControl;
   }
 
   get repeatPassword() {
-    return this.registerForm.get('repeatPassword');
+    return this.registerForm.get('repeatPassword') as AppFormControl;
   }
 
   get formData() {
