@@ -74,7 +74,9 @@ export class SkillComponent implements OnDestroy {
     this.chosenSubCat = this.subCategories[0];
     const currentUser$: Subscription = this.store.select(selectCurrentUser).subscribe(
       (user: User) => {
-        this.loadUserHandler(user, catTitle, categories.subCategories[0].title);
+        if (user !== null) {
+          this.loadUserHandler(user, catTitle, categories.subCategories[0].title);
+        }
       },
       (error) => {
         this.popupService.error(error.message);

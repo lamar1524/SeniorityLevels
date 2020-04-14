@@ -59,8 +59,8 @@ describe('Authentication effects', () => {
     scheduler = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected);
     });
-    authEffects = TestBed.get(AuthenticationEffects);
-    authService = TestBed.get(AuthenticationService);
+    authEffects = TestBed.inject(AuthenticationEffects);
+    authService = TestBed.inject(AuthenticationService) as SpyObj<AuthenticationService>;
   });
 
   describe('register user effect', () => {

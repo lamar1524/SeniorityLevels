@@ -46,11 +46,11 @@ describe('UserComponent', () => {
   });
 
   beforeEach(() => {
-    usersStore = TestBed.get(Store);
-    authStore = TestBed.get(Store);
+    usersStore = TestBed.inject(Store);
+    authStore = TestBed.inject(Store);
     spyOn(usersStore, 'dispatch');
     spyOn(usersStore, 'select').and.returnValue(of({}));
-    usersService = TestBed.get(UsersService);
+    usersService = TestBed.inject(UsersService);
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
   });

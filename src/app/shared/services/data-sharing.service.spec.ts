@@ -6,7 +6,7 @@
 //   beforeEach(() => TestBed.configureTestingModule({}));
 //
 //   it('should be created', () => {
-//     const service: DataSharingService = TestBed.get(DataSharingService);
+//     const service: DataSharingService = TestBed.inject(DataSharingService);
 //     expect(service).toBeTruthy();
 //   });
 // });
