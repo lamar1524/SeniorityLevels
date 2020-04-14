@@ -21,8 +21,8 @@ describe('PopupService', () => {
     }),
   );
   beforeEach(() => {
-    matSnackBar = TestBed.get(MatSnackBar);
-    service = TestBed.get(PopupService);
+    matSnackBar = TestBed.inject(MatSnackBar);
+    service = TestBed.inject(PopupService);
   });
 
   it('should be created', () => {

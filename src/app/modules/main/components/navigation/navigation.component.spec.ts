@@ -36,8 +36,8 @@ describe('NavigationComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NavigationComponent);
     component = fixture.componentInstance;
-    authService = TestBed.get(AuthenticationService);
-    router = TestBed.get(Router);
+    authService = TestBed.inject(AuthenticationService);
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {

@@ -48,10 +48,10 @@ describe('AuthenticationService', () => {
   );
 
   beforeEach(() => {
-    service = TestBed.get(AuthenticationService);
-    firebaseAuth = TestBed.get(AngularFireAuth);
-    db = TestBed.get(AngularFireDatabase);
-    store = TestBed.get(Store);
+    service = TestBed.inject(AuthenticationService);
+    firebaseAuth = TestBed.inject(AngularFireAuth);
+    db = TestBed.inject(AngularFireDatabase);
+    store = TestBed.inject(Store);
   });
 
   it('should be created', () => {

@@ -70,8 +70,8 @@ export class SkillComponent implements OnDestroy {
   }
 
   loadSubCategoriesHandler(categories: ICategoryProgress, catTitle: string) {
-    this.subCategories = categories.subCategories;
-    this.chosenSubCat = this.subCategories[0];
+    this.subCategories = { ...categories.subCategories };
+    this.chosenSubCat = { ...categories.subCategories[0] };
     const currentUser$: Subscription = this.store.select(selectCurrentUser).subscribe(
       (user: User) => {
         this.loadUserHandler(user, catTitle, categories.subCategories[0].title);

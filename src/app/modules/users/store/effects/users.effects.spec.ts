@@ -6,8 +6,8 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { throwError, Observable } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
-import SpyObj = jasmine.SpyObj;
 import createSpyObj = jasmine.createSpyObj;
+import SpyObj = jasmine.SpyObj;
 
 import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
@@ -64,9 +64,9 @@ describe('User effects', () => {
     scheduler = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected);
     });
-    usersEffects = TestBed.get(UsersEffects);
-    usersService = TestBed.get(UsersService);
-    skillsService = TestBed.get(SkillsService);
+    usersEffects = TestBed.inject(UsersEffects);
+    usersService = TestBed.inject(UsersService) as SpyObj<UsersService>;
+    skillsService = TestBed.inject(SkillsService) as SpyObj<SkillsService>;
   });
 
   describe('loadTotalProgress$ effect', () => {

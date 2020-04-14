@@ -47,8 +47,8 @@ describe('Skills effects', () => {
     });
   });
   beforeEach(() => {
-    skillsEffects = TestBed.get(SkillsEffects);
-    skillsService = TestBed.get(SkillsService);
+    skillsEffects = TestBed.inject(SkillsEffects);
+    skillsService = TestBed.inject(SkillsService) as SpyObj<SkillsService>;
     scheduler = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected);
     });

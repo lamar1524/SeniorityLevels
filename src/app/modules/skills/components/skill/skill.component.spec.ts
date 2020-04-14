@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ICategoryProgress, ISubCategoryDescription } from '@core/interfaces';
 import { Store } from '@ngrx/store';
 import { User } from 'firebase';
 import { MockModule } from 'ng-mocks';
@@ -13,7 +14,6 @@ import { seniorityEnum, SlugTextifyPipe, TextSlugifyPipe } from '@modules/skills
 import { loadSkillsBySubCategory, loadSkillValuesByName, sendSkillUpdate } from '@modules/skills/store/actions';
 import { SkillsModuleState } from '@modules/skills/store/reducers';
 import { selectSkillsSubCategories } from '@modules/skills/store/selectors';
-import { default as data } from '../../services/data';
 import { SkillComponent } from './skill.component';
 
 describe('SkillComponent', () => {
@@ -41,7 +41,7 @@ describe('SkillComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ category: 'web-technology' }),
+            params: of({}),
           },
         },
       ],
@@ -49,8 +49,8 @@ describe('SkillComponent', () => {
   });
 
   beforeEach(() => {
-    store = TestBed.get(Store);
-    activeRoute = TestBed.get(ActivatedRoute);
+    store = TestBed.inject(Store);
+    activeRoute = TestBed.inject(ActivatedRoute);
     spyOn(activeRoute.params, 'subscribe');
     fixture = TestBed.createComponent(SkillComponent);
     component = fixture.componentInstance;
@@ -62,6 +62,9 @@ describe('SkillComponent', () => {
 
   describe('routeChangeHandler', () => {
     const params = { category: 'web-technology' };
+    beforeEach(() => {
+      spyOn(component, 'loadSubCategoriesHandler');
+    });
 
     it('should dispatch proper action', () => {
       spyOn(store, 'dispatch');
@@ -80,7 +83,7 @@ describe('SkillComponent', () => {
     it('should select currentUser from store', () => {
       spyOn(component, 'loadUserHandler');
       spyOn(store, 'select').and.returnValue(of({}));
-      component.loadSubCategoriesHandler(data[0], 'Web Technology');
+      component.loadSubCategoriesHandler({ subCategories: [{ title: '', levels: {} }] } as ICategoryProgress, 'Web Technology');
       expect(store.select).toHaveBeenCalledWith(selectCurrentUser);
     });
   });
@@ -93,6 +96,7 @@ describe('SkillComponent', () => {
         subCatTitle: '',
       };
       spyOn(store, 'dispatch');
+      spyOn(component, 'loadSubCategoriesHandler');
       component.loadUserHandler({ uid: '' } as User, '', '');
       expect(store.dispatch).toHaveBeenCalledWith(loadSkillsBySubCategory(mockObj));
     });
