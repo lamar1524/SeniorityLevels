@@ -17,6 +17,7 @@ export class PopupService {
         text: message,
         type: state,
       },
+      panelClass: ['mat-toolbar'],
     });
   }
 
