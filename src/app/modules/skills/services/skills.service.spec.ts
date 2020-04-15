@@ -9,9 +9,9 @@ import { SkillsService } from './skills.service';
 describe('SkillsService', () => {
   let service: SkillsService;
   let db: AngularFireDatabase;
-  let userIdMock: string;
-  let skillCategoryMock: string;
-  let skillNameMock: string;
+  const userIdMock = '1';
+  const skillCategoryMock = '2';
+  const skillNameMock = '3';
 
   beforeEach(() =>
     TestBed.configureTestingModule({
@@ -33,9 +33,7 @@ describe('SkillsService', () => {
   beforeEach(() => {
     service = TestBed.get(SkillsService);
     db = TestBed.get(AngularFireDatabase);
-    userIdMock = '1';
-    skillCategoryMock = '2';
-    skillNameMock = '3';
+
   });
 
   it('should be created', () => {
