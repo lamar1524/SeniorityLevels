@@ -1,5 +1,4 @@
 @import './variables';
-@import '~@angular/material/theming';
 
 .u-text--link {
   color: $link;
@@ -18,12 +17,12 @@
 }
 
 .u-text--to-hover {
-  color: mat-color(mat-palette($mat-indigo));
+  color: $app-indigo;
 }
 
 .u-text--hover {
   &:hover {
-    color: mat-color(mat-palette($mat-indigo));
+    color: $app-indigo;
   }
 }
 
@@ -40,7 +39,7 @@
 }
 
 .u-background-primary {
-  background-color: mat-color(mat-palette($mat-indigo));
+  background-color: $app-indigo;
 }
 
 .u-theme--white-icon {
@@ -53,21 +52,21 @@
 
 .dark-theme {
   .u-text--link {
-    color: mat-color(mat-palette($mat-pink));
+    color: $app-pink;
   }
 
   .u-text--to-hover {
-    color: mat-color(mat-palette($mat-pink));
+    color: $app-pink;
   }
 
   .u-text--hover {
     &:hover {
-      color: mat-color(mat-palette($mat-pink));
+      color: $app-pink;
     }
   }
 
   .u-background-primary {
-    background-color: mat-color(mat-palette($mat-pink));
+    background-color: $app-pink;
   }
 
   .u-theme--white-icon {
