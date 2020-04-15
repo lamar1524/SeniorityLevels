@@ -35,9 +35,7 @@ export class UserProfileComponent {
     this.store.dispatch(usersActions.loadOtherUserDetails({ userId: this.userKey }));
     this.store.dispatch(usersActions.loadSkillsWithTitles({ userId: this.userKey }));
     this.userDetails$ = this.store.select(selectOtherUserDetails);
-    this.categories$ = this.store
-      .select(selectOtherUserSkillProgress)
-      .pipe(tap((skills) => (skills === null ? (this.levelsLoaded = false) : (this.levelsLoaded = true))));
+    this.categories$ = this.store.select(selectOtherUserSkillProgress).pipe(tap((skills) => (this.levelsLoaded = skills !== null)));
     this.loading$ = this.store.select(selectSkillsLoading);
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';
   }

@@ -33,11 +33,11 @@ export class LoginComponent implements OnDestroy {
   }
 
   get email() {
-    return this.loginForm.get('email') as AppFormControl;
+    return this.loginForm.get('email');
   }
 
   get password() {
-    return this.loginForm.get('password') as AppFormControl;
+    return this.loginForm.get('password');
   }
 
   sendCredentials = (): void => {
