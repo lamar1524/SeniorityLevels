@@ -49,7 +49,7 @@
         <div *ngIf="repeatPassword.errors.required">
           Repeating password is required.
         </div>
-        <div *ngIf="!repeatPassword.equalityValidator">
+        <div *ngIf="!repeatPassword.errors.notEqual">
           Passwords are not the same
         </div>
       </div>

@@ -19,13 +19,13 @@ import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoadi
 })
 export class UserProfileComponent {
   readonly userKey: string;
-  private readonly routes: IRoutesConst;
-  private categories$: Observable<ISubCategoryValue[]>;
-  private chosenLevel: seniorityEnum;
-  private levelsLoaded: boolean;
-  private userDetails$: Observable<IUserValues>;
+  readonly routes: IRoutesConst;
+  levelsLoaded: boolean;
+  categories$: Observable<ISubCategoryValue[]>;
+  chosenLevel: seniorityEnum;
+  userDetails$: Observable<IUserValues>;
   readonly imgSrc: string;
-  private loading$: Observable<boolean>;
+  loading$: Observable<boolean>;
 
   constructor(private route: ActivatedRoute, private cdRef: ChangeDetectorRef, private store: Store<UsersModuleState>) {
     this.routes = ROUTES_PATH;
@@ -35,9 +35,7 @@ export class UserProfileComponent {
     this.store.dispatch(usersActions.loadOtherUserDetails({ userId: this.userKey }));
     this.store.dispatch(usersActions.loadSkillsWithTitles({ userId: this.userKey }));
     this.userDetails$ = this.store.select(selectOtherUserDetails);
-    this.categories$ = this.store.select(selectOtherUserSkillProgress).pipe(
-      tap((skills) => skills === null ? this.levelsLoaded = false : this.levelsLoaded = true)
-    );
+    this.categories$ = this.store.select(selectOtherUserSkillProgress).pipe(tap((skills) => (this.levelsLoaded = skills !== null)));
     this.loading$ = this.store.select(selectSkillsLoading);
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';
   }
@@ -45,9 +43,5 @@ export class UserProfileComponent {
   chooseLevel(level: seniorityEnum) {
     this.chosenLevel = level;
     this.cdRef.markForCheck();
-  }
-
-  get levelsFound() {
-    return this.levelsLoaded;
   }
 }

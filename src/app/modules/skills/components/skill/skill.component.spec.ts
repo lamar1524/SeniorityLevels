@@ -49,8 +49,8 @@ describe('SkillComponent', () => {
   });
 
   beforeEach(() => {
-    store = TestBed.get(Store);
-    activeRoute = TestBed.get(ActivatedRoute);
+    store = TestBed.inject(Store);
+    activeRoute = TestBed.inject(ActivatedRoute);
     spyOn(activeRoute.params, 'subscribe');
     fixture = TestBed.createComponent(SkillComponent);
     component = fixture.componentInstance;
@@ -62,6 +62,9 @@ describe('SkillComponent', () => {
 
   describe('routeChangeHandler', () => {
     const params = { category: 'web-technology' };
+    beforeEach(() => {
+      spyOn(component, 'loadSubCategoriesHandler');
+    });
 
     it('should dispatch proper action', () => {
       spyOn(store, 'dispatch');

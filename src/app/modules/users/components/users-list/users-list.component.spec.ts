@@ -43,11 +43,11 @@ describe('UsersListComponent', () => {
   });
 
   beforeEach(() => {
-    service = TestBed.get(UsersService);
+    service = TestBed.inject(UsersService);
     spyOn(service, 'getUsersList').and.returnValue(of([{}] as IUser[]));
     fixture = TestBed.createComponent(UsersListComponent);
     component = fixture.componentInstance;
-    store = TestBed.get(Store);
+    store = TestBed.inject(Store);
   });
 
   it('should create', () => {

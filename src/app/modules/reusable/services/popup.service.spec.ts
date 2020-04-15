@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { popupStateEnum } from '@modules/reusable';
 import { PopupService } from './popup.service';
@@ -22,8 +22,8 @@ describe('PopupService', () => {
     }),
   );
   beforeEach(() => {
-    matSnackBar = TestBed.get(MatSnackBar);
-    service = TestBed.get(PopupService);
+    matSnackBar = TestBed.inject(MatSnackBar);
+    service = TestBed.inject(PopupService);
   });
 
   it('should be created', () => {

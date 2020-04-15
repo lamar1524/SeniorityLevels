@@ -12,7 +12,7 @@ import { DataSharingService } from '@shared/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  private darkMode: boolean;
+  darkMode: boolean;
 
   constructor(private dataSharingService: DataSharingService, private cdRef: ChangeDetectorRef) {
     this.darkMode = false;

@@ -24,15 +24,15 @@ import { selectClickable, selectLevels, selectSkillsSubCategories } from '../../
   providers: [SlugTextifyPipe],
 })
 export class SkillComponent implements OnDestroy {
-  private catTitle: string;
-  private subCategories: ISubCategoryDescription[];
-  private chosenSubCat: ISubCategoryDescription;
   private subscription: Subscription;
-  private levels: ISeniorityValues;
-  private currentlyDisplayedLevel: seniorityEnum;
-  private clickable$: Observable<boolean>;
-  private currentUser: User;
-  private routes: IRoutesConst;
+  catTitle: string;
+  subCategories: ISubCategoryDescription[];
+  chosenSubCat: ISubCategoryDescription;
+  levels: ISeniorityValues;
+  currentlyDisplayedLevel: seniorityEnum;
+  clickable$: Observable<boolean>;
+  currentUser: User;
+  routes: IRoutesConst;
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -72,14 +72,17 @@ export class SkillComponent implements OnDestroy {
   loadSubCategoriesHandler(categories: ICategoryProgress, catTitle: string) {
     this.subCategories = categories.subCategories;
     this.chosenSubCat = this.subCategories[0];
-    const currentUser$: Subscription = this.store.select(selectCurrentUser).subscribe(
-      (user: User) => {
-        this.loadUserHandler(user, catTitle, categories.subCategories[0].title);
-      },
-      (error) => {
-        this.popupService.error(error.message);
-      },
-    );
+    const currentUser$: Subscription = this.store
+      .select(selectCurrentUser)
+      .pipe(filter((user) => user !== null))
+      .subscribe(
+        (user: User) => {
+          this.loadUserHandler(user, catTitle, categories.subCategories[0].title);
+        },
+        (error) => {
+          this.popupService.error(error.message);
+        },
+      );
     this.subscription.add(currentUser$);
   }
 

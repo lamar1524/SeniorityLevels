@@ -32,7 +32,7 @@ describe('SkillsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SkillsComponent);
     component = fixture.componentInstance;
-    store = TestBed.get(Store);
+    store = TestBed.inject(Store);
   });
 
   it('should create', () => {

@@ -64,9 +64,9 @@ describe('User effects', () => {
     scheduler = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected);
     });
-    usersEffects = TestBed.get(UsersEffects);
-    usersService = TestBed.get(UsersService);
-    skillsService = TestBed.get(SkillsService);
+    usersEffects = TestBed.inject(UsersEffects);
+    usersService = TestBed.inject(UsersService) as SpyObj<UsersService>;
+    skillsService = TestBed.inject(SkillsService) as SpyObj<SkillsService>;
   });
 
   describe('loadTotalProgress$ effect', () => {

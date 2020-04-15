@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { PopupComponent } from '../components';
 import { popupStateEnum } from '../enums';
@@ -17,6 +17,7 @@ export class PopupService {
         text: message,
         type: state,
       },
+      panelClass: ['mat-toolbar'],
     });
   }
 

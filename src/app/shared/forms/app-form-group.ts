@@ -5,7 +5,7 @@ import { AppFormControl } from './app-form-control';
 export class AppFormGroup extends FormGroup {
   constructor(
     controls: {
-      [key: string]: AbstractControl;
+      [key: string]: AppFormControl;
     },
     validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
     asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null,
@@ -13,11 +13,11 @@ export class AppFormGroup extends FormGroup {
     super(controls, validatorOrOpts, asyncValidator);
   }
 
-  get(path: Array<string | number> | string): AbstractControl | AppFormControl | null {
-    return super.get(path);
+  get(path: Array<string | number> | string): AppFormControl | null {
+    return super.get(path) as AppFormControl;
   }
 
-  get ableToSend() {
+  get ableToSend(): boolean {
     return this.disabled || this.invalid;
   }
 }

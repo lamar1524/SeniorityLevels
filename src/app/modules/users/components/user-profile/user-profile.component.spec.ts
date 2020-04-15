@@ -41,7 +41,7 @@ describe('UserProfileComponent', () => {
   });
 
   beforeEach(() => {
-    store = TestBed.get(Store);
+    store = TestBed.inject(Store);
     spyOn(store, 'dispatch');
     spyOn(store, 'select').and.returnValue(of({}));
     fixture = TestBed.createComponent(UserProfileComponent);

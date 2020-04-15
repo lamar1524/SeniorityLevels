@@ -23,7 +23,12 @@ import { AppComponent } from './app.component';
     AngularFireAuthModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot([], {
+      runtimeChecks: {
+        strictStateImmutability: false,
+        strictActionImmutability: false,
+      },
+    }),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],

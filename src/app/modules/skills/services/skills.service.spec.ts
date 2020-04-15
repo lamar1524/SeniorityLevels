@@ -33,7 +33,6 @@ describe('SkillsService', () => {
   beforeEach(() => {
     service = TestBed.get(SkillsService);
     db = TestBed.get(AngularFireDatabase);
-
   });
 
   it('should be created', () => {

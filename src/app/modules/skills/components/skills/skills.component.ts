@@ -15,8 +15,8 @@ import { selectSkillsCategories } from '../../store/selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillsComponent {
-  private data$: Observable<ICategoryProgress[]>;
-  private readonly routes: IRoutesConst;
+  data$: Observable<ICategoryProgress[]>;
+  readonly routes: IRoutesConst;
 
   constructor(private store: Store<SkillsModuleState>) {
     this.routes = ROUTES_PATH;
