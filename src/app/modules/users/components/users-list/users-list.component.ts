@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
@@ -22,8 +22,8 @@ export class UsersListComponent {
 
   constructor(private store: Store<UsersModuleState>) {
     this.routes = ROUTES_PATH;
-    this.store.dispatch(usersActions.loadUsersList());
-    this.users$ = this.store.pipe(select(selectUsersList));
     this.displayedColumns = DISPLAYED_COLUMNS;
+    this.store.dispatch(usersActions.loadUsersList());
+    this.users$ = this.store.select(selectUsersList);
   }
 }

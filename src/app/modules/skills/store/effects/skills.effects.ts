@@ -22,9 +22,7 @@ export class SkillsEffects {
   loadSkills$ = createEffect(() =>
     this.actions$.pipe(
       ofType(skillsActions.loadSkillsNames),
-      switchMap((action) =>
-        this.skillsService.getSkillsData().pipe(map((data) => skillsActions.loadSkillsNamesSuccess({ categories: data }))),
-      ),
+      switchMap(() => this.skillsService.getSkillsData().pipe(map((data) => skillsActions.loadSkillsNamesSuccess({ categories: data })))),
       catchError((error) => {
         this.popupService.error(error.message);
         return of(skillsActions.loadSkillsNamesFail());
@@ -38,14 +36,14 @@ export class SkillsEffects {
       switchMap((action) =>
         this.skillsService.getSkillsData().pipe(
           map((res) => {
-            const subCategory = res.filter((element) => element.title === action.categoryName)[0];
-            if (subCategory === undefined) {
+            const chosenCategory = res.filter((element) => element.title === action.categoryName)[0];
+            if (chosenCategory === undefined) {
               this.popupService.error('Wrong route path!');
               this.router.navigate([ROUTES_PATH.skills]);
               return skillsActions.loadSkillValuesByNameFail();
             }
             return skillsActions.loadSkillValuesByNameSuccess({
-              subCat: subCategory,
+              subCat: chosenCategory,
             });
           }),
           catchError((error) => {
@@ -78,7 +76,7 @@ export class SkillsEffects {
       ofType(skillsActions.sendSkillUpdate),
       switchMap((action) =>
         this.skillsService.setUsersSkills(action.catTitle, action.subCatTitle, action.levels, action.userId).pipe(
-          map((res) => {
+          map(() => {
             this.popupService.success('You successfully updated your skills');
             return skillsActions.sendSkillUpdateSuccess();
           }),

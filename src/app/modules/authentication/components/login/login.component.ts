@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
@@ -27,7 +27,7 @@ export class LoginComponent implements OnDestroy {
       password: new AppFormControl('', [Validators.required, Validators.minLength(6)]),
     });
     this.routes = ROUTES_PATH;
-    this.loginForm$ = this.store.select(selectLoginLoading).subscribe((res) => {
+    this.loginForm$ = this.store.pipe(select(selectLoginLoading)).subscribe((res) => {
       res === true ? this.loginForm.disable() : this.loginForm.enable();
     });
   }

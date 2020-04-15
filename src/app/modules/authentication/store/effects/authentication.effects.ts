@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { User } from 'firebase';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
@@ -44,7 +44,7 @@ export class AuthenticationEffects {
       ofType(authActions.provideAdditionalData),
       switchMap((action) =>
         this.authService.provideAdditionalUserData(action.values, action.key).pipe(
-          map((user) => {
+          map(() => {
             this.router.navigate([ROUTES_PATH.home]);
             this.popupService.success('You successfully registered');
             return authActions.registerUserSuccess();
@@ -64,6 +64,9 @@ export class AuthenticationEffects {
       switchMap((action) =>
         this.authService.signIn(action.email, action.password).pipe(
           map((user) => {
+            if (user === null) {
+              throw Error('No user found');
+            }
             return authActions.loadUserLogin();
           }),
           catchError((error) => {
@@ -81,6 +84,9 @@ export class AuthenticationEffects {
       switchMap(() =>
         this.authService.getUserRemotely().pipe(
           map((user: User) => {
+            if (user === null) {
+              throw Error('User not found');
+            }
             this.router.navigate([ROUTES_PATH.userProfile]);
             return authActions.loginUserSuccess({ user });
           }),
@@ -96,6 +102,9 @@ export class AuthenticationEffects {
       switchMap(() =>
         this.authService.getUserRemotely().pipe(
           map((user: User) => {
+            if (user === null) {
+              throw Error('No user found');
+            }
             return authActions.loginUserSuccess({ user });
           }),
           catchError(() => of(authActions.loginUserFail())),

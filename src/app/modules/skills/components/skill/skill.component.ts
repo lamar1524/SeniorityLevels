@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { User } from 'firebase';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -24,15 +24,15 @@ import { selectClickable, selectLevels, selectSkillsSubCategories } from '../../
   providers: [SlugTextifyPipe],
 })
 export class SkillComponent implements OnDestroy {
-  private catTitle: string;
-  private subCategories: ISubCategoryDescription[];
-  private chosenSubCat: ISubCategoryDescription;
   private subscription: Subscription;
-  private levels: ISeniorityValues;
-  private currentlyDisplayedLevel: seniorityEnum;
-  private clickable$: Observable<boolean>;
-  private currentUser: User;
-  private routes: IRoutesConst;
+  catTitle: string;
+  subCategories: ISubCategoryDescription[];
+  chosenSubCat: ISubCategoryDescription;
+  levels: ISeniorityValues;
+  currentlyDisplayedLevel: seniorityEnum;
+  clickable$: Observable<boolean>;
+  currentUser: User;
+  routes: IRoutesConst;
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -40,17 +40,16 @@ export class SkillComponent implements OnDestroy {
     @Inject(DOCUMENT) private document: Document,
     private textifyPipe: SlugTextifyPipe,
     private popupService: PopupService,
-    private authStore: Store<AuthModuleState>,
-    private skillsStore: Store<SkillsModuleState>,
+    private store: Store<AuthModuleState | SkillsModuleState>,
   ) {
     this.subscription = new Subscription();
     this.routes = ROUTES_PATH;
     this.currentlyDisplayedLevel = seniorityEnum.junior;
-    this.clickable$ = this.skillsStore.pipe(select(selectClickable));
+    this.clickable$ = this.store.select(selectClickable);
     this.activatedRoute.params.subscribe((params) => {
       this.routeChangeHandler(params);
     });
-    const levels$: Subscription = this.skillsStore.pipe(select(selectLevels)).subscribe((levels) => (this.levels = levels));
+    const levels$: Subscription = this.store.select(selectLevels).subscribe((levels) => (this.levels = levels));
     this.subscription.add(levels$);
   }
 
@@ -60,38 +59,41 @@ export class SkillComponent implements OnDestroy {
 
   routeChangeHandler(params) {
     this.catTitle = this.textifyPipe.transform(params.category);
-    this.skillsStore.dispatch(skillsActions.loadSkillValuesByName({ categoryName: this.catTitle }));
-    const skillsDesc$: Subscription = this.skillsStore
-      .pipe(select(selectSkillsSubCategories))
+    this.store.dispatch(skillsActions.loadSkillValuesByName({ categoryName: this.catTitle }));
+    const skillsDesc$: Subscription = this.store
+      .select(selectSkillsSubCategories)
       .pipe(filter((res) => res !== null))
       .subscribe((res: ICategoryProgress) => {
-        this.loadSubCategoriesHandler(res);
+        this.loadSubCategoriesHandler(res, this.catTitle);
       });
     this.subscription.add(skillsDesc$);
   }
 
-  loadSubCategoriesHandler(categories: ICategoryProgress) {
+  loadSubCategoriesHandler(categories: ICategoryProgress, catTitle: string) {
     this.subCategories = categories.subCategories;
     this.chosenSubCat = this.subCategories[0];
-    const currentUser$: Subscription = this.authStore.pipe(select(selectCurrentUser)).subscribe(
-      (user: User) => {
-        this.loadUserHandler(user);
-      },
-      (error) => {
-        this.popupService.error(error.message);
-      },
-    );
+    const currentUser$: Subscription = this.store
+      .select(selectCurrentUser)
+      .pipe(filter((user) => user !== null))
+      .subscribe(
+        (user: User) => {
+          this.loadUserHandler(user, catTitle, categories.subCategories[0].title);
+        },
+        (error) => {
+          this.popupService.error(error.message);
+        },
+      );
     this.subscription.add(currentUser$);
   }
 
-  loadUserHandler(user: User) {
+  loadUserHandler(user: User, catTitle: string, subCatTitle: string) {
     this.currentUser = user;
     this.cdRef.markForCheck();
-    this.skillsStore.dispatch(
+    this.store.dispatch(
       skillsActions.loadSkillsBySubCategory({
-        catTitle: this.catTitle,
-        subCatTitle: this.chosenSubCat.title,
-        userId: this.currentUser.uid,
+        catTitle,
+        subCatTitle,
+        userId: user.uid,
       }),
     );
   }
@@ -107,14 +109,14 @@ export class SkillComponent implements OnDestroy {
     this.chosenSubCat = subCat;
   }
 
-  sendSkill(level: seniorityEnum) {
+  sendSkill(level: seniorityEnum, catTitle: string, subCatTitle: string, levels: ISeniorityValues, userId: string) {
     this.levels[level] = !this.levels[level];
-    this.skillsStore.dispatch(
+    this.store.dispatch(
       skillsActions.sendSkillUpdate({
-        catTitle: this.catTitle,
-        subCatTitle: this.chosenSubCat.title,
-        levels: this.levels,
-        userId: this.currentUser.uid,
+        catTitle,
+        subCatTitle,
+        levels,
+        userId,
       }),
     );
   }
