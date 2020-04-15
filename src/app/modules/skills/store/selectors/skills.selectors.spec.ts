@@ -11,6 +11,7 @@ describe('skills selectors', () => {
       clickable: true,
     },
   } as SkillsModuleState;
+
   it('selecting SkillsCategories', () => {
     expect(selectors.selectSkillsCategories(loadedState)).toEqual([] as ICategoryProgress[]);
   });

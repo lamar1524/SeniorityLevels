@@ -7,6 +7,7 @@ import { PopupService } from './popup.service';
 describe('PopupService', () => {
   let matSnackBar: MatSnackBar;
   let service: PopupService;
+
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [],
@@ -29,32 +30,32 @@ describe('PopupService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('methods', () => {
-    it('showPopupMethod should call matSnackBar.openFromComponent', () => {
+  describe('showPopupMethod', () => {
+    it('should call matSnackBar.openFromComponent', () => {
       spyOn(matSnackBar, 'openFromComponent');
       service.showPopup('', {} as popupStateEnum);
       expect(matSnackBar.openFromComponent).toHaveBeenCalled();
     });
+  });
 
-    describe('concrete methods', () => {
-      beforeEach(() => {
-        spyOn(service, 'showPopup');
-      });
+  describe('concrete methods', () => {
+    beforeEach(() => {
+      spyOn(service, 'showPopup');
+    });
 
-      it('info method should call showPopupMethod', () => {
-        service.info('');
-        expect(service.showPopup).toHaveBeenCalledWith('', popupStateEnum.info);
-      });
+    it('info method should call showPopupMethod', () => {
+      service.info('');
+      expect(service.showPopup).toHaveBeenCalledWith('', popupStateEnum.info);
+    });
 
-      it('error should call showPopupMethod', () => {
-        service.error('');
-        expect(service.showPopup).toHaveBeenCalledWith('', popupStateEnum.error);
-      });
+    it('error should call showPopupMethod', () => {
+      service.error('');
+      expect(service.showPopup).toHaveBeenCalledWith('', popupStateEnum.error);
+    });
 
-      it('success should call showPopupMethod', () => {
-        service.success('');
-        expect(service.showPopup).toHaveBeenCalledWith('', popupStateEnum.success);
-      });
+    it('success should call showPopupMethod', () => {
+      service.success('');
+      expect(service.showPopup).toHaveBeenCalledWith('', popupStateEnum.success);
     });
   });
 });

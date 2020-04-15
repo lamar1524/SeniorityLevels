@@ -1,8 +1,22 @@
 import { ICategoryProgress, ISeniorityValues } from '@core/interfaces';
 import * as skillsActions from '../actions';
-import { initialState, skillsReducer } from '../reducers';
+import { initialState, skillsReducer, SkillsState } from '../reducers';
 
 describe('skillsReducer reducer', () => {
+  const initialStateMock: SkillsState = {
+    loadingSkillsTitles: false,
+    skillsData: null,
+    loadSkillsValues: false,
+    currentSubCat: null,
+    clickable: true,
+    loadSkillsBySubCat: false,
+    currentLevels: { junior: false, middle: false, senior: false },
+  };
+
+  it('should assign initialState properly', () => {
+    expect(skillsReducer(initialState, { type: '' })).toEqual(initialStateMock);
+  });
+
   describe('loadSkillsNames', () => {
     it('should change loadingSkillsTitles in state when loading initialized', () => {
       const expected = { ...initialState, loadingSkillsTitles: true };
