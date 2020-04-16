@@ -4,7 +4,7 @@ import { User } from 'firebase';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { ICategoryProgress, ISeniorityCount } from '@core/interfaces';
+import { IBasicUser, ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { AuthModuleState } from '@modules/authentication/store';
 import { selectCurrentUser } from '@modules/authentication/store';
 import * as usersActions from '../../store/actions';
@@ -19,7 +19,7 @@ import { selectTotalSkillsProgress } from '../../store/selectors';
 })
 export class UserComponent implements OnDestroy {
   private user$: Subscription;
-  userDetails: User;
+  userDetails: IBasicUser;
   progress$: Observable<ISeniorityCount>;
   data: ICategoryProgress[];
 

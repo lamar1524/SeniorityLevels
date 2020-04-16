@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { User } from 'firebase';
 
+import { IBasicUser } from '@core/interfaces';
 import * as authActions from '../actions';
 
 export interface AuthModuleState {
@@ -10,7 +10,7 @@ export interface AuthModuleState {
 export interface AuthState {
   registerLoading: boolean;
   loginLoading: boolean;
-  userLogged: User;
+  userLogged: IBasicUser;
 }
 
 export const initialState: AuthState = {

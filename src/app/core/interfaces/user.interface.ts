@@ -12,3 +12,8 @@ export interface IUser {
 export interface IUserRegisterData extends IUserValues {
   password: string;
 }
+
+export interface IBasicUser {
+  email: string;
+  uid: string;
+}
