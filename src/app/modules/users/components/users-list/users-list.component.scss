@@ -12,11 +12,13 @@
   width: 100%;
 
   .users__header {
+    padding: 8px 0;
     text-align: center;
   }
 
   .users__list {
-    width: 75%;
+    overflow-x: auto;
+    width: 90%;
     @include center-one-element();
   }
 
