@@ -14,6 +14,7 @@
     <button class="link__button" mat-button [routerLink]="[routes.usersList]" (click)="closeNav()">Users list</button>
   </div>
   <div class="nav__link u-text--link--light profile__wrapper">
+    <span class="admin__badge" *ngIf="(currentUser$ | async)?.isAdmin"> ADMIN </span>
     <span class="link__button" [routerLink]="[routes.userProfile]" (click)="closeNav()" *ngIf="currentUser$ | async"
       >Logged as: {{ (currentUser$ | async).email }}</span
     >

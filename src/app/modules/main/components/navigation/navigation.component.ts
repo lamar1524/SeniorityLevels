@@ -9,6 +9,7 @@ import { IBasicUser, IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { DataSharingService } from '@shared/services';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navigation',
@@ -28,7 +29,7 @@ export class NavigationComponent {
     private store: Store<AuthModuleState>,
   ) {
     this.routes = ROUTES_PATH;
-    this.currentUser$ = this.store.select(selectCurrentUser);
+    this.currentUser$ = this.store.select(selectCurrentUser).pipe(filter(res => res !== null));
   }
 
   toggleNav(): void {

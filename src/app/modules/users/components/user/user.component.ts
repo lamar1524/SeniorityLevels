@@ -28,7 +28,8 @@ export class UserComponent implements OnDestroy {
       .pipe(filter((user) => user !== null))
       .subscribe((user) => {
         this.userDetails = user;
-        this.usersStore.dispatch(usersActions.loadTotalProgress({ userId: this.userDetails.uid }));
+        this.cdRef.markForCheck();
+        this.usersStore.dispatch(usersActions.loadTotalProgress({ userId: user.uid }));
       });
     this.progress$ = this.usersStore.select(selectTotalSkillsProgress);
   }

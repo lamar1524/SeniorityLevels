@@ -99,6 +99,12 @@
   justify-content: center;
   text-align: center;
 
+  .admin__badge {
+    cursor: auto;
+    display: none;
+    user-select: none;
+  }
+
   .link__button {
     font-size: 2rem;
     padding: 15px;
@@ -132,6 +138,10 @@
   }
 
   .nav__link {
+    .admin__badge {
+      display: inline;
+    }
+
     .link__button {
       font-size: 1rem;
       padding: 0 16px;
