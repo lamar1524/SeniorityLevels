@@ -117,6 +117,7 @@ describe('AuthenticationService', () => {
       email: '',
       firstName: '',
       lastName: '',
+      isAdmin: false,
     };
     const dataReturned = {
       foo: 'bar',

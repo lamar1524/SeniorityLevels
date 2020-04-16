@@ -75,7 +75,9 @@ describe('RegisterComponent', () => {
     it('Should dispatch proper action', () => {
       spyOn(store, 'dispatch');
       component.sendCredentials();
-      expect(store.dispatch).toHaveBeenCalledWith(registerUser({ ...component.formData, password: component.password.value }));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        registerUser({ ...component.formData, password: component.password.value, isAdmin: false }),
+      );
     });
   });
 });

@@ -27,7 +27,7 @@ export class AuthenticationEffects {
           map((user) =>
             authActions.provideAdditionalData({
               key: user.user.uid,
-              values: { email: action.email, firstName: action.firstName, lastName: action.lastName },
+              values: { email: action.email, firstName: action.firstName, lastName: action.lastName, isAdmin: false },
             }),
           ),
           catchError((error) => {

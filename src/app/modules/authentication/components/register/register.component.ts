@@ -65,7 +65,7 @@ export class RegisterComponent implements OnDestroy {
   }
 
   sendCredentials = (): void => {
-    this.store.dispatch(authActions.registerUser({ ...this.formData, password: this.password.value }));
+    this.store.dispatch(authActions.registerUser({ ...this.formData, password: this.password.value, isAdmin: false }));
   };
 
   ngOnDestroy(): void {

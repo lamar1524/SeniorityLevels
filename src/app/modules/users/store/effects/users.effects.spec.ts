@@ -94,7 +94,7 @@ describe('User effects', () => {
 
   describe('loadOtherUserDetails$ effect', () => {
     it('should return loadOtherUserSuccess action', () => {
-      const mockValues = { firstName: '', lastName: '', email: '' };
+      const mockValues = { firstName: '', lastName: '', email: '', isAdmin: false };
       scheduler.run(({ hot, cold, expectObservable }) => {
         actions$ = hot('--a', { a: usersActions.loadOtherUserDetails({ userId: userIdMock }) });
         usersService.getUserByKey.and.returnValue(cold('-b|', { b: { key: userIdMock, values: mockValues } }));

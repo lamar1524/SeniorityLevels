@@ -26,6 +26,7 @@ describe('Authentication effects', () => {
       firstName: '',
       lastName: '',
       email: '',
+      isAdmin: false,
     },
   };
 
@@ -70,6 +71,7 @@ describe('Authentication effects', () => {
       firstName: '',
       lastName: '',
       password: '',
+      isAdmin: false,
     };
     const mockIdData = {
       user: {

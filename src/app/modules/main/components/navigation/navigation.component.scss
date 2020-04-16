@@ -94,6 +94,7 @@
 
 .nav__link {
   align-items: center;
+  cursor: auto;
   display: flex;
   height: 100px;
   justify-content: center;
@@ -102,12 +103,18 @@
   .admin__badge {
     cursor: auto;
     display: none;
-    user-select: none;
+    height: 32px;
+    margin-right: 10px;
+    width: 32px;
   }
 
   .link__button {
     font-size: 2rem;
     padding: 15px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

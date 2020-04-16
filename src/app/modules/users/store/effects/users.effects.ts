@@ -48,7 +48,7 @@ export class UsersEffects {
           map((res: IUser) => {
             this.titleService.setTitle(`${res.values.firstName} ${res.values.lastName}`);
             return usersActions.loadOtherUserSuccess({
-              user: { firstName: res.values.firstName, lastName: res.values.lastName, email: res.values.email },
+              user: { ...res.values },
             });
           }),
           catchError((error) => {

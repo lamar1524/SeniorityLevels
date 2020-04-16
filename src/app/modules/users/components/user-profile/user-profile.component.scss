@@ -25,6 +25,7 @@
   }
 
   .profile__introduction {
+    padding-bottom: 15px;
     text-align: center;
   }
 
@@ -42,6 +43,10 @@
 
   .profile__name {
     font-size: 2rem;
+  }
+
+  .profile__role {
+    font-weight: bold;
   }
 
   .levels {

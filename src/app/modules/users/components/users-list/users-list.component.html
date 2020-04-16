@@ -9,7 +9,10 @@
 
       <ng-container matColumnDef="firstName">
         <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{ element.values.firstName }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.values.firstName }}
+          <img alt="Admin" class="admin__badge" title="Admin" src="../../../../../assets/icons/medal.svg" *ngIf="element.values.isAdmin" />
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="lastName">
