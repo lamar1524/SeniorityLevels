@@ -1,14 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { User } from 'firebase';
 import { of, Observable } from 'rxjs';
 
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {
   let service: UsersService;
-  let firebaseAuth: AngularFireAuth;
   let db: AngularFireDatabase;
 
   beforeEach(() =>
@@ -22,28 +20,16 @@ describe('UsersService', () => {
             },
           },
         },
-        {
-          provide: AngularFireAuth,
-          useValue: { currentUser: {} as Promise<User> },
-        },
       ],
     }),
   );
   beforeEach(() => {
     service = TestBed.inject(UsersService);
-    firebaseAuth = TestBed.inject(AngularFireAuth);
     db = TestBed.inject(AngularFireDatabase);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });
-
-  describe('getCurrentUser method', () => {
-    it('it should return proper observable', () => {
-      firebaseAuth.currentUser = new Promise<User>(() => {});
-      expect(service.getCurrentUser() instanceof Observable).toEqual(true);
-    });
   });
 
   describe('getUsersList method', () => {

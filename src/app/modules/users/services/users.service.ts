@@ -1,23 +1,16 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import 'firebase/database';
 import { from, Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
-import { IBasicUser, IUser, IUserValues } from '@core/interfaces';
+import { IUser, IUserValues } from '@core/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private db: AngularFireDatabase, private firebaseAuth: AngularFireAuth) {}
-
-  getCurrentUser = (): Observable<IBasicUser> =>
-    from(this.firebaseAuth.currentUser).pipe(
-      first(),
-      map((user) => ({ uid: user.uid, email: user.providerData[0].email })),
-    );
+  constructor(private db: AngularFireDatabase) {}
 
   getUsersList = (): Observable<IUser[]> =>
     from(this.db.database.ref('users').once('value')).pipe(

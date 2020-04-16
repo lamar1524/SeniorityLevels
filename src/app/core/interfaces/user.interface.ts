@@ -16,4 +16,5 @@ export interface IUserRegisterData extends IUserValues {
 export interface IBasicUser {
   email: string;
   uid: string;
+  isAdmin: boolean;
 }

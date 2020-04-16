@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { User } from 'firebase';
 import 'firebase/database';
 import { from, Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first, map, switchMap } from 'rxjs/operators';
 import Reference = firebase.database.Reference;
 import UserCredential = firebase.auth.UserCredential;
 
@@ -25,7 +25,11 @@ export class AuthenticationService {
   getUserRemotely = (): Observable<IBasicUser> =>
     from(this.firebaseAuth.authState).pipe(
       first(),
-      map((user) => ({ email: user.providerData[0].email, uid: user.uid })),
+      switchMap((fbUser) =>
+        from(this.db.database.ref(`users/${fbUser.uid}`).once('value')).pipe(
+          map((user) => ({ uid: fbUser.uid, email: user.val().email, isAdmin: user.val().isAdmin })),
+        ),
+      ),
     );
 
   logout = (): void => {
