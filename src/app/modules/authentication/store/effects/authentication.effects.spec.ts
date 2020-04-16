@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { IBasicUser } from '@core/interfaces';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { User } from 'firebase';
@@ -153,9 +154,9 @@ describe('Authentication effects', () => {
     it('Should return loginUserSuccess action', () => {
       scheduler.run(({ hot, cold, expectObservable }) => {
         actions$ = hot('--a', { a: authActions.loadUserLogin() });
-        authService.getUserRemotely.and.returnValue(cold('-b|', { b: {} as User }));
+        authService.getUserRemotely.and.returnValue(cold('-b|', { b: {} as IBasicUser }));
         const expected$ = '---c';
-        expectObservable(authEffects.loadUserLogin$).toBe(expected$, { c: loginUserSuccess({ user: {} as User }) });
+        expectObservable(authEffects.loadUserLogin$).toBe(expected$, { c: loginUserSuccess({ user: {} as IBasicUser }) });
       });
     });
 
@@ -182,9 +183,9 @@ describe('Authentication effects', () => {
     it('should return loginUserSuccess action', () => {
       scheduler.run(({ hot, cold, expectObservable }) => {
         actions$ = hot('--a', { a: authActions.loadUserRefresh() });
-        authService.getUserRemotely.and.returnValue(cold('-b|', { b: {} as User }));
+        authService.getUserRemotely.and.returnValue(cold('-b|', { b: {} as IBasicUser }));
         const expected$ = '---c';
-        expectObservable(authEffects.loadUserRefresh$).toBe(expected$, { c: loginUserSuccess({ user: {} as User }) });
+        expectObservable(authEffects.loadUserRefresh$).toBe(expected$, { c: loginUserSuccess({ user: {} as IBasicUser }) });
       });
     });
 
