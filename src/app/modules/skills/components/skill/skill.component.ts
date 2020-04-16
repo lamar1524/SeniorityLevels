@@ -49,7 +49,7 @@ export class SkillComponent implements OnDestroy {
     this.activatedRoute.params.subscribe((params) => {
       this.routeChangeHandler(params);
     });
-    const levels$: Subscription = this.store.select(selectLevels).subscribe((levels) => (this.levels = levels));
+    const levels$: Subscription = this.store.select(selectLevels).subscribe((levels) => (this.levels = { ...levels }));
     this.subscription.add(levels$);
   }
 
@@ -110,7 +110,8 @@ export class SkillComponent implements OnDestroy {
   }
 
   sendSkill(level: seniorityEnum, catTitle: string, subCatTitle: string, levels: ISeniorityValues, userId: string) {
-    this.levels[level] = !this.levels[level];
+    levels[level] = !levels[level];
+    this.levels = { ...levels };
     this.store.dispatch(
       skillsActions.sendSkillUpdate({
         catTitle,
