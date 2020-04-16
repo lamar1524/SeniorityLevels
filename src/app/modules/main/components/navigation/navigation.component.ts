@@ -6,7 +6,7 @@ import { User } from 'firebase';
 import { Observable } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { IRoutesConst } from '@core/interfaces';
+import { IBasicUser, IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { DataSharingService } from '@shared/services';
@@ -19,7 +19,7 @@ import { DataSharingService } from '@shared/services';
 })
 export class NavigationComponent {
   readonly routes: IRoutesConst;
-  currentUser$: Observable<User>;
+  currentUser$: Observable<IBasicUser>;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,

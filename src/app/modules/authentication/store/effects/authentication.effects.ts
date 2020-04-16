@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { User } from 'firebase';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';

@@ -41,13 +41,13 @@ export const SKILLS_REDUCER = createReducer(
   on(skillsActions.loadSkillsBySubCategorySuccess, (state, { levels }) => ({
     ...state,
     loadSkillsBySubCat: false,
-    currentLevels: levels,
+    currentLevels: { ...levels },
     clickable: true,
   })),
   on(skillsActions.loadSkillsBySubCategoryFail, (state) => ({
     ...state,
     loadSkillsBySubCat: false,
-    currentLevels: initialState.currentLevels,
+    currentLevels: { ...initialState.currentLevels },
     clickable: true,
   })),
 
