@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ISeniorityValues } from '@core/interfaces';
 import { Store } from '@ngrx/store';
 import { User } from 'firebase';
 import { MockModule } from 'ng-mocks';
@@ -121,11 +122,13 @@ describe('SkillComponent', () => {
       const mockObj = {
         catTitle: '',
         subCatTitle: '',
-        levels: {} as any,
+        levels: {
+          junior: true,
+        } as ISeniorityValues,
         userId: '',
       };
       spyOn(store, 'dispatch');
-      component.sendSkill(seniorityEnum.junior, '', '', {} as any, '');
+      component.sendSkill(seniorityEnum.junior, '', '', { junior: false } as any, '');
       expect(store.dispatch).toHaveBeenCalledWith(sendSkillUpdate(mockObj));
     });
   });
