@@ -7,6 +7,7 @@ import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser, IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
+import { badgeSizeEnum } from '@modules/reusable/enums/user-badge.enum';
 import { Store } from '@ngrx/store';
 import { DataSharingService } from '@shared/services';
 import { Observable } from 'rxjs';
@@ -22,6 +23,7 @@ export class NavigationComponent {
   readonly routes: IRoutesConst;
   currentUser$: Observable<IBasicUser>;
   adminRole: roleEnum.admin;
+  size: badgeSizeEnum;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -33,6 +35,7 @@ export class NavigationComponent {
     this.routes = ROUTES_PATH;
     this.currentUser$ = this.store.select(selectCurrentUser).pipe(filter((res) => res !== null));
     this.adminRole = roleEnum.admin;
+    this.size = badgeSizeEnum.big;
   }
 
   toggleNav(): void {

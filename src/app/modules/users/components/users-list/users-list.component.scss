@@ -11,12 +11,6 @@
   top: $hamburger-height;
   width: 100%;
 
-  .admin__badge {
-    display: none;
-    height: 16px;
-    width: 16px;
-  }
-
   .users__header {
     padding: 8px 0;
     text-align: center;
@@ -59,12 +53,6 @@
   @include break(map-get($breakpoints, md)) {
     min-height: calc(100vh - #{$nav-height});
     position: static;
-
-    .admin__badge {
-      display: inline;
-      height: 16px;
-      width: 16px;
-    }
 
     .users__table {
       width: 60%;

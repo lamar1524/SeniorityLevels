@@ -1,0 +1,23 @@
+@import '../../../../../styles/mixins';
+@import '../../../../../styles/variables';
+
+.big,
+.small {
+  display: none;
+}
+
+@include break(map-get($breakpoints, md)) {
+  .big {
+    cursor: auto;
+    display: inline;
+    height: 32px;
+    margin-right: 10px;
+    width: 32px;
+  }
+
+  .small {
+    display: inline;
+    height: 16px;
+    width: 16px;
+  }
+}

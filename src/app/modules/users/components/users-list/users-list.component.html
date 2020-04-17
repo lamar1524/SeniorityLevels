@@ -11,13 +11,7 @@
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let element">
           {{ element.values.firstName }}
-          <img
-            alt="Admin"
-            class="admin__badge"
-            title="Admin"
-            src="../../../../../assets/icons/medal.svg"
-            *ngIf="element.values.role === adminRole"
-          />
+          <app-user-badge [role]="element.values.role" [size]="size"></app-user-badge>
         </td>
       </ng-container>
 
