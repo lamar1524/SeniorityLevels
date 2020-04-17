@@ -1,0 +1,8 @@
+<div class="container" mat-dialog-content>
+  <h1>Deleting user</h1>
+  <p>{{ data.caption }}</p>
+  <div class="button__wrapper">
+    <button mat-raised-button color="primary" (click)="onAccept(data.id)">Yes</button>
+    <button mat-raised-button color="warn" (click)="onDecline()">No</button>
+  </div>
+</div>

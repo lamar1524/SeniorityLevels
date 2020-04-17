@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import 'firebase/database';
 import { from, Observable } from 'rxjs';
@@ -10,7 +11,7 @@ import { IUser, IUserValues } from '@core/interfaces';
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private db: AngularFireDatabase) {}
+  constructor(private db: AngularFireDatabase, private angularFireAuth: AngularFireAuth) {}
 
   getUsersList = (): Observable<IUser[]> =>
     from(this.db.database.ref('users').once('value')).pipe(
@@ -29,4 +30,6 @@ export class UsersService {
       })),
     );
   }
+  // TODO - creating cloud function for deleting users and call it
+  deleteAccountByUser() {}
 }

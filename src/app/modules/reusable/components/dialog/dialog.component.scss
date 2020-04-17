@@ -1,0 +1,12 @@
+.container {
+  padding: 10px;
+  text-align: center;
+}
+
+.button__wrapper {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 30px;
+}

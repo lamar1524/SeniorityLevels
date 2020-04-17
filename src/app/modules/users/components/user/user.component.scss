@@ -40,6 +40,15 @@
     width: 50%;
   }
 
+  .options__wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .button--edit {
+      margin-bottom: 10px;
+    }
+  }
+
   @include break(map-get($breakpoints, md)) {
     height: calc(100vh - #{$nav-height});
     margin: 0 auto;

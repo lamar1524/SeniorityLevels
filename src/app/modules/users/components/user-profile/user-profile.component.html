@@ -1,11 +1,15 @@
 <button class="back__button" mat-icon-button [routerLink]="[routes.usersList]">Back</button>
 <div class="container" *ngIf="userDetails$ | async">
   <div class="profile__wrapper">
+    <div class="options__wrapper" *ngIf="currentUser?.isAdmin">
+      <button mat-raised-button color="primary" *ngIf="!(userDetails$ | async).isAdmin">Make admin</button>
+      <button mat-raised-button color="warn" (click)="showDeletePopup(currentUser?.uid)">Delete user</button>
+    </div>
     <div class="profile__introduction">
       <div class="profile__photo"><img class="photo__inner" alt="Profile picture" aria-label="Profile picture" [src]="imgSrc" /></div>
       <span class="profile__name">{{ (userDetails$ | async).firstName }} {{ (userDetails$ | async).lastName }}</span>
       <p class="profile__email">{{ (userDetails$ | async).email }}</p>
-      <p  class="profile__role" *ngIf="(userDetails$ | async).isAdmin">Admin</p>
+      <p class="profile__role" *ngIf="(userDetails$ | async).isAdmin">Admin</p>
     </div>
     <div class="profile__summary">
       <h3>Seniority levels:</h3>

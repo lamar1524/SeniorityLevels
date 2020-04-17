@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -6,6 +7,7 @@ import { filter } from 'rxjs/operators';
 import { IBasicUser, ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { AuthModuleState } from '@modules/authentication/store';
 import { selectCurrentUser } from '@modules/authentication/store';
+import { DialogComponent } from '@modules/reusable/components';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
 import { selectTotalSkillsProgress } from '../../store/selectors';
@@ -22,7 +24,12 @@ export class UserComponent implements OnDestroy {
   progress$: Observable<ISeniorityCount>;
   data: ICategoryProgress[];
 
-  constructor(private cdRef: ChangeDetectorRef, private authStore: Store<AuthModuleState>, private usersStore: Store<UsersModuleState>) {
+  constructor(
+    private cdRef: ChangeDetectorRef,
+    private authStore: Store<AuthModuleState>,
+    private usersStore: Store<UsersModuleState>,
+    private dialog: MatDialog,
+  ) {
     this.user$ = this.authStore
       .select(selectCurrentUser)
       .pipe(filter((user) => user !== null))
@@ -40,5 +47,16 @@ export class UserComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.user$.unsubscribe();
+  }
+
+  showDeletePopup() {
+    this.dialog.open(DialogComponent, {
+      width: '350px',
+      height: '200px',
+      data: {
+        id: this.userDetails.uid,
+        caption: 'Are you sure about deleting your account?',
+      },
+    });
   }
 }
