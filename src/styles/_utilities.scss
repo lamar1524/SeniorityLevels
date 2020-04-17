@@ -50,9 +50,35 @@
   display: inline-block;
 }
 
+@keyframes autofill {
+  0%,
+  100% {
+    background: transparent;
+    color: #000;
+  }
+}
+
+input:-webkit-autofill {
+  animation-delay: 1s !important; /* Safari support - any positive time runs instantly */
+  animation-fill-mode: both !important;
+  animation-name: autofill !important;
+}
+
 .dark-theme {
   .u-text--link {
     color: $app-pink;
+  }
+
+  @keyframes autofillDark {
+    0%,
+    100% {
+      background: transparent;
+      color: #fff;
+    }
+  }
+
+  input:-webkit-autofill {
+    animation-name: autofillDark !important;
   }
 
   .u-text--to-hover {
