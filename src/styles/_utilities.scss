@@ -1,5 +1,9 @@
 @import './variables';
 
+.u-responsive-table {
+  overflow-x: auto;
+}
+
 .u-text--link {
   color: $link;
 

@@ -7,8 +7,8 @@
       <p class="profile__email">{{ (userDetails$ | async).email }}</p>
     </div>
     <div class="profile__summary">
-      <h3>Seniority levels:</h3>
-      Currently displayed level: <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select>
+      <h3 class="seniority__header">Seniority levels:</h3>
+      <span class="seniority__caption">Currently displayed level: <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select></span>
       <div class="levels" *ngIf="(loading$ | async) === false; else spinner">
         <div class="seniority" *ngFor="let category of categories$ | async">
           <p>{{ category?.title }} {{ (category?.levels)[chosenLevel] }}%</p>
