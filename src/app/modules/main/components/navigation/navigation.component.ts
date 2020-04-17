@@ -1,14 +1,15 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
+import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser, IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
+import { Store } from '@ngrx/store';
 import { DataSharingService } from '@shared/services';
+import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -20,6 +21,7 @@ import { filter } from 'rxjs/operators';
 export class NavigationComponent {
   readonly routes: IRoutesConst;
   currentUser$: Observable<IBasicUser>;
+  adminRole: roleEnum.admin;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -29,7 +31,8 @@ export class NavigationComponent {
     private store: Store<AuthModuleState>,
   ) {
     this.routes = ROUTES_PATH;
-    this.currentUser$ = this.store.select(selectCurrentUser).pipe(filter(res => res !== null));
+    this.currentUser$ = this.store.select(selectCurrentUser).pipe(filter((res) => res !== null));
+    this.adminRole = roleEnum.admin;
   }
 
   toggleNav(): void {

@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
+import UserCredential = firebase.auth.UserCredential;
+
+import { roleEnum } from '@core/enums/role.enum';
+import { IUserValues } from '@core/interfaces';
+import { AuthModuleState } from '@modules/authentication/store';
 import { Store } from '@ngrx/store';
 import { User } from 'firebase';
 import { of, Observable } from 'rxjs';
-import UserCredential = firebase.auth.UserCredential;
-
-import { IUserValues } from '@core/interfaces';
-import { AuthModuleState } from '@modules/authentication/store';
 import * as authActions from '../store/actions';
 import { AuthenticationService } from './authentication.service';
 
@@ -117,7 +118,7 @@ describe('AuthenticationService', () => {
       email: '',
       firstName: '',
       lastName: '',
-      isAdmin: false,
+      role: roleEnum.user,
     };
     const dataReturned = {
       foo: 'bar',

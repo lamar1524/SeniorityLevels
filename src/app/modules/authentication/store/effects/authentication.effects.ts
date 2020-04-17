@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
+import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser } from '@core/interfaces';
 import { PopupService } from '@modules/reusable';
 import { AuthenticationService } from '../../services';
@@ -27,7 +28,7 @@ export class AuthenticationEffects {
           map((user) =>
             authActions.provideAdditionalData({
               key: user.user.uid,
-              values: { email: action.email, firstName: action.firstName, lastName: action.lastName, isAdmin: false },
+              values: { email: action.email, firstName: action.firstName, lastName: action.lastName, role: roleEnum.user },
             }),
           ),
           catchError((error) => {

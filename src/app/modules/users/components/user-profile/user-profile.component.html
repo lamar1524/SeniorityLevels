@@ -5,7 +5,7 @@
       <div class="profile__photo"><img class="photo__inner" alt="Profile picture" aria-label="Profile picture" [src]="imgSrc" /></div>
       <span class="profile__name">{{ (userDetails$ | async).firstName }} {{ (userDetails$ | async).lastName }}</span>
       <p class="profile__email">{{ (userDetails$ | async).email }}</p>
-      <p  class="profile__role" *ngIf="(userDetails$ | async).isAdmin">Admin</p>
+      <p class="profile__role">{{ (userDetails$ | async).role }}</p>
     </div>
     <div class="profile__summary">
       <h3>Seniority levels:</h3>
