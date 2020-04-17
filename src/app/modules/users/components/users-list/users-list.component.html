@@ -1,6 +1,6 @@
 <div class="container">
   <h2 class="users__header">Currently signed in users</h2>
-  <div class="users__list">
+  <div class="users__list u-responsive-table">
     <table mat-table [dataSource]="users$ | async" class="mat-elevation-z8 users__table">
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef>Email</th>
