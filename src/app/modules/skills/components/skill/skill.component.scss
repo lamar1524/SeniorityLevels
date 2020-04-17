@@ -14,8 +14,7 @@
 
 .container {
   min-height: calc(100vh - #{$hamburger-height});
-  padding: 25px;
-  position: absolute;
+  padding: 45px 25px;
   top: $hamburger-height;
   user-select: none;
   width: 100vw;
