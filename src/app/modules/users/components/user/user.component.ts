@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { User } from 'firebase';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 

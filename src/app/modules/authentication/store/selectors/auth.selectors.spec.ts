@@ -1,5 +1,4 @@
-import { User } from 'firebase';
-
+import { IBasicUser } from '@core/interfaces';
 import { AuthModuleState } from '../reducers';
 import * as selectors from './auth.selectors';
 
@@ -8,7 +7,7 @@ describe('Auth selectors', () => {
     auth: {
       registerLoading: false,
       loginLoading: false,
-      userLogged: { uid: '' } as User,
+      userLogged: { uid: '' } as IBasicUser,
     },
   } as AuthModuleState;
 
@@ -21,6 +20,6 @@ describe('Auth selectors', () => {
   });
 
   it('selecting current User', () => {
-    expect(selectors.selectCurrentUser(loadedState)).toEqual({ uid: '' } as User);
+    expect(selectors.selectCurrentUser(loadedState)).toEqual({ uid: '' } as IBasicUser);
   });
 });

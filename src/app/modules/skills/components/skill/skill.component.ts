@@ -2,12 +2,11 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { User } from 'firebase';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { ICategoryProgress, IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
+import { IBasicUser, ICategoryProgress, IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { PopupService } from '@modules/reusable';
 import { seniorityEnum } from '../../enums';
@@ -31,7 +30,7 @@ export class SkillComponent implements OnDestroy {
   levels: ISeniorityValues;
   currentlyDisplayedLevel: seniorityEnum;
   clickable$: Observable<boolean>;
-  currentUser: User;
+  currentUser: IBasicUser;
   routes: IRoutesConst;
 
   constructor(
@@ -76,7 +75,7 @@ export class SkillComponent implements OnDestroy {
       .select(selectCurrentUser)
       .pipe(filter((user) => user !== null))
       .subscribe(
-        (user: User) => {
+        (user: IBasicUser) => {
           this.loadUserHandler(user, catTitle, categories.subCategories[0].title);
         },
         (error) => {
@@ -86,7 +85,7 @@ export class SkillComponent implements OnDestroy {
     this.subscription.add(currentUser$);
   }
 
-  loadUserHandler(user: User, catTitle: string, subCatTitle: string) {
+  loadUserHandler(user: IBasicUser, catTitle: string, subCatTitle: string) {
     this.currentUser = user;
     this.cdRef.markForCheck();
     this.store.dispatch(
