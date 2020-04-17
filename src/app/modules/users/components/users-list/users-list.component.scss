@@ -12,7 +12,7 @@
   width: 100%;
 
   .users__header {
-    padding: 8px 0;
+    padding: 24px 0;
     text-align: center;
   }
 
@@ -37,11 +37,11 @@
   .users__header,
   .users__nav {
     margin: 0 auto 10px;
-    padding-top: 10px;
     width: 80%;
   }
 
   .users__nav {
+    padding-top: 10px;
     @include center-one-element(column);
   }
 
