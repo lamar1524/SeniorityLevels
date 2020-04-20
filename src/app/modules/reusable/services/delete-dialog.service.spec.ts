@@ -45,11 +45,12 @@ describe('DeleteDialogService', () => {
           id: '',
           caption: 'Are you sure about deleting your account?',
           classToApply: 'light',
+          isCurrent: true,
         },
         panelClass: 'u-dialog',
       };
       dataSharingService.getTheme.and.returnValue(of(themeEnum.light));
-      service.showDialog('');
+      service.showDialog('', true);
       expect(dialog.open).toHaveBeenCalledWith(DialogComponent, assertConfig);
     });
   });
