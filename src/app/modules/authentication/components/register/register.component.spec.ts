@@ -2,15 +2,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Store } from '@ngrx/store';
+import { MockModule } from 'ng-mocks';
+import { of } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
 import { registerUser, AuthModuleState } from '@modules/authentication/store';
 import { SharedUiModule } from '@modules/reusable/shared-ui.module';
-import { Store } from '@ngrx/store';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { MockModule } from 'ng-mocks';
-import { of } from 'rxjs';
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {

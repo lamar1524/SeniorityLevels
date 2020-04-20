@@ -1,4 +1,4 @@
 <span class="container" [ngSwitch]="role">
-  <img *ngSwitchCase="'Admin'" [ngClass]="classObj" alt="Admin" title="Admin" src="../../../../../assets/icons/medal.svg" />
-  <span *ngSwitchCase="'User'"></span>
+  <img *ngSwitchCase="adminRole" [ngClass]="classObj" alt="Admin" title="Admin" src="../../../../../assets/icons/medal.svg" />
+  <span *ngSwitchCase="userRole"></span>
 </span>

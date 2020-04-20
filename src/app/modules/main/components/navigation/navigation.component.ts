@@ -7,7 +7,7 @@ import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser, IRoutesConst } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
-import { badgeSizeEnum } from '@modules/reusable/enums/user-badge.enum';
+import { badgeSizeEnum } from '@modules/reusable';
 import { Store } from '@ngrx/store';
 import { DataSharingService } from '@shared/services';
 import { Observable } from 'rxjs';
@@ -22,8 +22,8 @@ import { filter } from 'rxjs/operators';
 export class NavigationComponent {
   readonly routes: IRoutesConst;
   currentUser$: Observable<IBasicUser>;
-  adminRole: roleEnum.admin;
-  size: badgeSizeEnum;
+  readonly adminRole: roleEnum.admin;
+  readonly size: badgeSizeEnum;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
