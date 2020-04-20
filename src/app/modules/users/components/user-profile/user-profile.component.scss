@@ -13,8 +13,7 @@
 
 .container {
   min-height: calc(100vh - #{$hamburger-height});
-  position: absolute;
-  top: $hamburger-height;
+  padding: $hamburger-height 0;
   @include center-one-element(column);
 
   .profile__wrapper {
@@ -25,7 +24,7 @@
   }
 
   .profile__introduction {
-    padding-bottom: 15px;
+    padding: 20px 0;
     text-align: center;
   }
 
@@ -47,6 +46,11 @@
 
   .profile__role {
     font-weight: bold;
+  }
+
+  .seniority__header,
+  .seniority__caption {
+    padding: 5px 0;
   }
 
   .levels {

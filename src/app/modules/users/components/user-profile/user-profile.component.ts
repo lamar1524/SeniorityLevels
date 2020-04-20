@@ -3,13 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
+import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser, IRoutesConst, ISubCategoryValue, IUserValues } from '@core/interfaces';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { DialogComponent } from '@modules/reusable/components/dialog/dialog.component';
 import { seniorityEnum } from '@modules/skills';
-import { filter, tap } from 'rxjs/operators';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
 import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoading } from '../../store/selectors';
@@ -29,6 +30,7 @@ export class UserProfileComponent implements OnDestroy {
   userDetails$: Observable<IUserValues>;
   readonly imgSrc: string;
   loading$: Observable<boolean>;
+  adminRole: roleEnum;
   currentUser$: Subscription;
   currentUser: IBasicUser;
 
@@ -54,6 +56,7 @@ export class UserProfileComponent implements OnDestroy {
         this.currentUser = user;
       });
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';
+    this.adminRole = roleEnum.admin;
   }
 
   chooseLevel(level: seniorityEnum) {

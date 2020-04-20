@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SharedUiModule } from '@modules/reusable';
 import { Store } from '@ngrx/store';
+import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
@@ -17,7 +19,7 @@ describe('NavigationComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [NavigationComponent],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, MockModule(SharedUiModule)],
       providers: [
         {
           provide: AuthenticationService,

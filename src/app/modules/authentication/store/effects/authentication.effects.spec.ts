@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IBasicUser } from '@core/interfaces';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { User } from 'firebase';
@@ -10,6 +9,8 @@ import { TestScheduler } from 'rxjs/testing';
 import SpyObj = jasmine.SpyObj;
 import createSpyObj = jasmine.createSpyObj;
 
+import { roleEnum } from '@core/enums/role.enum';
+import { IBasicUser } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { loginUserFail, loginUserSuccess, AuthenticationEffects } from '@modules/authentication/store';
 import { PopupService } from '@modules/reusable';
@@ -26,7 +27,7 @@ describe('Authentication effects', () => {
       firstName: '',
       lastName: '',
       email: '',
-      isAdmin: false,
+      role: roleEnum.user,
     },
   };
 
@@ -71,7 +72,7 @@ describe('Authentication effects', () => {
       firstName: '',
       lastName: '',
       password: '',
-      isAdmin: false,
+      role: roleEnum.user,
     };
     const mockIdData = {
       user: {

@@ -9,6 +9,7 @@ import { TestScheduler } from 'rxjs/testing';
 import SpyObj = jasmine.SpyObj;
 import createSpyObj = jasmine.createSpyObj;
 
+import { roleEnum } from '@core/enums/role.enum';
 import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
 import { UsersService } from '@modules/users';
@@ -94,7 +95,7 @@ describe('User effects', () => {
 
   describe('loadOtherUserDetails$ effect', () => {
     it('should return loadOtherUserSuccess action', () => {
-      const mockValues = { firstName: '', lastName: '', email: '', isAdmin: false };
+      const mockValues = { firstName: '', lastName: '', email: '', role: roleEnum.user };
       scheduler.run(({ hot, cold, expectObservable }) => {
         actions$ = hot('--a', { a: usersActions.loadOtherUserDetails({ userId: userIdMock }) });
         usersService.getUserByKey.and.returnValue(cold('-b|', { b: { key: userIdMock, values: mockValues } }));

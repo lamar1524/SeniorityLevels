@@ -14,9 +14,7 @@
 
 .container {
   min-height: calc(100vh - #{$hamburger-height});
-  padding: 25px;
-  position: absolute;
-  top: $hamburger-height;
+  padding: 45px 5px;
   user-select: none;
   width: 100vw;
 
@@ -30,7 +28,6 @@
     display: grid;
     grid-template-areas: 'labels content';
     grid-template-columns: repeat(2, minmax(150px, 50%));
-    overflow-x: auto;
     @include form-shadow($blur-color);
   }
 
@@ -51,8 +48,9 @@
 
   .table__content {
     grid-area: content;
+    word-break: break-all;
 
-    .table__spinner {
+    .spinner__wrapper {
       margin: auto;
     }
   }
@@ -67,17 +65,17 @@
     }
   }
 
+  @include break(map-get($breakpoints, sm)) {
+    .table__content {
+      word-break: normal;
+    }
+  }
+
   @include break(map-get($breakpoints, md)) {
     margin: 0 auto;
     min-height: calc(100vh - #{$nav-height});
     position: static;
     width: 50vw;
-  }
-
-  @media only screen and (max-width: map-get($breakpoints, sm)) {
-    .table__content {
-      word-break: break-all;
-    }
   }
 }
 

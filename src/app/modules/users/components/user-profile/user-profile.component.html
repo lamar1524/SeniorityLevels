@@ -1,19 +1,21 @@
 <button class="back__button" mat-icon-button [routerLink]="[routes.usersList]">Back</button>
-<div class="container" *ngIf="userDetails$ | async">
+<div class="container" *ngIf="userDetails$ | async as userDetails">
   <div class="profile__wrapper">
-    <div class="options__wrapper" *ngIf="currentUser?.isAdmin">
-      <button mat-raised-button color="primary" *ngIf="!(userDetails$ | async).isAdmin">Make admin</button>
+    <div class="options__wrapper" *ngIf="currentUser?.role == adminRole">
+      <button mat-raised-button color="primary" *ngIf="userDetails.role != adminRole">Make admin</button>
       <button mat-raised-button color="warn" (click)="showDeletePopup(currentUser?.uid)">Delete user</button>
     </div>
     <div class="profile__introduction">
       <div class="profile__photo"><img class="photo__inner" alt="Profile picture" aria-label="Profile picture" [src]="imgSrc" /></div>
-      <span class="profile__name">{{ (userDetails$ | async).firstName }} {{ (userDetails$ | async).lastName }}</span>
-      <p class="profile__email">{{ (userDetails$ | async).email }}</p>
-      <p class="profile__role" *ngIf="(userDetails$ | async).isAdmin">Admin</p>
+      <span class="profile__name">{{ userDetails.firstName }} {{ userDetails.lastName }}</span>
+      <p class="profile__email">{{ userDetails.email }}</p>
+      <p class="profile__role">{{ userDetails.role }}</p>
     </div>
     <div class="profile__summary">
-      <h3>Seniority levels:</h3>
-      Currently displayed level: <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select>
+      <h3 class="seniority__header">Seniority levels:</h3>
+      <span class="seniority__caption"
+        >Currently displayed level: <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select
+      ></span>
       <div class="levels" *ngIf="(loading$ | async) === false; else spinner">
         <div class="seniority" *ngFor="let category of categories$ | async">
           <p>{{ category?.title }} {{ (category?.levels)[chosenLevel] }}%</p>

@@ -27,7 +27,7 @@ export class AuthenticationService {
       first(),
       switchMap((fbUser) =>
         from(this.db.database.ref(`users/${fbUser.uid}`).once('value')).pipe(
-          map((user) => ({ uid: fbUser.uid, email: user.val().email, isAdmin: user.val().isAdmin })),
+          map((user) => ({ uid: fbUser.uid, email: user.val().email, role: user.val().role })),
         ),
       ),
     );
