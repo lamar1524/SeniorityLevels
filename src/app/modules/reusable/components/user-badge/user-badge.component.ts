@@ -13,14 +13,8 @@ import { badgeSizeEnum } from '../../enums';
 export class UserBadgeComponent implements OnInit {
   @Input() role: roleEnum;
   @Input() size: badgeSizeEnum;
-  readonly adminRole: roleEnum;
-  readonly userRole: roleEnum;
+  readonly roles = roleEnum;
   classObj: IBadgeClassObj;
-
-  constructor() {
-    this.adminRole = roleEnum.admin;
-    this.userRole = roleEnum.user;
-  }
 
   ngOnInit(): void {
     switch (this.size) {
