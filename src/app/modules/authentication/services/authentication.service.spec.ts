@@ -8,8 +8,8 @@ import { of, Observable } from 'rxjs';
 
 import { roleEnum } from '@core/enums/role.enum';
 import { IUserValues } from '@core/interfaces';
-import { AuthModuleState } from '@modules/authentication/store';
 import * as authActions from '../store/actions';
+import { AuthModuleState } from '../store/reducers';
 import { AuthenticationService } from './authentication.service';
 
 describe('AuthenticationService', () => {

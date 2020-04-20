@@ -8,10 +8,11 @@ import createSpyObj = jasmine.createSpyObj;
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IUser } from '@core/interfaces';
 import { MaterialModule } from '@core/material/material.module';
-import { selectUsersList, UsersModuleState } from '@modules/users/store';
 import { UsersListComponent } from '..';
 import { DISPLAYED_COLUMNS } from '../../consts';
 import { UsersService } from '../../services';
+import { UsersModuleState } from '../../store/reducers';
+import { selectUsersList } from '../../store/selectors';
 
 describe('UsersListComponent', () => {
   let component: UsersListComponent;

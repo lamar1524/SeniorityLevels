@@ -12,9 +12,10 @@ import createSpyObj = jasmine.createSpyObj;
 import { roleEnum } from '@core/enums/role.enum';
 import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
-import { UsersService } from '@modules/users';
-import { loadOtherUserDetailsFail, UsersEffects } from '@modules/users/store';
+import { UsersService } from '../../services';
 import * as usersActions from '../../store/actions';
+import { loadOtherUserDetailsFail } from '../actions';
+import { UsersEffects } from '../effects';
 
 describe('User effects', () => {
   let actions$: Observable<Action>;

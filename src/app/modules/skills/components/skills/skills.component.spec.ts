@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { selectSkillsCategories } from '@modules/skills/store/selectors';
 import { Store } from '@ngrx/store';
 import createSpyObj = jasmine.createSpyObj;
 import { MockModule } from 'ng-mocks';
 
 import { MaterialModule } from '@core/material';
-import { SlugTextifyPipe, TextSlugifyPipe } from '@modules/skills';
-import { loadSkillsNames } from '@modules/skills/store/actions';
-import { SkillsModuleState } from '@modules/skills/store/reducers';
+import { SlugTextifyPipe, TextSlugifyPipe } from '../../pipes';
+import { loadSkillsNames } from '../../store/actions';
+import { SkillsModuleState } from '../../store/reducers';
+import { selectSkillsCategories } from '../../store/selectors';
 import { SkillsComponent } from './skills.component';
 
 describe('SkillsComponent', () => {

@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
 
-import { IDeleteDialogData } from '@core/interfaces/class-obj.interface';
+import { IDeleteDialogData } from '@core/interfaces';
+import { deleteUser } from '@modules/users/store/actions';
+import { UsersModuleState } from '@modules/users/store/reducers';
 
 @Component({
   selector: 'app-dialog',
@@ -10,12 +13,16 @@ import { IDeleteDialogData } from '@core/interfaces/class-obj.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogComponent implements OnInit {
-  constructor(public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: IDeleteDialogData) {}
+  constructor(
+    public dialogRef: MatDialogRef<DialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: IDeleteDialogData,
+    private store: Store<UsersModuleState>,
+  ) {}
 
   ngOnInit(): void {}
 
   onAccept(id: string) {
-    console.log(id);
+    this.store.dispatch(deleteUser({ userId: id }));
   }
 
   onDecline() {

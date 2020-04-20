@@ -4,9 +4,9 @@ import createSpyObj = jasmine.createSpyObj;
 import SpyObj = jasmine.SpyObj;
 import { of } from 'rxjs';
 
-import { DialogComponent } from '@modules/reusable';
 import { themeEnum } from '@shared/enum/theme.enum';
 import { DataSharingService } from '@shared/services';
+import { DialogComponent } from '../components';
 import { DeleteDialogService } from './delete-dialog.service';
 
 describe('DeleteDialogService', () => {

@@ -10,7 +10,7 @@ import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
 import { ISeniorityValues, IUser } from '@core/interfaces';
 import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
-import { UsersService } from '@modules/users';
+import { UsersService } from '../../services';
 import * as usersActions from '../actions';
 
 @Injectable()
@@ -82,6 +82,18 @@ export class UsersEffects {
         this.usersService.getUsersList().pipe(
           map((list) => usersActions.loadUsersListSuccess({ users: list })),
           catchError(() => of(usersActions.loadUsersListFail())),
+        ),
+      ),
+    ),
+  );
+
+  deleteUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersActions.deleteUser),
+      switchMap((action) =>
+        this.usersService.deleteAccount(action.userId).pipe(
+          map(() => usersActions.deleteUserSuccess()),
+          catchError(() => of(usersActions.deleteUserFail())),
         ),
       ),
     ),

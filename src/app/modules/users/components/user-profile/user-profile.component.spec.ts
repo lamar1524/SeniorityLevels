@@ -7,9 +7,10 @@ import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
 import { SharedUiModule } from '@modules/reusable';
-import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoading, UsersModuleState } from '@modules/users/store';
 import { UserProfileComponent } from '..';
 import * as usersActions from '../../store/actions';
+import { UsersModuleState } from '../../store/reducers';
+import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoading } from '../../store/selectors';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;

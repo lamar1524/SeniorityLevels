@@ -1,5 +1,5 @@
 import { ICategoryProgress, ISeniorityValues } from '@core/interfaces';
-import { SkillsModuleState } from '@modules/skills/store/reducers';
+import { SkillsModuleState } from '../reducers';
 import * as selectors from './skills.selectors';
 
 describe('skills selectors', () => {

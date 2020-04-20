@@ -10,7 +10,7 @@ import { DeleteDialogService, PopupService } from './services';
 @NgModule({
   declarations: [LevelSelectComponent, SubmitButtonComponent, PopupComponent, DialogComponent, UserBadgeComponent],
   imports: [CommonModule, FormsModule, MaterialModule],
-  exports: [SubmitButtonComponent, LevelSelectComponent, PopupComponent, UserBadgeComponent],
+  exports: [SubmitButtonComponent, LevelSelectComponent, PopupComponent, UserBadgeComponent, MaterialModule],
   entryComponents: [PopupComponent],
   providers: [PopupService, DeleteDialogService],
 })
