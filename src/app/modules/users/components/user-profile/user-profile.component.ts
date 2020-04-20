@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -9,7 +8,7 @@ import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser, IRoutesConst, ISubCategoryValue, IUserValues } from '@core/interfaces';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
-import { DialogComponent } from '@modules/reusable/components/dialog/dialog.component';
+import { DeleteDialogService } from '@modules/reusable';
 import { seniorityEnum } from '@modules/skills';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
@@ -38,7 +37,7 @@ export class UserProfileComponent implements OnDestroy {
     private route: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
     private store: Store<AuthModuleState | UsersModuleState>,
-    private dialog: MatDialog,
+    private deleteDialogService: DeleteDialogService,
   ) {
     this.routes = ROUTES_PATH;
     this.levelsLoaded = false;
@@ -65,14 +64,7 @@ export class UserProfileComponent implements OnDestroy {
   }
 
   showDeletePopup(id: string) {
-    this.dialog.open(DialogComponent, {
-      width: '350px',
-      height: '200px',
-      data: {
-        id,
-        caption: 'Are you sure about deleting this account?',
-      },
-    });
+    this.deleteDialogService.showDialog(id);
   }
 
   ngOnDestroy() {

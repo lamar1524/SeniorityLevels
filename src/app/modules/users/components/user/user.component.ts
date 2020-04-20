@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { IBasicUser, ICategoryProgress, ISeniorityCount } from '@core/interfaces';
-import { AuthModuleState } from '@modules/authentication/store';
-import { selectCurrentUser } from '@modules/authentication/store';
-import { DialogComponent } from '@modules/reusable/components';
+import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
+import { DeleteDialogService } from '@modules/reusable';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
 import { selectTotalSkillsProgress } from '../../store/selectors';
@@ -28,7 +26,7 @@ export class UserComponent implements OnDestroy {
     private cdRef: ChangeDetectorRef,
     private authStore: Store<AuthModuleState>,
     private usersStore: Store<UsersModuleState>,
-    private dialog: MatDialog,
+    private deleteDialogService: DeleteDialogService,
   ) {
     this.user$ = this.authStore
       .select(selectCurrentUser)
@@ -50,13 +48,6 @@ export class UserComponent implements OnDestroy {
   }
 
   showDeletePopup() {
-    this.dialog.open(DialogComponent, {
-      width: '350px',
-      height: '200px',
-      data: {
-        id: this.userDetails.uid,
-        caption: 'Are you sure about deleting your account?',
-      },
-    });
+    this.deleteDialogService.showDialog(this.userDetails.uid);
   }
 }

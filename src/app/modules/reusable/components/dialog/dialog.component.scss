@@ -1,6 +1,9 @@
 .container {
-  padding: 10px;
+  height: 100%;
+  margin: 0;
+  padding: 24px 10px 10px;
   text-align: center;
+  width: 100%;
 }
 
 .button__wrapper {
@@ -9,4 +12,14 @@
   flex-direction: row;
   justify-content: space-around;
   padding-top: 30px;
+}
+
+.light {
+  background-color: #fff;
+  color: #000;
+}
+
+.dark {
+  background-color: #323232;
+  color: #fff;
 }

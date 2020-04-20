@@ -11,7 +11,7 @@ import { IUser, IUserValues } from '@core/interfaces';
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private db: AngularFireDatabase, private angularFireAuth: AngularFireAuth) {}
+  constructor(private db: AngularFireDatabase) {}
 
   getUsersList = (): Observable<IUser[]> =>
     from(this.db.database.ref('users').once('value')).pipe(

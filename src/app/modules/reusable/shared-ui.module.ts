@@ -5,13 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@core/material';
 import { LevelSelectComponent, PopupComponent, SubmitButtonComponent } from './components';
 import { DialogComponent, UserBadgeComponent } from './components';
-import { PopupService } from './services';
+import { DeleteDialogService, PopupService } from './services';
 
 @NgModule({
-  declarations: [LevelSelectComponent, SubmitButtonComponent, PopupComponent, DialogComponent,  UserBadgeComponent],
+  declarations: [LevelSelectComponent, SubmitButtonComponent, PopupComponent, DialogComponent, UserBadgeComponent],
   imports: [CommonModule, FormsModule, MaterialModule],
   exports: [SubmitButtonComponent, LevelSelectComponent, PopupComponent, UserBadgeComponent],
   entryComponents: [PopupComponent],
-  providers: [PopupService],
+  providers: [PopupService, DeleteDialogService],
 })
 export class SharedUiModule {}

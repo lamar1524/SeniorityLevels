@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import { IDeleteDialogData } from '@core/interfaces/class-obj.interface';
+
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
@@ -8,7 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogComponent implements OnInit {
-  constructor(public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: IDeleteDialogData) {}
 
   ngOnInit(): void {}
 
