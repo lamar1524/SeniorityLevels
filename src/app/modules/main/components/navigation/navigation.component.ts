@@ -2,7 +2,6 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { User } from 'firebase';
 import { Observable } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';

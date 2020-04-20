@@ -14,10 +14,9 @@
 
 .container {
   min-height: calc(100vh - #{$hamburger-height});
-  padding: 25px;
-  position: absolute;
-  top: $hamburger-height;
+  padding: 45px 5px;
   user-select: none;
+  width: 100vw;
 
   .header {
     text-align: center;
@@ -28,8 +27,7 @@
     color: #000;
     display: grid;
     grid-template-areas: 'labels content';
-    grid-template-columns: repeat(2, 50%);
-    min-width: 300px;
+    grid-template-columns: repeat(2, minmax(150px, 50%));
     @include form-shadow($blur-color);
   }
 
@@ -50,8 +48,9 @@
 
   .table__content {
     grid-area: content;
+    word-break: break-all;
 
-    .table__spinner {
+    .spinner__wrapper {
       margin: auto;
     }
   }
@@ -63,6 +62,12 @@
 
     &:hover {
       cursor: pointer;
+    }
+  }
+
+  @include break(map-get($breakpoints, sm)) {
+    .table__content {
+      word-break: normal;
     }
   }
 

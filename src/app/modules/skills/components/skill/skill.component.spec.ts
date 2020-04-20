@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ISeniorityValues } from '@core/interfaces';
 import { Store } from '@ngrx/store';
-import { User } from 'firebase';
 import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
+import { IBasicUser, ISeniorityValues } from '@core/interfaces';
 import { MaterialModule } from '@core/material';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { PopupService, SharedUiModule } from '@modules/reusable';
@@ -97,7 +96,7 @@ describe('SkillComponent', () => {
         subCatTitle: '',
       };
       spyOn(store, 'dispatch');
-      component.loadUserHandler({ uid: '' } as User, '', '');
+      component.loadUserHandler({ uid: '' } as IBasicUser, '', '');
       expect(store.dispatch).toHaveBeenCalledWith(loadSkillsBySubCategory(mockObj));
     });
   });
