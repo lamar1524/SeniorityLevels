@@ -1,0 +1,22 @@
+<button class="back__button" mat-icon-button [routerLink]="[routes.usersList]">Back</button>
+<div class="container" *ngIf="userDetails$ | async">
+  <div class="profile__wrapper">
+    <div class="profile__introduction">
+      <div class="profile__photo"><img class="photo__inner" alt="Profile picture" aria-label="Profile picture" [src]="imgSrc" /></div>
+      <span class="profile__name">{{ (userDetails$ | async).firstName }} {{ (userDetails$ | async).lastName }}</span>
+      <p class="profile__email">{{ (userDetails$ | async).email }}</p>
+    </div>
+    <div class="profile__summary">
+      <h3 class="seniority__header">Seniority levels:</h3>
+      <span class="seniority__caption">Currently displayed level: <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select></span>
+      <div class="levels" *ngIf="(loading$ | async) === false; else spinner">
+        <div class="seniority" *ngFor="let category of categories$ | async">
+          <p>{{ category?.title }} {{ (category?.levels)[chosenLevel] }}%</p>
+          <mat-progress-bar class="progress__bar" mode="determinate" [value]="(category?.levels)[chosenLevel]"></mat-progress-bar>
+        </div>
+        <div *ngIf="!levelsLoaded">User didn't fill skills yet</div>
+      </div>
+      <ng-template #spinner><mat-spinner class="spinner"></mat-spinner></ng-template>
+    </div>
+  </div>
+</div>

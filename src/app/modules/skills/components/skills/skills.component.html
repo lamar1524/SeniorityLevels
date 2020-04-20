@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="categories__header">
+    <h2>Feel free to fill up your skills below</h2>
+  </div>
+  <div class="categories__wrapper">
+    <div class="category  u-text--hover" *ngFor="let category of data$ | async">
+      <button class="category__button" mat-stroked-button [routerLink]="[routes.skill + (category.title | slugify)]">
+        {{ category.title }}
+      </button>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

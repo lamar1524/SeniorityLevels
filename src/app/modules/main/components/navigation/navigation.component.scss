@@ -1,0 +1,140 @@
+@import '../../../../../styles/mixins';
+@import '../../../../../styles/variables';
+
+@mixin hamburger-line {
+  background-color: $hamburger-line;
+  height: 3px;
+  position: absolute;
+  width: 100%;
+}
+
+.hamburger {
+  background: transparent;
+  border: 0;
+  height: 30px;
+  position: fixed;
+  right: 15px;
+  top: 15px;
+  width: 35px;
+  z-index: 3;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.hamburger__box {
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.hamburger__inner {
+  @include hamburger-line();
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 0.2s ease-in-out;
+
+  &::before,
+  &::after {
+    content: '';
+    left: 0;
+    transition: transform 0.3s ease-in-out;
+    @include hamburger-line();
+  }
+
+  &::before {
+    top: -10px;
+  }
+
+  &::after {
+    top: 10px;
+  }
+}
+
+.hamburger__box--active {
+  .hamburger__inner {
+    background-color: transparent;
+
+    &::before,
+    &::after {
+      opacity: 1;
+    }
+
+    &::before {
+      transform: translateY(10px) rotate(45deg);
+    }
+
+    &::after {
+      transform: translateY(-10px) rotate(-45deg);
+    }
+  }
+}
+
+.nav {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transform: translateX(100vw);
+  transition: transform 0.3s ease-in-out;
+  width: 100vw;
+  z-index: 2;
+}
+
+.nav--active {
+  transform: translateX(0);
+}
+
+.nav__link {
+  align-items: center;
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  text-align: center;
+
+  .link__button {
+    font-size: 2rem;
+    padding: 15px;
+  }
+}
+
+@include break(map-get($breakpoints, md)) {
+  .hamburger {
+    display: none;
+  }
+
+  .nav {
+    flex-direction: row;
+    height: $nav-height;
+    justify-content: flex-start;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: static;
+    transform: translateX(0);
+    width: 100%;
+
+    .profile__wrapper,
+    .theme__wrapper,
+    .logout__wrapper {
+      margin-right: 0;
+    }
+
+    .profile__wrapper {
+      margin-left: auto;
+    }
+  }
+
+  .nav__link {
+    .link__button {
+      font-size: 1rem;
+      padding: 0 16px;
+    }
+  }
+}

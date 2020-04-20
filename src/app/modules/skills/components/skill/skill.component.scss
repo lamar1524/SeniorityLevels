@@ -1,0 +1,86 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+@import '~@angular/material/theming';
+
+.back__button {
+  background-color: $gray;
+  color: #000;
+  height: 50px;
+  left: 15px;
+  position: absolute;
+  top: 15px;
+  width: 50px;
+}
+
+.container {
+  min-height: calc(100vh - #{$hamburger-height});
+  padding: 45px 5px;
+  user-select: none;
+  width: 100vw;
+
+  .header {
+    text-align: center;
+  }
+
+  .table {
+    background-color: $gray;
+    color: #000;
+    display: grid;
+    grid-template-areas: 'labels content';
+    grid-template-columns: repeat(2, minmax(150px, 50%));
+    @include form-shadow($blur-color);
+  }
+
+  .table__column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .content--active {
+    color: $accept;
+  }
+
+  .table__labels {
+    border-right: 1px solid #707070;
+    grid-area: labels;
+  }
+
+  .table__content {
+    grid-area: content;
+    word-break: break-all;
+
+    .spinner__wrapper {
+      margin: auto;
+    }
+  }
+
+  .table__row {
+    display: block;
+    height: fit-content;
+    padding: 10px 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  @include break(map-get($breakpoints, sm)) {
+    .table__content {
+      word-break: normal;
+    }
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    margin: 0 auto;
+    min-height: calc(100vh - #{$nav-height});
+    position: static;
+    width: 50vw;
+  }
+}
+
+@include break(map-get($breakpoints, md)) {
+  .back__button {
+    top: calc(15px + #{$nav-height});
+  }
+}

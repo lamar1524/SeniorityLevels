@@ -1,0 +1,26 @@
+<button class="back__button" mat-icon-button [routerLink]="[routes.skills]">Back</button>
+<div class="container">
+  <div class="header">
+    <h2 class="header__text">{{ catTitle }}</h2>
+    <h4 class="header__level-switch">
+      Currently displaying requirements for <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select>
+    </h4>
+  </div>
+  <div class="table u-responsive-table" *ngIf="contentLoaded">
+    <div class="table__column table__labels">
+      <div class="table__row table__label" [ngClass]="{ 'u-text--to-hover': i === 0 }" *ngFor="let subCat of subCategories; index as i">
+        <span class="u-text--hover" (click)="chooseSubCategory(subCat, i)">{{ subCat.title }}</span>
+      </div>
+    </div>
+    <div class="table__column table__content" [ngClass]="{ 'content--active': levels[currentlyDisplayedLevel] }">
+      <div
+        class="table__row"
+        *ngIf="clickable$ | async; else spinner"
+        (click)="sendSkill(currentlyDisplayedLevel, catTitle, chosenSubCat.title, levels, currentUser.uid)"
+      >
+        {{ chosenSubCat.levels[currentlyDisplayedLevel] }}
+      </div>
+      <ng-template #spinner><div class="spinner__wrapper"><mat-spinner [diameter]="50" class="table__spinner"></mat-spinner></div></ng-template>
+    </div>
+  </div>
+</div>

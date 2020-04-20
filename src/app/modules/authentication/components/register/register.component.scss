@@ -1,0 +1,61 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 25px 0;
+  width: 100%;
+
+  .register__container {
+    border-radius: $box-border-radius;
+    display: grid;
+    grid-template-rows: 0.5fr 3fr 0.5fr;
+    width: 70%;
+    @include form-shadow($blur-color);
+  }
+
+  .register__header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .form__control,
+  .form__error {
+    display: block;
+    margin: 5px auto;
+  }
+
+  .form__input {
+    width: $input-width;
+  }
+
+  .form__error {
+    width: $input-width;
+  }
+
+  .register__messages {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+  }
+
+  .register__caption,
+  .register__error {
+    text-align: center;
+    width: 100%;
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    .register__container {
+      width: 350px;
+    }
+  }
+}

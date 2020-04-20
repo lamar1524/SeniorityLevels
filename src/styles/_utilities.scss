@@ -1,0 +1,109 @@
+@import './variables';
+
+.u-responsive-table {
+  overflow-x: auto;
+}
+
+.u-text--link {
+  color: $link;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.u-text--bold {
+  font-weight: 700;
+}
+
+.u-text--black {
+  color: #000;
+}
+
+.u-text--to-hover {
+  color: $app-indigo;
+}
+
+.u-text--hover {
+  &:hover {
+    color: $app-indigo;
+  }
+}
+
+.u-text--link--light {
+  color: $light-link;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.u-text--error {
+  color: $warn;
+}
+
+.u-background-primary {
+  background-color: $app-indigo;
+}
+
+.u-theme--white-icon {
+  display: none;
+}
+
+.u-theme--black-icon {
+  display: inline-block;
+}
+
+@keyframes autofill {
+  0%,
+  100% {
+    background: transparent;
+    color: #000;
+  }
+}
+
+input:-webkit-autofill {
+  animation-delay: 1s !important; /* Safari support - any positive time runs instantly */
+  animation-fill-mode: both !important;
+  animation-name: autofill !important;
+}
+
+.dark-theme {
+  .u-text--link {
+    color: $app-pink;
+  }
+
+  @keyframes autofillDark {
+    0%,
+    100% {
+      background: transparent;
+      color: #fff;
+    }
+  }
+
+  input:-webkit-autofill {
+    animation-name: autofillDark !important;
+  }
+
+  .u-text--to-hover {
+    color: $app-pink;
+  }
+
+  .u-text--hover {
+    &:hover {
+      color: $app-pink;
+    }
+  }
+
+  .u-background-primary {
+    background-color: $app-pink;
+  }
+
+  .u-theme--white-icon {
+    display: inline-block;
+  }
+
+  .u-theme--black-icon {
+    display: none;
+  }
+}

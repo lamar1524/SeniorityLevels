@@ -1,0 +1,68 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: calc(100vh - #{$hamburger-height});
+  position: absolute;
+  top: $hamburger-height;
+  width: 100%;
+
+  .users__header {
+    padding: 24px 0;
+    text-align: center;
+  }
+
+  .users__list {
+    width: 100%;
+  }
+
+  .mat-cell {
+    min-width: 200px;
+  }
+
+  .users__table {
+    width: 100%;
+  }
+
+  .mat-header-row {
+    background-color: $gray;
+  }
+
+  .mat-header-cell {
+    color: #000;
+  }
+
+  .users__header,
+  .users__nav {
+    margin: 0 auto 10px;
+    width: 80%;
+  }
+
+  .users__nav {
+    padding-top: 10px;
+    @include center-one-element(column);
+  }
+
+  .nav__link {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    min-height: calc(100vh - #{$nav-height});
+    position: static;
+
+    .users__list {
+      width: 90%;
+      @include center-one-element();
+    }
+
+    .users__table {
+      width: 60%;
+    }
+  }
+}

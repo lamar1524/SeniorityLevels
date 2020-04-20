@@ -1,0 +1,58 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
+
+  .login__container {
+    border-radius: $box-border-radius;
+    height: 400px;
+    position: relative;
+    width: 70%;
+    @include form-shadow($blur-color);
+  }
+
+  .login__header {
+    align-items: center;
+    display: flex;
+    height: 100px;
+    justify-content: center;
+  }
+
+  .login__form {
+    height: 50%;
+    width: 100%;
+    @include absolute-centered-vertically;
+  }
+
+  .form__control,
+  .form__error {
+    display: block;
+    margin: 5px auto;
+  }
+
+  .form__input,
+  .form__error {
+    width: $input-width;
+  }
+
+  .login__messages {
+    bottom: 5%;
+    left: 0;
+    padding: 15px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    .login__container {
+      width: 350px;
+    }
+  }
+}

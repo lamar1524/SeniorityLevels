@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="register__container">
+    <div class="register__header">
+      <h2>Join us</h2>
+    </div>
+    <form class="register__form" [formGroup]="registerForm" (ngSubmit)="sendCredentials()">
+      <mat-form-field class="form__control form__input">
+        <input placeholder="Email" type="email" matInput formControlName="email" />
+      </mat-form-field>
+      <div *ngIf="email.invalidControl" class="form__error u-text--error mat-body">
+        <div *ngIf="email.errors.required">
+          Email is required.
+        </div>
+        <div *ngIf="email.errors.email">
+          Please provide valid email.
+        </div>
+      </div>
+      <mat-form-field class="form__control form__input">
+        <input placeholder="First name" type="text" matInput formControlName="firstName" />
+      </mat-form-field>
+      <div *ngIf="firstName.invalidControl" class="form__error u-text--error mat-body">
+        <div *ngIf="firstName.errors.required">
+          First name is required.
+        </div>
+      </div>
+      <mat-form-field class="form__control form__input">
+        <input placeholder="Last name" type="text" matInput formControlName="lastName" />
+      </mat-form-field>
+      <div *ngIf="lastName.invalidControl" class="form__error u-text--error mat-body">
+        <div *ngIf="lastName.errors.required">
+          Last name is required.
+        </div>
+      </div>
+      <mat-form-field class="form__control form__input">
+        <input placeholder="Password" type="password" matInput formControlName="password" />
+      </mat-form-field>
+      <div *ngIf="password.invalidControl" class="form__error u-text--error mat-body">
+        <div *ngIf="password.errors.required">
+          Password is required.
+        </div>
+        <div *ngIf="password.errors.minlength">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+      <mat-form-field class="form__control form__input">
+        <input placeholder="Repeat password" type="password" matInput formControlName="repeatPassword" />
+      </mat-form-field>
+      <div *ngIf="repeatPassword.invalidControl" class="form__error u-text--error mat-body">
+        <div *ngIf="repeatPassword.errors.required">
+          Repeating password is required.
+        </div>
+        <div *ngIf="!repeatPassword.errors.notEqual">
+          Passwords are not the same
+        </div>
+      </div>
+      <app-submit-button [loading]="registerForm.disabled" [disabled]="registerForm.ableToSend">Register</app-submit-button>
+    </form>
+    <div class="register__messages">
+      <div class="register__caption">
+        <span [routerLink]="[routes.home]" class="mat-body u-text--link">Homepage</span>
+      </div>
+    </div>
+  </div>
+</div>
