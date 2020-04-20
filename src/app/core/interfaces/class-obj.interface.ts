@@ -7,4 +7,5 @@ export interface IDeleteDialogData {
   id: string;
   caption: string;
   classToApply: string;
+  isCurrent: boolean;
 }

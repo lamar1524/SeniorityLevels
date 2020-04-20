@@ -11,7 +11,7 @@ import { DialogComponent } from '../components';
 export class DeleteDialogService {
   constructor(private matDialog: MatDialog, private dataSharingService: DataSharingService) {}
 
-  showDialog(userId: string) {
+  showDialog(userId: string, isCurrent: boolean) {
     this.dataSharingService.getTheme().subscribe((theme) => {
       const classToApply = theme === themeEnum.light ? 'light' : 'dark';
       this.matDialog.open(DialogComponent, {
@@ -21,6 +21,7 @@ export class DeleteDialogService {
           id: userId,
           caption: 'Are you sure about deleting your account?',
           classToApply,
+          isCurrent,
         },
         panelClass: 'u-dialog',
       });

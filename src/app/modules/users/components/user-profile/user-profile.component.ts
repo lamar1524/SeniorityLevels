@@ -64,7 +64,11 @@ export class UserProfileComponent implements OnDestroy {
   }
 
   showDeletePopup(id: string) {
-    this.deleteDialogService.showDialog(id);
+    if (this.currentUser.uid === id) {
+      this.deleteDialogService.showDialog(id, true);
+    } else {
+      this.deleteDialogService.showDialog(id, false);
+    }
   }
 
   ngOnDestroy() {

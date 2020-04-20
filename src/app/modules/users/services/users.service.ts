@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import 'firebase/database';
@@ -33,6 +33,13 @@ export class UsersService {
   }
 
   deleteAccount(userId: string) {
-    return this.http.request('delete', ENDPOINTS.deleteUser, { body: { userId } });
+    return this.http.request('delete', ENDPOINTS.deleteUser, {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'DELETE',
+      }),
+      body: { userId },
+    });
   }
 }

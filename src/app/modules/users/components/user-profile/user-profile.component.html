@@ -3,7 +3,7 @@
   <div class="profile__wrapper">
     <div class="options__wrapper" *ngIf="currentUser?.role == adminRole">
       <button mat-raised-button color="primary" *ngIf="userDetails.role != adminRole">Make admin</button>
-      <button mat-raised-button color="warn" (click)="showDeletePopup(currentUser?.uid)">Delete user</button>
+      <button mat-raised-button color="warn" (click)="showDeletePopup(userKey)">Delete user</button>
     </div>
     <div class="profile__introduction">
       <div class="profile__photo"><img class="photo__inner" alt="Profile picture" aria-label="Profile picture" [src]="imgSrc" /></div>

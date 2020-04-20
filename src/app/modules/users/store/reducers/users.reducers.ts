@@ -63,11 +63,8 @@ const USERS_REDUCER = createReducer(
 
   on(usersActions.deleteUser, (state) => ({ ...state, deletingUser: true })),
   on(usersActions.deleteUserSuccess, (state) => ({ ...state, deletingUser: false })),
-  on(usersActions.deleteUserFail, (state) => ({ ...state, deletingUser: false })),
-
-  on(usersActions.deleteOtherUser, (state) => ({ ...state, deletingUser: true })),
   on(usersActions.deleteOtherUserSuccess, (state) => ({ ...state, deletingUser: false })),
-  on(usersActions.deleteOtherUserFail, (state) => ({ ...state, deletingUser: false })),
+  on(usersActions.deleteUserFail, (state) => ({ ...state, deletingUser: false })),
 );
 
 export function usersReducer(state: UsersState, action: Action) {

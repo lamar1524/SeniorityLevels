@@ -48,6 +48,6 @@ export class UserComponent implements OnDestroy {
   }
 
   showDeletePopup() {
-    this.deleteDialogService.showDialog(this.userDetails.uid);
+    this.deleteDialogService.showDialog(this.userDetails.uid, true);
   }
 }
