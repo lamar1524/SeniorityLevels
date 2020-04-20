@@ -23,6 +23,12 @@
     @include form-shadow($blur-color);
   }
 
+  .options__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
   .profile__introduction {
     padding: 20px 0;
     text-align: center;
