@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { Store } from '@ngrx/store';
+import { User } from 'firebase';
 import UserCredential = firebase.auth.UserCredential;
+import { of, Observable } from 'rxjs';
 
 import { roleEnum } from '@core/enums/role.enum';
 import { IUserValues } from '@core/interfaces';
 import { AuthModuleState } from '@modules/authentication/store';
-import { Store } from '@ngrx/store';
-import { User } from 'firebase';
-import { of, Observable } from 'rxjs';
 import * as authActions from '../store/actions';
 import { AuthenticationService } from './authentication.service';
 

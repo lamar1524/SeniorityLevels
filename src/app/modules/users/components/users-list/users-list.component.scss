@@ -17,8 +17,11 @@
   }
 
   .users__list {
-    width: 90%;
-    @include center-one-element();
+    width: 100%;
+  }
+
+  .mat-cell {
+    min-width: 200px;
   }
 
   .users__table {
@@ -52,6 +55,11 @@
   @include break(map-get($breakpoints, md)) {
     min-height: calc(100vh - #{$nav-height});
     position: static;
+
+    .users__list {
+      width: 90%;
+      @include center-one-element();
+    }
 
     .users__table {
       width: 60%;

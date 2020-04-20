@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
 import { IRoutesConst, IUser } from '@core/interfaces';
-import { badgeSizeEnum } from '@modules/reusable/enums/user-badge.enum';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { badgeSizeEnum } from '@modules/reusable';
 import { DISPLAYED_COLUMNS } from '../../consts';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
