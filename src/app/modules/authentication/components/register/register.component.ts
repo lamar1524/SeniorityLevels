@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { select, Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
+import { roleEnum } from '@core/enums/role.enum';
 import { IRoutesConst } from '@core/interfaces';
+import { select, Store } from '@ngrx/store';
 import { equalityValidator } from '@shared/equality.validator';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { Subscription } from 'rxjs';
 import * as authActions from '../../store/actions';
 import { AuthModuleState } from '../../store/reducers';
 import { selectRegisterLoading } from '../../store/selectors';
@@ -65,7 +66,7 @@ export class RegisterComponent implements OnDestroy {
   }
 
   sendCredentials = (): void => {
-    this.store.dispatch(authActions.registerUser({ ...this.formData, password: this.password.value }));
+    this.store.dispatch(authActions.registerUser({ ...this.formData, password: this.password.value, role: roleEnum.user }));
   };
 
   ngOnDestroy(): void {

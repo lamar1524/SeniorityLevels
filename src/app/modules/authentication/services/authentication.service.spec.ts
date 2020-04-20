@@ -3,9 +3,10 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Store } from '@ngrx/store';
 import { User } from 'firebase';
-import { of, Observable } from 'rxjs';
 import UserCredential = firebase.auth.UserCredential;
+import { of, Observable } from 'rxjs';
 
+import { roleEnum } from '@core/enums/role.enum';
 import { IUserValues } from '@core/interfaces';
 import { AuthModuleState } from '@modules/authentication/store';
 import * as authActions from '../store/actions';
@@ -117,6 +118,7 @@ describe('AuthenticationService', () => {
       email: '',
       firstName: '',
       lastName: '',
+      role: roleEnum.user,
     };
     const dataReturned = {
       foo: 'bar',

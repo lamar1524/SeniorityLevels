@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
+import { roleEnum } from '@core/enums/role.enum';
 import { IRoutesConst, ISubCategoryValue, IUserValues } from '@core/interfaces';
 import { seniorityEnum } from '@modules/skills';
-import { tap } from 'rxjs/operators';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
 import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoading } from '../../store/selectors';
@@ -26,6 +27,7 @@ export class UserProfileComponent {
   userDetails$: Observable<IUserValues>;
   readonly imgSrc: string;
   loading$: Observable<boolean>;
+  adminRole: roleEnum;
 
   constructor(private route: ActivatedRoute, private cdRef: ChangeDetectorRef, private store: Store<UsersModuleState>) {
     this.routes = ROUTES_PATH;
@@ -38,6 +40,7 @@ export class UserProfileComponent {
     this.categories$ = this.store.select(selectOtherUserSkillProgress).pipe(tap((skills) => (this.levelsLoaded = skills !== null)));
     this.loading$ = this.store.select(selectSkillsLoading);
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';
+    this.adminRole = roleEnum.admin;
   }
 
   chooseLevel(level: seniorityEnum) {
