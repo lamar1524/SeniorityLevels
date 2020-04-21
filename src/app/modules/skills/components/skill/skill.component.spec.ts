@@ -9,11 +9,12 @@ import { IBasicUser, ISeniorityValues } from '@core/interfaces';
 import { MaterialModule } from '@core/material';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { PopupService, SharedUiModule } from '@modules/reusable';
-import { seniorityEnum, SlugTextifyPipe, TextSlugifyPipe } from '@modules/skills';
-import { loadSkillsBySubCategory, loadSkillValuesByName, sendSkillUpdate } from '@modules/skills/store/actions';
-import { SkillsModuleState } from '@modules/skills/store/reducers';
-import { selectSkillsSubCategories } from '@modules/skills/store/selectors';
+import { seniorityEnum } from '../../enums';
+import { SlugTextifyPipe, TextSlugifyPipe } from '../../pipes';
 import { default as data } from '../../services/data';
+import { loadSkillsBySubCategory, loadSkillValuesByName, sendSkillUpdate } from '../../store/actions';
+import { SkillsModuleState } from '../../store/reducers';
+import { selectSkillsSubCategories } from '../../store/selectors';
 import { SkillComponent } from './skill.component';
 
 describe('SkillComponent', () => {

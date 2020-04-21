@@ -4,8 +4,8 @@ import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { IBasicUser, ICategoryProgress, ISeniorityCount } from '@core/interfaces';
-import { AuthModuleState } from '@modules/authentication/store';
-import { selectCurrentUser } from '@modules/authentication/store';
+import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
+import { DialogService } from '@modules/reusable';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
 import { selectTotalSkillsProgress } from '../../store/selectors';
@@ -22,7 +22,12 @@ export class UserComponent implements OnDestroy {
   progress$: Observable<ISeniorityCount>;
   data: ICategoryProgress[];
 
-  constructor(private cdRef: ChangeDetectorRef, private authStore: Store<AuthModuleState>, private usersStore: Store<UsersModuleState>) {
+  constructor(
+    private cdRef: ChangeDetectorRef,
+    private authStore: Store<AuthModuleState>,
+    private usersStore: Store<UsersModuleState>,
+    private deleteDialogService: DialogService,
+  ) {
     this.user$ = this.authStore
       .select(selectCurrentUser)
       .pipe(filter((user) => user !== null))
@@ -40,5 +45,14 @@ export class UserComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.user$.unsubscribe();
+  }
+
+  showDeletePopup() {
+    this.deleteDialogService.showDeleteDialog(
+      this.userDetails.uid,
+      'Deleting user',
+      true,
+      'Are you sure that you want to delete your' + ' account?',
+    );
   }
 }

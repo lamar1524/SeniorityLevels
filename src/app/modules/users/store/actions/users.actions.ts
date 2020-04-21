@@ -20,3 +20,8 @@ export const loadSkillsWithTitlesFail = createAction('[Users] Load users skills 
 export const loadUsersList = createAction('[Users] Load users list');
 export const loadUsersListSuccess = createAction('[Users] Load users list success', props<{ users: IUser[] }>());
 export const loadUsersListFail = createAction('[Users] Load users list fail');
+
+export const deleteUser = createAction('[Users] delete user', props<{ userId: string; isCurrent: boolean }>());
+export const deleteUserSuccess = createAction('[Users] delete user success');
+export const deleteOtherUserSuccess = createAction('[Users] delete other user success');
+export const deleteUserFail = createAction('[Users] delete user fail');

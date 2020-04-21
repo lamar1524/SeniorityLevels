@@ -11,10 +11,11 @@ import createSpyObj = jasmine.createSpyObj;
 
 import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser } from '@core/interfaces';
-import { AuthenticationService } from '@modules/authentication';
-import { loginUserFail, loginUserSuccess, AuthenticationEffects } from '@modules/authentication/store';
 import { PopupService } from '@modules/reusable';
+import { AuthenticationService } from '../../services';
 import * as authActions from '../../store/actions';
+import { loginUserFail, loginUserSuccess } from '../actions';
+import { AuthenticationEffects } from '../effects';
 
 describe('Authentication effects', () => {
   let actions$: Observable<Action>;

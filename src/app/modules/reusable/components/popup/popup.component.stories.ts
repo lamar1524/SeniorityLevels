@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 
 import { MaterialModule } from '@core/material';
-import { popupStateEnum } from '@modules/reusable';
+import { popupStateEnum } from '../../enums';
 import { PopupComponent } from './popup.component';
 
 const templateString = `<div class="mat-toolbar" style="

@@ -53,4 +53,26 @@ describe('usersReducer reducer', () => {
       expect(usersReducer(undefined, usersActions.loadUsersListFail)).toEqual(expected);
     });
   });
+
+  describe('deleteUser action', () => {
+    it('should change loadingUsersList when deleting initialized', () => {
+      const expected = { ...initialState, deletingUser: true };
+      expect(usersReducer(undefined, usersActions.deleteUser({ userId: '', isCurrent: true }))).toEqual(expected);
+    });
+
+    it('should change loadingUsersList when deleting success', () => {
+      const expected = { ...initialState, deletingUser: false };
+      expect(usersReducer(undefined, usersActions.deleteUserSuccess)).toEqual(expected);
+    });
+
+    it('should change loadingUsersList when deleting other user success', () => {
+      const expected = { ...initialState, deletingUser: false };
+      expect(usersReducer(undefined, usersActions.deleteOtherUserSuccess)).toEqual(expected);
+    });
+
+    it('should change loadingUsersList when deleting failed', () => {
+      const expected = { ...initialState, deletingUser: false };
+      expect(usersReducer(undefined, usersActions.deleteUserFail)).toEqual(expected);
+    });
+  });
 });

@@ -10,9 +10,9 @@ import { TestScheduler } from 'rxjs/testing';
 
 import { ICategoryProgress, ISeniorityValues } from '@core/interfaces';
 import { PopupService } from '@modules/reusable';
-import { SkillsService } from '@modules/skills';
-import { SkillsEffects } from '@modules/skills/store/effects/skills.effects';
+import { SkillsService } from '../../services';
 import * as skillsActions from '../actions';
+import { SkillsEffects } from '../effects';
 
 describe('Skills effects', () => {
   let actions$: Observable<Action>;

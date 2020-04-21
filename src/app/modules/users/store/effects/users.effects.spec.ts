@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -10,11 +11,13 @@ import SpyObj = jasmine.SpyObj;
 import createSpyObj = jasmine.createSpyObj;
 
 import { roleEnum } from '@core/enums/role.enum';
+import { AuthenticationService } from '@modules/authentication';
 import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
-import { UsersService } from '@modules/users';
-import { loadOtherUserDetailsFail, UsersEffects } from '@modules/users/store';
+import { UsersService } from '../../services';
 import * as usersActions from '../../store/actions';
+import { loadOtherUserDetailsFail } from '../actions';
+import { UsersEffects } from '../effects';
 
 describe('User effects', () => {
   let actions$: Observable<Action>;
@@ -26,17 +29,21 @@ describe('User effects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule],
       providers: [
         UsersEffects,
         provideMockActions(() => actions$),
         {
           provide: UsersService,
-          useValue: createSpyObj('usersService', ['getCurrentUser', 'getUsersList', 'getUserByKey']),
+          useValue: createSpyObj('usersService', ['getCurrentUser', 'getUsersList', 'getUserByKey', 'deleteAccount']),
         },
         {
           provide: SkillsService,
           useValue: createSpyObj('skillsService', ['getAllSkillsValues', 'getProgressOf', 'getAllSkillsWithTitles', 'getSummaryProgress']),
+        },
+        {
+          provide: AuthenticationService,
+          useValue: createSpyObj('authService', ['logout']),
         },
         {
           provide: PopupService,
@@ -154,6 +161,38 @@ describe('User effects', () => {
         usersService.getUsersList.and.returnValue(throwError(''));
         const expected$ = '--c';
         expectObservable(usersEffects.loadUsersList$).toBe(expected$, { c: usersActions.loadUsersListFail() });
+      });
+    });
+  });
+
+  describe('deleteUser$ effect', () => {
+    it('should return deleteOtherUserSuccess action', () => {
+      scheduler.run(({ hot, cold, expectObservable }) => {
+        const idMock = 'userId';
+        actions$ = hot('--a', { a: usersActions.deleteUser({ userId: idMock, isCurrent: false }) });
+        usersService.deleteAccount.and.returnValue(cold('-b|', { b: {} as any }));
+        const expected$ = '---c';
+        expectObservable(usersEffects.deleteUser$).toBe(expected$, { c: usersActions.deleteOtherUserSuccess() });
+      });
+    });
+
+    it('should return deleteUserSuccess action', () => {
+      scheduler.run(({ hot, cold, expectObservable }) => {
+        const idMock = 'userId';
+        actions$ = hot('--a', { a: usersActions.deleteUser({ userId: idMock, isCurrent: true }) });
+        usersService.deleteAccount.and.returnValue(cold('-b|', { b: {} as any }));
+        const expected$ = '---c';
+        expectObservable(usersEffects.deleteUser$).toBe(expected$, { c: usersActions.deleteUserSuccess() });
+      });
+    });
+
+    it('should return deleteUserSuccess action', () => {
+      scheduler.run(({ hot, cold, expectObservable }) => {
+        const idMock = 'userId';
+        actions$ = hot('--a', { a: usersActions.deleteUser({ userId: idMock, isCurrent: true }) });
+        usersService.deleteAccount.and.returnValue(cold('-#|'));
+        const expected$ = '---c';
+        expectObservable(usersEffects.deleteUser$).toBe(expected$, { c: usersActions.deleteUserFail() });
       });
     });
   });

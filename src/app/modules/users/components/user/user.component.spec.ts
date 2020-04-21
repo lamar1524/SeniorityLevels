@@ -9,15 +9,14 @@ import { of } from 'rxjs';
 import { MaterialModule } from '@core/material/material.module';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { SharedUiModule } from '@modules/reusable/shared-ui.module';
-import { selectTotalSkillsProgress, UsersModuleState } from '@modules/users/store';
 import { UserComponent } from '..';
-import { UsersService } from '../../services';
 import * as usersActions from '../../store/actions';
+import { UsersModuleState } from '../../store/reducers';
+import { selectTotalSkillsProgress } from '../../store/selectors';
 
 describe('UserComponent', () => {
   let component: UserComponent;
   let fixture: ComponentFixture<UserComponent>;
-  let usersService: UsersService;
   let usersStore: Store<UsersModuleState>;
   let authStore: Store<AuthModuleState>;
 
@@ -50,7 +49,6 @@ describe('UserComponent', () => {
     authStore = TestBed.inject(Store);
     spyOn(usersStore, 'dispatch');
     spyOn(usersStore, 'select').and.returnValue(of({}));
-    usersService = TestBed.inject(UsersService);
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
   });

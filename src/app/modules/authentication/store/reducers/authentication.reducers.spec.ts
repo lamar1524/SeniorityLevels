@@ -1,5 +1,5 @@
-import { authReducer, initialState, AuthState } from '@modules/authentication/store';
 import * as authActions from '../actions';
+import { authReducer, initialState, AuthState } from '../reducers';
 
 describe('Authentication reducer', () => {
   const initialStateMock: AuthState = {

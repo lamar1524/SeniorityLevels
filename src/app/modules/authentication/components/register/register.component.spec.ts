@@ -8,9 +8,10 @@ import { of } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
-import { registerUser, AuthModuleState } from '@modules/authentication/store';
 import { SharedUiModule } from '@modules/reusable/shared-ui.module';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { registerUser } from '../../store/actions';
+import { AuthModuleState } from '../../store/reducers';
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {

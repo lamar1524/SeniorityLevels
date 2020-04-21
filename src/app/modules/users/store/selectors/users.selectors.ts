@@ -11,3 +11,5 @@ export const selectOtherUserSkillProgress = createSelector(usersSelector, (state
 export const selectSkillsLoading = createSelector(usersSelector, (state: UsersState) => state.loadingUsersSkills);
 
 export const selectUsersList = createSelector(usersSelector, (state: UsersState) => state.usersList);
+
+export const selectDeletingUser = createSelector(usersSelector, (state: UsersState) => state.deletingUser);
