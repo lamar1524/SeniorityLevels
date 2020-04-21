@@ -42,4 +42,8 @@ export class UsersService {
       body: { userId },
     });
   }
+
+  editCredentials(userId: string, data: IUserValues) {
+    return from(this.db.database.ref(`users/${userId}`).update(data));
+  }
 }

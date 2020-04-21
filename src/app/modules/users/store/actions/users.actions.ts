@@ -25,3 +25,10 @@ export const deleteUser = createAction('[Users] delete user', props<{ userId: st
 export const deleteUserSuccess = createAction('[Users] delete user success');
 export const deleteOtherUserSuccess = createAction('[Users] delete other user success');
 export const deleteUserFail = createAction('[Users] delete user fail');
+
+export const showEditForm = createAction('[Users] Show editing profile form');
+export const hideEditForm = createAction('[Users] Hide editing profile form');
+
+export const saveEditedData = createAction('[Users] Save edited data', props<{ userId: string; data: IUserValues }>());
+export const saveEditedDataSuccess = createAction('[Users] Save edited data success');
+export const saveEditedDataFail = createAction('[Users] Save edited data fail');

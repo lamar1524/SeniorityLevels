@@ -75,4 +75,28 @@ describe('usersReducer reducer', () => {
       expect(usersReducer(undefined, usersActions.deleteUserFail)).toEqual(expected);
     });
   });
+
+  describe('saveEditedData action', () => {
+    it('should change editLoading when editing initialized', () => {
+      const expected = { ...initialState, editLoading: true };
+      expect(usersReducer(undefined, usersActions.saveEditedData({ userId: '', data: {} as IUserValues }))).toEqual(expected);
+    });
+
+    it('should change editLoading when editing success', () => {
+      const expected = { ...initialState, editLoading: false };
+      expect(usersReducer(undefined, usersActions.saveEditedDataSuccess)).toEqual(expected);
+    });
+
+    it('should change editLoading when editing fail', () => {
+      const expected = { ...initialState, editLoading: false };
+      expect(usersReducer(undefined, usersActions.saveEditedDataFail)).toEqual(expected);
+    });
+  });
+
+  describe('showEditForm action', () => {
+    it('should change editingFormVisibility when called', () => {
+      const expected = { ...initialState, editingFormVisibility: true };
+      expect(usersReducer(undefined, usersActions.showEditForm)).toEqual(expected);
+    });
+  });
 });

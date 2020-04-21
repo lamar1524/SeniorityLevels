@@ -111,4 +111,22 @@ export class UsersEffects {
       ),
     ),
   );
+
+  saveEditedData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersActions.saveEditedData),
+      switchMap((action) =>
+        this.usersService.editCredentials(action.userId, action.data).pipe(
+          map(() => {
+            this.popupService.success('Successfully updated credentials');
+            return usersActions.saveEditedDataSuccess();
+          }),
+          catchError((error) => {
+            this.popupService.error(error.message);
+            return of(usersActions.saveEditedDataFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

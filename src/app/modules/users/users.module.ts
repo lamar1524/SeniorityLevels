@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -15,6 +16,8 @@ import { UsersRoutingModule } from './users-routing.module';
   imports: [
     CommonModule,
     UsersRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedUiModule,
     StoreModule.forFeature(USERS_FEATURE, usersReducer),
     EffectsModule.forFeature([UsersEffects]),

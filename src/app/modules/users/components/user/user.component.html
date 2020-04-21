@@ -1,6 +1,6 @@
 <div class="container">
   <div class="profile__wrapper">
-    <div class="profile__introduction" *ngIf="(progress$ | async) as progress">
+    <div class="profile__introduction" *ngIf="progress$ | async as progress">
       <h1 *ngIf="userLoaded">Hello {{ userDetails.email }}</h1>
       <h2>You are:</h2>
       <div class="level__wrapper">
@@ -18,7 +18,32 @@
     </div>
   </div>
   <div class="options__wrapper">
-    <button class="button--edit" mat-raised-button color="primary">Edit credentials</button>
+    <button class="button--edit" mat-raised-button color="primary" (click)="showForm()">Edit credentials</button>
     <button class="button--delete" mat-raised-button color="warn" (click)="showDeletePopup()">Delete account</button>
+  </div>
+  <div class="form__wrapper" *ngIf="formVisibility$ | async">
+    <form (ngSubmit)="editCredentials()" class="login__form" [formGroup]="editForm">
+      <mat-form-field class="form__control form__input">
+        <label>
+          <input placeholder="First name" formControlName="firstName" type="text" matInput />
+        </label>
+      </mat-form-field>
+      <div *ngIf="firstName.invalidControl" class="form__error u-text--error mat-body">
+        <div *ngIf="firstName.errors.required">
+          First name is required.
+        </div>
+      </div>
+      <mat-form-field class="form__control form__input">
+        <label>
+          <input placeholder="Last name" formControlName="lastName" type="text" matInput />
+        </label>
+      </mat-form-field>
+      <div *ngIf="lastName.invalidControl" class="form__error u-text--error mat-body">
+        <div *ngIf="lastName.errors.required">
+          Last name is required.
+        </div>
+      </div>
+      <app-submit-button [loading]="editForm.disabled" [disabled]="editForm.ableToSend">Login</app-submit-button>
+    </form>
   </div>
 </div>
