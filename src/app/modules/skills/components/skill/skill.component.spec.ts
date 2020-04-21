@@ -102,7 +102,7 @@ describe('SkillComponent', () => {
   });
 
   describe('chooseSubCategory method', () => {
-    it('should call querySelectorAll method', () => {
+    beforeEach(() => {
       spyOn(document, 'querySelectorAll').and.returnValue([
         {
           classList: {
@@ -111,8 +111,17 @@ describe('SkillComponent', () => {
           },
         },
       ] as any);
-      component.chooseSubCategory({} as any, 0);
+
+      spyOn(store, 'dispatch');
+    });
+    it('should call querySelectorAll method', () => {
+      component.chooseSubCategory({} as any, 0, '', '', '');
       expect(document.querySelectorAll).toHaveBeenCalledWith('.table__label');
+    });
+
+    it('should dispatch proper action', () => {
+      component.chooseSubCategory({} as any, 0, '', '', '');
+      expect(store.dispatch).toHaveBeenCalledWith(loadSkillsBySubCategory({ catTitle: '', subCatTitle: '', userId: '' }));
     });
   });
 
