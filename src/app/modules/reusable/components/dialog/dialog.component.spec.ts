@@ -48,7 +48,6 @@ describe('DialogComponent', () => {
     store.select.withArgs(selectDeletingUser).and.returnValue(of(false));
     fixture = TestBed.createComponent(DialogComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

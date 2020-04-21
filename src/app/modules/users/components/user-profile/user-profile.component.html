@@ -1,7 +1,7 @@
 <button class="back__button" mat-icon-button [routerLink]="[routes.usersList]">Back</button>
 <div class="container" *ngIf="userDetails$ | async as userDetails">
   <div class="profile__wrapper">
-    <div class="options__wrapper" *ngIf="currentUser?.role == adminRole">
+    <div class="options__wrapper" *ngIf="currentUser?.role === adminRole">
       <button mat-raised-button color="primary" *ngIf="userDetails.role != adminRole">Make admin</button>
       <button mat-raised-button color="warn" (click)="showDeletePopup(userKey)">Delete user</button>
     </div>
