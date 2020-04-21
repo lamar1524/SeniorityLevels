@@ -2,9 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestro
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 
-import { IDeleteDialogData } from '@core/interfaces';
+import { IDialogData } from '@core/interfaces';
 import { UsersModuleState } from '@modules/users/store/reducers';
-import { selectDeletingUser } from '@modules/users/store/selectors';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -15,21 +14,21 @@ import { filter } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogComponent implements OnDestroy {
-  isDeleting$: Subscription;
-  isDeleting: boolean;
+  isProcessing$: Subscription;
+  isProcessing: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IDeleteDialogData,
+    @Inject(MAT_DIALOG_DATA) public data: IDialogData,
     private store: Store<UsersModuleState>,
     private cdRef: ChangeDetectorRef,
   ) {
-    this.isDeleting = false;
-    this.isDeleting$ = this.store
-      .select(selectDeletingUser)
-      .pipe(filter((res) => res !== this.isDeleting))
+    this.isProcessing = false;
+    this.isProcessing$ = this.store
+      .select(this.data.select)
+      .pipe(filter((res) => res !== this.isProcessing))
       .subscribe((res) => {
-        this.isDeleting = res;
+        this.isProcessing = res;
         this.cdRef.markForCheck();
         if (!res) {
           this.dialogRef.close();
@@ -38,8 +37,8 @@ export class DialogComponent implements OnDestroy {
   }
 
   onAccept(id: string) {
-    if (!this.isDeleting) {
-      this.data.onAcceptCallback(id);
+    if (!this.isProcessing) {
+      this.data.onAcceptCallback(this.store, id);
     }
   }
 
@@ -48,6 +47,6 @@ export class DialogComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.isDeleting$.unsubscribe();
+    this.isProcessing$.unsubscribe();
   }
 }

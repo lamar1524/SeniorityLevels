@@ -1,13 +1,18 @@
+import { UsersModuleState } from '@modules/users/store';
+import { Store } from '@ngrx/store';
+import { MemoizedSelector } from '@ngrx/store/src/selector';
+
 export interface IBadgeClassObj {
   small: boolean;
   big: boolean;
 }
 
-export interface IDeleteDialogData {
-  id: string;
+export interface IDialogData {
   header: string;
   caption: string;
   classToApply: string;
-  isCurrent: boolean;
-  onAcceptCallback: (id: string) => {};
+  onAcceptCallback: (store: Store, id?: string) => {};
+  isCurrent?: boolean;
+  select?: MemoizedSelector<UsersModuleState, boolean>;
+  id?: string;
 }
