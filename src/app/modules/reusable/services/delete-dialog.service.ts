@@ -19,7 +19,7 @@ export class DeleteDialogService {
         height: '200px',
         data: {
           id: userId,
-          caption: 'Are you sure about deleting your account?',
+          caption: isCurrent ? 'Are you sure about deleting your account?' : 'Are you sure about deleting this account?',
           classToApply,
           isCurrent,
         },
