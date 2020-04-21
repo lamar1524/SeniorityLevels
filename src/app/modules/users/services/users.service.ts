@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import 'firebase/database';
 import { from, Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first, map, tap } from 'rxjs/operators';
 
 import { ENDPOINTS } from '@constants/endpoints.constants';
 import { IUser, IUserValues } from '@core/interfaces';
@@ -35,9 +35,9 @@ export class UsersService {
   deleteAccount(userId: string) {
     return this.http.request('delete', ENDPOINTS.deleteUser, {
       headers: new HttpHeaders({
-        'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'DELETE',
+        'Access-Control-Allow-Headers': '*',
       }),
       body: { userId },
     });

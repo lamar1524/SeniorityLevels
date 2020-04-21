@@ -6,6 +6,7 @@ import { deleteUser } from '@modules/users/store/actions';
 import { UsersModuleState } from '@modules/users/store/reducers';
 import { themeEnum } from '@shared/enum/theme.enum';
 import { DataSharingService } from '@shared/services';
+import { first } from 'rxjs/operators';
 import { DialogComponent } from '../components';
 
 @Injectable({
@@ -15,23 +16,26 @@ export class DialogService {
   constructor(private matDialog: MatDialog, private dataSharingService: DataSharingService, private store: Store<UsersModuleState>) {}
 
   showDeleteDialog(userId: string, header: string, isCurrent: boolean, caption: string) {
-    this.dataSharingService.getTheme().subscribe((theme) => {
-      const classToApply = theme === themeEnum.light ? 'light' : 'dark';
-      this.matDialog.open(DialogComponent, {
-        width: '350px',
-        height: '200px',
-        data: {
-          id: userId,
-          header,
-          caption,
-          classToApply,
-          isCurrent,
-          onAcceptCallback: (id: string): void => {
-            this.store.dispatch(deleteUser({ userId: id, isCurrent }));
+    this.dataSharingService
+      .getTheme()
+      .pipe(first())
+      .subscribe((theme) => {
+        const classToApply = theme === themeEnum.light ? 'light' : 'dark';
+        this.matDialog.open(DialogComponent, {
+          width: '350px',
+          height: '200px',
+          data: {
+            id: userId,
+            header,
+            caption,
+            classToApply,
+            isCurrent,
+            onAcceptCallback: (id: string): void => {
+              this.store.dispatch(deleteUser({ userId: id, isCurrent }));
+            },
           },
-        },
-        panelClass: 'u-dialog',
+          panelClass: 'u-dialog',
+        });
       });
-    });
   }
 }
