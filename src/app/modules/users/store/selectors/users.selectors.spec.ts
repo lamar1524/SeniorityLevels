@@ -14,6 +14,7 @@ describe('Users selectors', () => {
       otherUserDetails: {} as IUserValues,
       usersList: [] as IUser[],
       loadingUsersSkills: true,
+      deletingUser: true,
     },
   } as UsersModuleState;
 
@@ -39,5 +40,9 @@ describe('Users selectors', () => {
 
   it('selecting UsersList', () => {
     expect(selectors.selectUsersList(loadedState)).toEqual([] as IUser[]);
+  });
+
+  it('selecting deletingUser', () => {
+    expect(selectors.selectDeletingUser(loadedState)).toEqual(true);
   });
 });
