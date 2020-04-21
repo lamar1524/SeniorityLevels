@@ -5,10 +5,11 @@ import { Store } from '@ngrx/store';
 import { MockModule } from 'ng-mocks';
 import createSpyObj = jasmine.createSpyObj;
 import SpyObj = jasmine.SpyObj;
+import { of } from 'rxjs';
 
 import { MaterialModule } from '@core/material';
-import { selectDeletingUser, UsersModuleState } from '@modules/users/store';
-import { of } from 'rxjs';
+import { UsersModuleState } from '@modules/users/store/reducers';
+import { selectDeletingUser } from '@modules/users/store/selectors';
 import { DialogComponent } from './dialog.component';
 
 describe('DialogComponent', () => {
@@ -38,6 +39,7 @@ describe('DialogComponent', () => {
             classToApply: 'classToApply',
             isCurrent: true,
             onAcceptCallback: () => {},
+            selector: selectDeletingUser,
           },
         },
       ],
@@ -46,7 +48,7 @@ describe('DialogComponent', () => {
 
   beforeEach(() => {
     store = TestBed.inject(Store) as SpyObj<Store<UsersModuleState>>;
-    store.select.withArgs(selectDeletingUser).and.returnValue(of(false));
+    store.select.and.returnValue(of(false));
     fixture = TestBed.createComponent(DialogComponent);
     component = fixture.componentInstance;
   });
@@ -63,7 +65,7 @@ describe('DialogComponent', () => {
     });
 
     it('should not dispatch action if loading', () => {
-      component.isDeleting = true;
+      component.isProcessing = true;
       component.onAccept('userId');
       expect(store.dispatch).not.toHaveBeenCalled();
     });
