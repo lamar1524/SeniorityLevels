@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 
 import { IDeleteDialogData } from '@core/interfaces';
-import { deleteUser } from '@modules/users/store/actions';
 import { UsersModuleState } from '@modules/users/store/reducers';
 import { selectDeletingUser } from '@modules/users/store/selectors';
 import { Subscription } from 'rxjs';
@@ -40,7 +39,7 @@ export class DialogComponent implements OnDestroy {
 
   onAccept(id: string) {
     if (!this.isDeleting) {
-      this.store.dispatch(deleteUser({ userId: id, isCurrent: this.data.isCurrent }));
+      this.data.onAcceptCallback(id);
     }
   }
 

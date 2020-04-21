@@ -1,14 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { MockModule } from 'ng-mocks';
 import createSpyObj = jasmine.createSpyObj;
 import SpyObj = jasmine.SpyObj;
 
 import { MaterialModule } from '@core/material';
-import { deleteUser, selectDeletingUser, UsersModuleState } from '@modules/users/store';
+import { selectDeletingUser, UsersModuleState } from '@modules/users/store';
 import { of } from 'rxjs';
 import { DialogComponent } from './dialog.component';
 
@@ -34,9 +33,11 @@ describe('DialogComponent', () => {
           provide: MAT_DIALOG_DATA,
           useValue: {
             id: 'userId',
+            header: '',
             caption: 'Are you sure about deleting your account?',
             classToApply: 'classToApply',
             isCurrent: true,
+            onAcceptCallback: () => {},
           },
         },
       ],
@@ -56,8 +57,9 @@ describe('DialogComponent', () => {
 
   describe('onAccept method', () => {
     it('should dispatch action if not loading', () => {
+      spyOn(component.data, 'onAcceptCallback');
       component.onAccept('userId');
-      expect(store.dispatch).toHaveBeenCalledWith(deleteUser({ userId: 'userId', isCurrent: true }));
+      expect(component.data.onAcceptCallback).toHaveBeenCalled();
     });
 
     it('should not dispatch action if loading', () => {

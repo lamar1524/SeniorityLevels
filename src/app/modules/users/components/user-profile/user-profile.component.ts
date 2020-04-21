@@ -8,7 +8,7 @@ import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser, IRoutesConst, ISubCategoryValue, IUserValues } from '@core/interfaces';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
-import { DeleteDialogService } from '@modules/reusable';
+import { DialogService } from '@modules/reusable';
 import { seniorityEnum } from '@modules/skills';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
@@ -37,7 +37,7 @@ export class UserProfileComponent implements OnDestroy {
     private route: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
     private store: Store<AuthModuleState | UsersModuleState>,
-    private deleteDialogService: DeleteDialogService,
+    private deleteDialogService: DialogService,
   ) {
     this.routes = ROUTES_PATH;
     this.levelsLoaded = false;
@@ -65,9 +65,9 @@ export class UserProfileComponent implements OnDestroy {
 
   showDeletePopup(id: string) {
     if (this.currentUser.uid === id) {
-      this.deleteDialogService.showDialog(id, true);
+      this.deleteDialogService.showDeleteDialog(id, 'Deleting user', true, 'Are you sure that you want to delete your account?');
     } else {
-      this.deleteDialogService.showDialog(id, false);
+      this.deleteDialogService.showDeleteDialog(id, 'Deleting user', false, 'Are you sure that you want to delete this account?');
     }
   }
 

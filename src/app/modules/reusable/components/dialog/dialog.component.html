@@ -1,5 +1,5 @@
 <div [className]="data.classToApply + ' container'" mat-dialog-content>
-  <h1>Deleting user</h1>
+  <h1>{{ data.header }}</h1>
   <p>{{ data.caption }}</p>
   <div class="button__wrapper">
     <button class="accept__button" mat-raised-button color="primary" (click)="onAccept(data.id)" [disabled]="isDeleting">

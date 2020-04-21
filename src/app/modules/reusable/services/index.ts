@@ -1,2 +1,2 @@
 export * from './popup.service';
-export * from './delete-dialog.service';
+export * from './dialog.service';

@@ -5,7 +5,7 @@ import { filter } from 'rxjs/operators';
 
 import { IBasicUser, ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
-import { DeleteDialogService } from '@modules/reusable';
+import { DialogService } from '@modules/reusable';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
 import { selectTotalSkillsProgress } from '../../store/selectors';
@@ -26,7 +26,7 @@ export class UserComponent implements OnDestroy {
     private cdRef: ChangeDetectorRef,
     private authStore: Store<AuthModuleState>,
     private usersStore: Store<UsersModuleState>,
-    private deleteDialogService: DeleteDialogService,
+    private deleteDialogService: DialogService,
   ) {
     this.user$ = this.authStore
       .select(selectCurrentUser)
@@ -48,6 +48,11 @@ export class UserComponent implements OnDestroy {
   }
 
   showDeletePopup() {
-    this.deleteDialogService.showDialog(this.userDetails.uid, true);
+    this.deleteDialogService.showDeleteDialog(
+      this.userDetails.uid,
+      'Deleting user',
+      true,
+      'Are you sure that you want to delete your' + ' account?',
+    );
   }
 }

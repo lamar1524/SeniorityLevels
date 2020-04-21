@@ -31,9 +31,11 @@ storiesOf('Dialog', module)
           provide: MAT_DIALOG_DATA,
           useValue: {
             id: '',
-            caption: 'Are you sure about deleting your account?',
+            header: 'Sample header',
+            caption: 'Sample text',
             classToApply: 'light',
             isCurrent: true,
+            onAcceptCallback: (id: string) => {},
           },
         },
         {
@@ -55,9 +57,11 @@ storiesOf('Dialog', module)
           provide: MAT_DIALOG_DATA,
           useValue: {
             id: '',
-            caption: 'Are you sure about deleting your account?',
+            header: 'Sample header',
+            caption: 'Sample text',
             classToApply: 'dark',
             isCurrent: true,
+            onAcceptCallback: (id: string) => {},
           },
         },
         {
@@ -79,9 +83,11 @@ storiesOf('Dialog', module)
           provide: MAT_DIALOG_DATA,
           useValue: {
             id: '',
-            caption: 'Are you sure about deleting your account?',
+            header: 'Sample header',
+            caption: 'Sample text',
             classToApply: 'light',
             isCurrent: true,
+            onAcceptCallback: (id: string) => {},
           },
         },
         {
@@ -103,9 +109,11 @@ storiesOf('Dialog', module)
           provide: MAT_DIALOG_DATA,
           useValue: {
             id: '',
-            caption: 'Are you sure about deleting your account?',
+            header: 'Sample header',
+            caption: 'Sample text',
             classToApply: 'dark',
             isCurrent: true,
+            onAcceptCallback: (id: string) => {},
           },
         },
         {
