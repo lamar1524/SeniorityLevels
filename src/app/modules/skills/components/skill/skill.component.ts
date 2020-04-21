@@ -97,7 +97,7 @@ export class SkillComponent implements OnDestroy {
     );
   }
 
-  chooseSubCategory(subCat: ISubCategoryDescription, index: number) {
+  chooseSubCategory(subCat: ISubCategoryDescription, index: number, catTitle: string, subCatTitle: string, userId: string) {
     this.document.querySelectorAll('.table__label').forEach((element) => {
       element.classList.remove('u-text--to-hover');
     });
@@ -106,11 +106,20 @@ export class SkillComponent implements OnDestroy {
       chosenElement.classList.add('u-text--to-hover');
     }
     this.chosenSubCat = subCat;
+    this.store.dispatch(
+      skillsActions.loadSkillsBySubCategory({
+        catTitle,
+        subCatTitle,
+        userId,
+      }),
+    );
+    this.cdRef.markForCheck();
   }
 
   sendSkill(level: seniorityEnum, catTitle: string, subCatTitle: string, levels: ISeniorityValues, userId: string) {
     levels[level] = !levels[level];
     this.levels = { ...levels };
+    this.cdRef.markForCheck();
     this.store.dispatch(
       skillsActions.sendSkillUpdate({
         catTitle,
