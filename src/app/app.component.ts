@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { themeEnum } from '@shared/enum/theme.enum';
 import { DataSharingService } from '@shared/services';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
