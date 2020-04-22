@@ -8,7 +8,7 @@ import { selectCurrentUser, AuthModuleState } from '@modules/authentication/stor
 import { DialogService } from '@modules/reusable';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
-import { selectTotalSkillsProgress } from '../../store/selectors';
+import * as usersSelectors from '../../store/selectors';
 
 @Component({
   selector: 'app-user',
@@ -18,6 +18,7 @@ import { selectTotalSkillsProgress } from '../../store/selectors';
 })
 export class UserComponent implements OnDestroy {
   private user$: Subscription;
+  formVisibility$: Observable<boolean>;
   userDetails: IBasicUser;
   progress$: Observable<ISeniorityCount>;
   data: ICategoryProgress[];
@@ -28,23 +29,28 @@ export class UserComponent implements OnDestroy {
     private usersStore: Store<UsersModuleState>,
     private deleteDialogService: DialogService,
   ) {
-    this.user$ = this.authStore
-      .select(selectCurrentUser)
-      .pipe(filter((user) => user !== null))
-      .subscribe((user) => {
-        this.userDetails = user;
-        this.cdRef.markForCheck();
-        this.usersStore.dispatch(usersActions.loadTotalProgress({ userId: user.uid }));
-      });
-    this.progress$ = this.usersStore.select(selectTotalSkillsProgress);
+    this.loadCurrentUser();
+    this.progress$ = this.usersStore.select(usersSelectors.selectTotalSkillsProgress);
+    this.formVisibility$ = this.usersStore.select(usersSelectors.selectEditingFormVisibility);
   }
 
   get userLoaded() {
     return !!this.userDetails;
   }
 
-  ngOnDestroy(): void {
-    this.user$.unsubscribe();
+  loadCurrentUser() {
+    this.user$ = this.authStore
+      .select(selectCurrentUser)
+      .pipe(filter((user) => user !== null))
+      .subscribe((user: IBasicUser) => {
+        this.selectCurrentUserHandler(user);
+      });
+  }
+
+  selectCurrentUserHandler(user: IBasicUser) {
+    this.userDetails = user;
+    this.cdRef.markForCheck();
+    this.usersStore.dispatch(usersActions.loadTotalProgress({ userId: user.uid }));
   }
 
   showDeletePopup() {
@@ -52,7 +58,15 @@ export class UserComponent implements OnDestroy {
       this.userDetails.uid,
       'Deleting user',
       true,
-      'Are you sure that you want to delete your' + ' account?',
+      'Are you sure that you want to delete your account?',
     );
+  }
+
+  showForm() {
+    this.usersStore.dispatch(usersActions.showEditForm());
+  }
+
+  ngOnDestroy(): void {
+    this.user$.unsubscribe();
   }
 }
