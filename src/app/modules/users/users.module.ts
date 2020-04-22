@@ -7,8 +7,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { USERS_FEATURE } from '@constants/users.constants';
 import { SharedUiModule } from '@modules/reusable';
-import { UsersListComponent, UserComponent, UserProfileComponent } from './components';
-import { UserEditFormComponent } from './components/user-edit-form/user-edit-form.component';
+import { UsersListComponent, UserComponent, UserEditFormComponent, UserProfileComponent } from './components';
 import { usersReducer, UsersEffects } from './store';
 import { UsersRoutingModule } from './users-routing.module';
 
