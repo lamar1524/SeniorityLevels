@@ -15,7 +15,7 @@ import { AppFormControl, AppFormGroup } from '@shared/forms';
   styleUrls: ['./user-edit-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserEditFormComponent implements OnInit, OnDestroy {
+export class UserEditFormComponent implements OnDestroy {
   @Input() userDetails: IBasicUser;
   editForm: AppFormGroup;
   formLoading$: Subscription;
@@ -29,8 +29,6 @@ export class UserEditFormComponent implements OnInit, OnDestroy {
       this.formLoadingHandler(formState);
     });
   }
-
-  ngOnInit(): void {}
 
   formLoadingHandler(state: boolean) {
     if (state) {
