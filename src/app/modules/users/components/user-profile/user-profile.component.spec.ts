@@ -2,16 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { RouterTestingModule } from '@angular/router/testing';
-import { roleEnum } from '@core/enums/role.enum';
-
-import { SharedUiModule } from '@modules/reusable';
 import { Store } from '@ngrx/store';
 import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
-import { UserProfileComponent } from '..';
+
+import { roleEnum } from '@core/enums/role.enum';
+import { SharedUiModule } from '@modules/reusable';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
 import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoading } from '../../store/selectors';
+import { UserProfileComponent } from './user-profile.component';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
