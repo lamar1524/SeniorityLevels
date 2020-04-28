@@ -6,11 +6,12 @@ import { Store } from '@ngrx/store';
 import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
+import { roleEnum } from '@core/enums/role.enum';
 import { SharedUiModule } from '@modules/reusable';
-import { UserProfileComponent } from '..';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
 import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoading } from '../../store/selectors';
+import { UserProfileComponent } from './user-profile.component';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -78,6 +79,23 @@ describe('UserProfileComponent', () => {
 
     it('should select skills loading state', () => {
       expect(store.select).toHaveBeenCalledWith(selectSkillsLoading);
+    });
+  });
+
+  describe('setRole method proper values', () => {
+    it('should dispatch action with user role', () => {
+      component.setRole('', roleEnum.admin);
+      expect(store.dispatch).toHaveBeenCalledWith(usersActions.updateRole({ userId: '', role: roleEnum.user }));
+    });
+
+    it('should dispatch action with admin role', () => {
+      component.setRole('', roleEnum.user);
+      expect(store.dispatch).toHaveBeenCalledWith(usersActions.updateRole({ userId: '', role: roleEnum.admin }));
+    });
+
+    it('should dispatch proper action after all', () => {
+      component.setRole('', roleEnum.user);
+      expect(store.dispatch).toHaveBeenCalledWith(usersActions.loadOtherUserDetails({ userId: '' }));
     });
   });
 });

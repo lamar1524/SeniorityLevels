@@ -1,18 +1,19 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser, IRoutesConst, ISubCategoryValue, IUserValues } from '@core/interfaces';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
+import * as authActions from '@modules/authentication/store/actions';
 import { DialogService } from '@modules/reusable';
 import { seniorityEnum } from '@modules/skills';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
-import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoading } from '../../store/selectors';
+import { selectOtherUserDetails, selectOtherUserSkillProgress, selectRoleLoading, selectSkillsLoading } from '../../store/selectors';
 
 @Component({
   selector: 'app-user-profile',
@@ -23,12 +24,13 @@ import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoadi
 export class UserProfileComponent implements OnDestroy {
   readonly userKey: string;
   readonly routes: IRoutesConst;
+  readonly imgSrc: string;
   levelsLoaded: boolean;
   categories$: Observable<ISubCategoryValue[]>;
   chosenLevel: seniorityEnum;
   userDetails$: Observable<IUserValues>;
-  readonly imgSrc: string;
   loading$: Observable<boolean>;
+  roleLoading$: Observable<boolean>;
   adminRole: roleEnum;
   currentUser$: Subscription;
   currentUser: IBasicUser;
@@ -53,7 +55,9 @@ export class UserProfileComponent implements OnDestroy {
       .pipe(filter((user) => user !== null))
       .subscribe((user) => {
         this.currentUser = user;
+        this.cdRef.markForCheck();
       });
+    this.roleLoading$ = this.store.select(selectRoleLoading);
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';
     this.adminRole = roleEnum.admin;
   }
@@ -68,6 +72,15 @@ export class UserProfileComponent implements OnDestroy {
       this.deleteDialogService.showDeleteDialog(id, 'Deleting user', true, 'Are you sure that you want to delete your account?');
     } else {
       this.deleteDialogService.showDeleteDialog(id, 'Deleting user', false, 'Are you sure that you want to delete this account?');
+    }
+  }
+
+  setRole(userId: string, role: roleEnum) {
+    const roleToSet = role === roleEnum.admin ? roleEnum.user : roleEnum.admin;
+    this.store.dispatch(usersActions.updateRole({ userId, role: roleToSet }));
+    this.store.dispatch(usersActions.loadOtherUserDetails({ userId }));
+    if (userId === this.currentUser.uid) {
+      this.store.dispatch(authActions.loadUserRefresh());
     }
   }
 

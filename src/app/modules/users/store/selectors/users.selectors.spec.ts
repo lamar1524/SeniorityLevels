@@ -17,6 +17,7 @@ describe('Users selectors', () => {
       deletingUser: true,
       editLoading: true,
       editingFormVisibility: true,
+      roleLoading: true,
     },
   } as UsersModuleState;
 
@@ -54,5 +55,9 @@ describe('Users selectors', () => {
 
   it('selecting EditLoading', () => {
     expect(selectors.selectEditLoading(loadedState)).toEqual(true);
+  });
+
+  it('selecting roleLoading', () => {
+    expect(selectors.selectRoleLoading(loadedState)).toEqual(true);
   });
 });

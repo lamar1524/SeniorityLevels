@@ -15,6 +15,7 @@ export interface UsersState {
   deletingUser: boolean;
   editingFormVisibility: boolean;
   editLoading: boolean;
+  roleLoading: boolean;
   skillProgress: ISeniorityCount;
   otherUserDetails: IUserValues;
   otherUserSkillsProgress: ISubCategoryValue[];
@@ -29,6 +30,7 @@ export const initialState: UsersState = {
   deletingUser: false,
   editingFormVisibility: false,
   editLoading: false,
+  roleLoading: false,
   skillProgress: {
     junior: 0,
     middle: 0,
@@ -75,6 +77,10 @@ const USERS_REDUCER = createReducer(
   on(usersActions.saveEditedData, (state) => ({ ...state, editLoading: true })),
   on(usersActions.saveEditedDataSuccess, (state) => ({ ...state, editLoading: false, editingFormVisibility: false })),
   on(usersActions.saveEditedDataFail, (state) => ({ ...state, editLoading: false })),
+
+  on(usersActions.updateRole, (state) => ({ ...state, roleLoading: true })),
+  on(usersActions.updateRoleSuccess, (state) => ({ ...state, roleLoading: false })),
+  on(usersActions.updateRoleFail, (state) => ({ ...state, roleLoading: false })),
 );
 
 export function usersReducer(state: UsersState, action: Action) {

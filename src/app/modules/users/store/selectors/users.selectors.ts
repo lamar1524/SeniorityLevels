@@ -16,3 +16,5 @@ export const selectDeletingUser = createSelector(usersSelector, (state: UsersSta
 
 export const selectEditingFormVisibility = createSelector(usersSelector, (state: UsersState) => state.editingFormVisibility);
 export const selectEditLoading = createSelector(usersSelector, (state: UsersState) => state.editLoading);
+
+export const selectRoleLoading = createSelector(usersSelector, (state: UsersState) => state.roleLoading);

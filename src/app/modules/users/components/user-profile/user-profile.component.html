@@ -2,7 +2,13 @@
 <div class="container" *ngIf="userDetails$ | async as userDetails">
   <div class="profile__wrapper">
     <div class="options__wrapper" *ngIf="currentUser?.role === adminRole">
-      <button mat-raised-button color="primary" *ngIf="userDetails.role != adminRole">Make admin</button>
+      <button mat-raised-button [disabled]="roleLoading$ | async" color="primary" (click)="setRole(userKey, userDetails.role)">
+        <span *ngIf="(roleLoading$ | async) === false; else spinner">
+          <span class="button__fill" *ngIf="userDetails.role != adminRole; else downgrade">Make admin</span>
+          <ng-template class="button__fill" #downgrade> Downgrade to user</ng-template>
+        </span>
+        <ng-template #spinner> <mat-spinner [diameter]="35" class="u-loading__button"></mat-spinner> </ng-template>
+      </button>
       <button mat-raised-button color="warn" (click)="showDeletePopup(userKey)">Delete user</button>
     </div>
     <div class="profile__introduction">
