@@ -1,8 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
@@ -10,6 +7,9 @@ import { IBasicUser, IRoutesConst, ISubCategoryValue, IUserValues } from '@core/
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { DialogService } from '@modules/reusable';
 import { seniorityEnum } from '@modules/skills';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
 import { selectOtherUserDetails, selectOtherUserSkillProgress, selectRoleLoading, selectSkillsLoading } from '../../store/selectors';
@@ -74,16 +74,13 @@ export class UserProfileComponent implements OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this.currentUser$.unsubscribe();
+  setRole(userId: string, role: roleEnum) {
+    const roleToSet = role === roleEnum.admin ? roleEnum.user : roleEnum.admin;
+    this.store.dispatch(usersActions.updateRole({ userId, role: roleToSet }));
+    this.store.dispatch(usersActions.loadOtherUserDetails({ userId }));
   }
 
-  setRole(userId: string, role: roleEnum) {
-    if (role === roleEnum.user) {
-      this.store.dispatch(usersActions.updateRole({ userId, role: roleEnum.admin }));
-    } else {
-      this.store.dispatch(usersActions.updateRole({ userId, role: roleEnum.user }));
-    }
-    this.store.dispatch(usersActions.loadOtherUserDetails({ userId }));
+  ngOnDestroy() {
+    this.currentUser$.unsubscribe();
   }
 }
