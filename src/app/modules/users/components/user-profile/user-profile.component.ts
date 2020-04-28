@@ -23,11 +23,11 @@ import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoadi
 export class UserProfileComponent implements OnDestroy {
   readonly userKey: string;
   readonly routes: IRoutesConst;
+  readonly imgSrc: string;
   levelsLoaded: boolean;
   categories$: Observable<ISubCategoryValue[]>;
   chosenLevel: seniorityEnum;
   userDetails$: Observable<IUserValues>;
-  readonly imgSrc: string;
   loading$: Observable<boolean>;
   adminRole: roleEnum;
   currentUser$: Subscription;
