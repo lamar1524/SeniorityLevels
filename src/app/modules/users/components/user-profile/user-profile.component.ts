@@ -5,6 +5,7 @@ import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser, IRoutesConst, ISubCategoryValue, IUserValues } from '@core/interfaces';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
+import * as authActions from '@modules/authentication/store/actions';
 import { DialogService } from '@modules/reusable';
 import { seniorityEnum } from '@modules/skills';
 import { Store } from '@ngrx/store';
@@ -78,6 +79,9 @@ export class UserProfileComponent implements OnDestroy {
     const roleToSet = role === roleEnum.admin ? roleEnum.user : roleEnum.admin;
     this.store.dispatch(usersActions.updateRole({ userId, role: roleToSet }));
     this.store.dispatch(usersActions.loadOtherUserDetails({ userId }));
+    if (userId === this.currentUser.uid) {
+      this.store.dispatch(authActions.loadUserRefresh());
+    }
   }
 
   ngOnDestroy() {
