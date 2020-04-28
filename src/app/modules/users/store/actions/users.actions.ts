@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
+import { roleEnum } from '@core/enums/role.enum';
 import { ISeniorityCount, ISubCategoryValue, IUser, IUserValues } from '@core/interfaces';
 
 export const loadTotalProgress = createAction('[Users] Load skills', props<{ userId: string }>());
@@ -27,8 +28,11 @@ export const deleteOtherUserSuccess = createAction('[Users] delete other user su
 export const deleteUserFail = createAction('[Users] delete user fail');
 
 export const showEditForm = createAction('[Users] Show editing profile form');
-export const hideEditForm = createAction('[Users] Hide editing profile form');
 
 export const saveEditedData = createAction('[Users] Save edited data', props<{ userId: string; data: IUserValues }>());
 export const saveEditedDataSuccess = createAction('[Users] Save edited data success');
 export const saveEditedDataFail = createAction('[Users] Save edited data fail');
+
+export const updateRole = createAction('[Users] Change user role', props<{ userId: string; role: roleEnum }>());
+export const updateRoleSuccess = createAction('[Users] Change user role success');
+export const updateRoleFail = createAction('[Users] Change user role fail');

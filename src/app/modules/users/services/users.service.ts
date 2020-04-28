@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import 'firebase/database';
 import { from, Observable } from 'rxjs';
-import { first, map, tap } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { ENDPOINTS } from '@constants/endpoints.constants';
+import { roleEnum } from '@core/enums/role.enum';
 import { IUser, IUserValues } from '@core/interfaces';
 
 @Injectable({
@@ -45,5 +46,9 @@ export class UsersService {
 
   editCredentials(userId: string, data: IUserValues) {
     return from(this.db.database.ref(`users/${userId}`).update(data));
+  }
+
+  editRole(userId: string, role: roleEnum) {
+    return from(this.db.database.ref(`users/${userId}`).update({ role }));
   }
 }

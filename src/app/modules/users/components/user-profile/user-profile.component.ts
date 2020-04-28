@@ -12,7 +12,7 @@ import { DialogService } from '@modules/reusable';
 import { seniorityEnum } from '@modules/skills';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
-import { selectOtherUserDetails, selectOtherUserSkillProgress, selectSkillsLoading } from '../../store/selectors';
+import { selectOtherUserDetails, selectOtherUserSkillProgress, selectRoleLoading, selectSkillsLoading } from '../../store/selectors';
 
 @Component({
   selector: 'app-user-profile',
@@ -29,6 +29,7 @@ export class UserProfileComponent implements OnDestroy {
   chosenLevel: seniorityEnum;
   userDetails$: Observable<IUserValues>;
   loading$: Observable<boolean>;
+  roleLoading$: Observable<boolean>;
   adminRole: roleEnum;
   currentUser$: Subscription;
   currentUser: IBasicUser;
@@ -53,7 +54,9 @@ export class UserProfileComponent implements OnDestroy {
       .pipe(filter((user) => user !== null))
       .subscribe((user) => {
         this.currentUser = user;
+        this.cdRef.markForCheck();
       });
+    this.roleLoading$ = this.store.select(selectRoleLoading);
     this.imgSrc = 'assets/img/mock/profile_mock.jpg';
     this.adminRole = roleEnum.admin;
   }
@@ -73,5 +76,14 @@ export class UserProfileComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.currentUser$.unsubscribe();
+  }
+
+  setRole(role: roleEnum) {
+    if (role === roleEnum.user) {
+      this.store.dispatch(usersActions.updateRole({ userId: this.userKey, role: roleEnum.admin }));
+    } else {
+      this.store.dispatch(usersActions.updateRole({ userId: this.userKey, role: roleEnum.user }));
+    }
+    this.store.dispatch(usersActions.loadOtherUserDetails({ userId: this.userKey }));
   }
 }

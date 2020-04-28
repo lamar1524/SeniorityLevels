@@ -129,4 +129,22 @@ export class UsersEffects {
       ),
     ),
   );
+
+  updateRole$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersActions.updateRole),
+      switchMap((action) =>
+        this.usersService.editRole(action.userId, action.role).pipe(
+          map(() => {
+            this.popupService.success('Successfully updated credentials');
+            return usersActions.updateRoleSuccess();
+          }),
+          catchError((error) => {
+            this.popupService.error(error.message);
+            return of(usersActions.updateRoleFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }
