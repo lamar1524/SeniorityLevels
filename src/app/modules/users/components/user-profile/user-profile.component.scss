@@ -61,6 +61,32 @@
 
   .levels {
     display: block;
+
+    .top__wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .seniority__title,
+    .icon__wrapper {
+      width: fit-content;
+    }
+
+    .icon__wrapper {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .comment__amount {
+      font-size: 0.8rem;
+    }
+
+    .comment__icon {
+      margin-left: 3px;
+      width: 16px;
+    }
   }
 
   .current-level {
