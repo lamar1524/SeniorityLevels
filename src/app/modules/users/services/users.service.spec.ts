@@ -3,11 +3,14 @@ import { TestBed } from '@angular/core/testing';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { of, Observable } from 'rxjs';
 
+import { roleEnum } from '@core/enums/role.enum';
+import { IUserValues } from '@core/interfaces';
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {
   let service: UsersService;
   let db: AngularFireDatabase;
+  const userIdMock = 'userid';
 
   beforeEach(() =>
     TestBed.configureTestingModule({
@@ -17,7 +20,7 @@ describe('UsersService', () => {
           provide: AngularFireDatabase,
           useValue: {
             database: {
-              ref: () => ({ once: () => of({}) }),
+              ref: () => ({ once: () => of({}), update: () => of({}) }),
             },
           },
         },
@@ -54,6 +57,22 @@ describe('UsersService', () => {
       spyOn(db.database, 'ref').and.callThrough();
       service.getUserByKey('test');
       expect(db.database.ref).toHaveBeenCalledWith('users/test');
+    });
+  });
+
+  describe('editCredentials method', () => {
+    it('should call ref method', () => {
+      spyOn(db.database, 'ref').and.callThrough();
+      service.editCredentials(userIdMock, {} as IUserValues);
+      expect(db.database.ref).toHaveBeenCalledWith(`users/${userIdMock}`);
+    });
+  });
+
+  describe('editRole method', () => {
+    it('should call ref method', () => {
+      spyOn(db.database, 'ref').and.callThrough();
+      service.editRole(userIdMock, roleEnum.admin);
+      expect(db.database.ref).toHaveBeenCalledWith(`users/${userIdMock}`);
     });
   });
 });

@@ -1,3 +1,4 @@
+import { roleEnum } from '@core/enums/role.enum';
 import { IUserValues } from '@core/interfaces';
 import * as usersActions from '../actions';
 import { initialState, usersReducer } from '../reducers';
@@ -97,6 +98,23 @@ describe('usersReducer reducer', () => {
     it('should change editingFormVisibility when called', () => {
       const expected = { ...initialState, editingFormVisibility: true };
       expect(usersReducer(undefined, usersActions.showEditForm)).toEqual(expected);
+    });
+  });
+
+  describe('updateRole action', () => {
+    it('should change roleLoading when editing initialized', () => {
+      const expected = { ...initialState, roleLoading: true };
+      expect(usersReducer(undefined, usersActions.updateRole({ userId: '', role: roleEnum.admin }))).toEqual(expected);
+    });
+
+    it('should change roleLoading when editing success', () => {
+      const expected = { ...initialState, roleLoading: false };
+      expect(usersReducer(undefined, usersActions.updateRoleSuccess)).toEqual(expected);
+    });
+
+    it('should change roleLoading when editing fail', () => {
+      const expected = { ...initialState, roleLoading: false };
+      expect(usersReducer(undefined, usersActions.updateRoleFail)).toEqual(expected);
     });
   });
 });

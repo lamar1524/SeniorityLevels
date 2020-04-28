@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { roleEnum } from '@core/enums/role.enum';
-import { IUserValues } from '@core/interfaces';
 import { AuthenticationService } from '@modules/authentication';
 import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
@@ -36,7 +35,14 @@ describe('User effects', () => {
         provideMockActions(() => actions$),
         {
           provide: UsersService,
-          useValue: createSpyObj('usersService', ['getCurrentUser', 'getUsersList', 'getUserByKey', 'deleteAccount', 'editCredentials']),
+          useValue: createSpyObj('usersService', [
+            'editRole',
+            'getCurrentUser',
+            'getUsersList',
+            'getUserByKey',
+            'deleteAccount',
+            'editCredentials',
+          ]),
         },
         {
           provide: SkillsService,
@@ -221,6 +227,32 @@ describe('User effects', () => {
         usersService.editCredentials.and.returnValue(cold('-#'));
         const expected$ = '---c';
         expectObservable(usersEffects.saveEditedData$).toBe(expected$, { c: usersActions.saveEditedDataFail() });
+      });
+    });
+  });
+
+  describe('updateRole effect', () => {
+    it('should return updateRoleSuccess action', () => {
+      scheduler.run(({ hot, cold, expectObservable }) => {
+        actions$ = hot('--a', { a: usersActions.updateRole({ userId: '', role: roleEnum.admin }) });
+        usersService.editRole.and.returnValue(cold('-b|', { b: {} as any }));
+        const expected$ = '---c';
+        expectObservable(usersEffects.updateRole$).toBe(expected$, { c: usersActions.updateRoleSuccess() });
+      });
+    });
+
+    it('should return updateRoleFail action', () => {
+      scheduler.run(({ hot, cold, expectObservable }) => {
+        const idMock = 'userId';
+        actions$ = hot('--a', {
+          a: usersActions.updateRole({
+            userId: idMock,
+            role: roleEnum.admin,
+          }),
+        });
+        usersService.editRole.and.returnValue(cold('-#'));
+        const expected$ = '---c';
+        expectObservable(usersEffects.updateRole$).toBe(expected$, { c: usersActions.updateRoleFail() });
       });
     });
   });

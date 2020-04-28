@@ -78,12 +78,12 @@ export class UserProfileComponent implements OnDestroy {
     this.currentUser$.unsubscribe();
   }
 
-  setRole(role: roleEnum) {
+  setRole(userId: string, role: roleEnum) {
     if (role === roleEnum.user) {
-      this.store.dispatch(usersActions.updateRole({ userId: this.userKey, role: roleEnum.admin }));
+      this.store.dispatch(usersActions.updateRole({ userId, role: roleEnum.admin }));
     } else {
-      this.store.dispatch(usersActions.updateRole({ userId: this.userKey, role: roleEnum.user }));
+      this.store.dispatch(usersActions.updateRole({ userId, role: roleEnum.user }));
     }
-    this.store.dispatch(usersActions.loadOtherUserDetails({ userId: this.userKey }));
+    this.store.dispatch(usersActions.loadOtherUserDetails({ userId }));
   }
 }
