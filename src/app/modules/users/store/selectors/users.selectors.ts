@@ -18,3 +18,6 @@ export const selectEditingFormVisibility = createSelector(usersSelector, (state:
 export const selectEditLoading = createSelector(usersSelector, (state: UsersState) => state.editLoading);
 
 export const selectRoleLoading = createSelector(usersSelector, (state: UsersState) => state.roleLoading);
+
+export const selectSubCatsLoading = createSelector(usersSelector, (state: UsersState) => state.subCatsLoading);
+export const selectSubCatsDesc = createSelector(usersSelector, (state: UsersState) => state.subCatsDesc);

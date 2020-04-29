@@ -147,4 +147,19 @@ export class UsersEffects {
       ),
     ),
   );
+
+  loadSubCatsDesc$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersActions.loadSubCategoriesDesc),
+      switchMap((action) =>
+        this.skillsService
+          .getSkillsData()
+          .pipe(map((subCats) => subCats.filter((element) => element.title === action.title)))
+          .pipe(
+            map((subCat) => usersActions.loadSubCategoriesDescSuccess({ subCats: subCat[0] })),
+            catchError(() => of(usersActions.loadSubCategoriesDescFail())),
+          ),
+      ),
+    ),
+  );
 }
