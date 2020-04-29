@@ -73,20 +73,16 @@
       width: fit-content;
     }
 
-    .icon__wrapper {
+    .details__wrapper {
       align-items: center;
       display: flex;
       flex-direction: row;
     }
 
-    .comment__amount {
+    .details__link {
       font-size: 0.8rem;
     }
 
-    .comment__icon {
-      margin-left: 3px;
-      width: 16px;
-    }
   }
 
   .current-level {

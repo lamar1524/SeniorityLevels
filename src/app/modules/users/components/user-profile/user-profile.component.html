@@ -26,10 +26,8 @@
         <div class="seniority" *ngFor="let category of categories$ | async">
           <div class="top__wrapper">
             <p class="seniority__title">{{ category?.title }} {{ (category?.levels)[chosenLevel] }}% </p>
-            <p class="icon__wrapper">
-              <span class="comment__amount">9</span>
-              <img src="../../../../../assets/icons/comment_white.svg" alt="Theme toggle" class="u-theme--white-icon comment__icon" />
-              <img src="../../../../../assets/icons/comment_black.svg" alt="Theme toggle" class="u-theme--black-icon comment__icon"/>
+            <p class="details__wrapper">
+              <span class="details__link">Details</span>
             </p>
           </div>
           <mat-progress-bar class="progress__bar" mode="determinate" [value]="(category?.levels)[chosenLevel]"></mat-progress-bar>
