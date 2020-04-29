@@ -40,19 +40,24 @@
     width: 50%;
   }
 
-  .options__wrapper {
-    display: flex;
-    flex-direction: column;
+  .button--edit {
+    margin-bottom: 10px;
+  }
 
-    .button--edit {
-      margin-bottom: 10px;
-    }
+  .button--edit,
+  .button--delete {
+    display: block !important;
   }
 
   @include break(map-get($breakpoints, md)) {
+    flex-direction: row;
     height: calc(100vh - #{$nav-height});
     margin: 0 auto;
     position: static;
     width: 50vw;
+
+    .profile__wrapper {
+      padding-right: 20px;
+    }
   }
 }

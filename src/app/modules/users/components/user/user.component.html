@@ -16,10 +16,9 @@
         <mat-progress-bar class="progress__bar" mode="determinate" [value]="progress.senior"></mat-progress-bar>
       </div>
     </div>
-  </div>
-  <div class="options__wrapper">
     <button class="button--edit" mat-raised-button color="primary" (click)="showForm()">Edit credentials</button>
     <button class="button--delete" mat-raised-button color="warn" (click)="showDeletePopup()">Delete account</button>
   </div>
+
   <app-user-edit-form [userDetails]="userDetails" *ngIf="formVisibility$ | async"></app-user-edit-form>
 </div>
