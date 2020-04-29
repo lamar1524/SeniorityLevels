@@ -11,6 +11,7 @@ export const ROUTES: IRoutesHeader = {
   otherUserProfile: { title: '', path: 'user' },
   skills: { title: 'Fill up your skills', path: 'skills' },
   skill: { title: '', path: 'skill' },
+  comments: { title: '', path: 'comments' },
 };
 
 export const ROUTES_PATH: IRoutesConst = {
@@ -22,4 +23,5 @@ export const ROUTES_PATH: IRoutesConst = {
   otherUserProfile: '/dashboard/users/user/',
   skills: '/dashboard/skills',
   skill: '/dashboard/skills/skill/',
+  comments: '/dashboard/users/comments',
 };

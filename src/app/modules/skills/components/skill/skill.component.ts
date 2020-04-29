@@ -8,8 +8,8 @@ import { filter } from 'rxjs/operators';
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IBasicUser, ICategoryProgress, IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
+import { SlugTextifyPipe } from '../../../reusable/pipes';
 import { seniorityEnum } from '../../enums';
-import { SlugTextifyPipe } from '../../pipes';
 import * as skillsActions from '../../store/actions';
 import { SkillsModuleState } from '../../store/reducers';
 import { selectClickable, selectLevels, selectSkillsSubCategories } from '../../store/selectors';
@@ -72,11 +72,9 @@ export class SkillComponent implements OnDestroy {
     const currentUser$: Subscription = this.store
       .select(selectCurrentUser)
       .pipe(filter((user) => user !== null))
-      .subscribe(
-        (user: IBasicUser) => {
-          this.loadUserHandler(user, catTitle, categories.subCategories[0].title);
-        }
-      );
+      .subscribe((user: IBasicUser) => {
+        this.loadUserHandler(user, catTitle, categories.subCategories[0].title);
+      });
     this.subscription.add(currentUser$);
   }
 

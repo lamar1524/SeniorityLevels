@@ -5,7 +5,7 @@ import createSpyObj = jasmine.createSpyObj;
 import { MockModule } from 'ng-mocks';
 
 import { MaterialModule } from '@core/material';
-import { SlugTextifyPipe, TextSlugifyPipe } from '../../pipes';
+import { SlugTextifyPipe, TextSlugifyPipe } from '../../../reusable/pipes';
 import { loadSkillsNames } from '../../store/actions';
 import { SkillsModuleState } from '../../store/reducers';
 import { selectSkillsCategories } from '../../store/selectors';

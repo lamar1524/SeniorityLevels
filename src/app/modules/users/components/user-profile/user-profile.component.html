@@ -27,7 +27,7 @@
           <div class="top__wrapper">
             <p class="seniority__title">{{ category?.title }} {{ (category?.levels)[chosenLevel] }}% </p>
             <p class="details__wrapper">
-              <span class="details__link">Details</span>
+              <span class="details__link" [routerLink]="routes.comments + '/' + userKey + '/' + (category?.title | slugify)">Details</span>
             </p>
           </div>
           <mat-progress-bar class="progress__bar" mode="determinate" [value]="(category?.levels)[chosenLevel]"></mat-progress-bar>
