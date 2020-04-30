@@ -34,7 +34,7 @@ export class DialogService {
             onAcceptCallback: (store: Store<UsersModuleState>, id: string): void => {
               store.dispatch(deleteUser({ userId: id, isCurrent }));
             },
-            selector: selectDeletingUser,
+            select: selectDeletingUser,
           },
           panelClass: 'u-dialog',
         });
