@@ -1,7 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import * as reusableActions from '../../store/actions';
+import { ReusableModuleState } from '../../store/reducers';
+import { selectFormVisibility } from '../../store/selectors';
 
 @Component({
   selector: 'app-comments',
@@ -12,13 +17,14 @@ import { AppFormControl, AppFormGroup } from '@shared/forms';
 export class CommentsComponent implements OnInit {
   @Input() description: string;
   @Input() level: string;
-  formVisible: boolean;
+  formVisible$: Observable<boolean>;
   commentForm: AppFormGroup;
 
-  constructor() {
+  constructor(private store: Store<ReusableModuleState>) {
     this.commentForm = new AppFormGroup({
       content: new AppFormControl('', Validators.required),
     });
+    this.formVisible$ = this.store.select(selectFormVisibility);
   }
 
   ngOnInit(): void {}
@@ -28,6 +34,6 @@ export class CommentsComponent implements OnInit {
   }
 
   formToggle() {
-    this.formVisible = !this.formVisible;
+    this.store.dispatch(reusableActions.toggleCommentForm());
   }
 }
