@@ -14,6 +14,10 @@ describe('Users selectors', () => {
       otherUserDetails: {} as IUserValues,
       usersList: [] as IUser[],
       loadingUsersSkills: true,
+      deletingUser: true,
+      editLoading: true,
+      editingFormVisibility: true,
+      roleLoading: true,
     },
   } as UsersModuleState;
 
@@ -39,5 +43,21 @@ describe('Users selectors', () => {
 
   it('selecting UsersList', () => {
     expect(selectors.selectUsersList(loadedState)).toEqual([] as IUser[]);
+  });
+
+  it('selecting deletingUser', () => {
+    expect(selectors.selectDeletingUser(loadedState)).toEqual(true);
+  });
+
+  it('selecting EditingFormVisibility', () => {
+    expect(selectors.selectEditingFormVisibility(loadedState)).toEqual(true);
+  });
+
+  it('selecting EditLoading', () => {
+    expect(selectors.selectEditLoading(loadedState)).toEqual(true);
+  });
+
+  it('selecting roleLoading', () => {
+    expect(selectors.selectRoleLoading(loadedState)).toEqual(true);
   });
 });

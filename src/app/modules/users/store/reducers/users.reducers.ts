@@ -12,6 +12,10 @@ export interface UsersState {
   loadingUsersSkills: boolean;
   loadingSkillsWithTitles: boolean;
   loadingUsersList: boolean;
+  deletingUser: boolean;
+  editingFormVisibility: boolean;
+  editLoading: boolean;
+  roleLoading: boolean;
   skillProgress: ISeniorityCount;
   otherUserDetails: IUserValues;
   otherUserSkillsProgress: ISubCategoryValue[];
@@ -23,6 +27,10 @@ export const initialState: UsersState = {
   loadingUsersSkills: false,
   loadingSkillsWithTitles: false,
   loadingUsersList: false,
+  deletingUser: false,
+  editingFormVisibility: false,
+  editLoading: false,
+  roleLoading: false,
   skillProgress: {
     junior: 0,
     middle: 0,
@@ -58,6 +66,21 @@ const USERS_REDUCER = createReducer(
   on(usersActions.loadUsersList, (state) => ({ ...state, loadingUsersList: true })),
   on(usersActions.loadUsersListSuccess, (state, { users }) => ({ ...state, usersList: users, loadingUsersList: false })),
   on(usersActions.loadUsersListFail, (state) => ({ ...state, usersList: null, loadingUsersList: false })),
+
+  on(usersActions.deleteUser, (state) => ({ ...state, deletingUser: true })),
+  on(usersActions.deleteUserSuccess, (state) => ({ ...state, deletingUser: false })),
+  on(usersActions.deleteOtherUserSuccess, (state) => ({ ...state, deletingUser: false })),
+  on(usersActions.deleteUserFail, (state) => ({ ...state, deletingUser: false })),
+
+  on(usersActions.showEditForm, (state) => ({ ...state, editingFormVisibility: true })),
+
+  on(usersActions.saveEditedData, (state) => ({ ...state, editLoading: true })),
+  on(usersActions.saveEditedDataSuccess, (state) => ({ ...state, editLoading: false, editingFormVisibility: false })),
+  on(usersActions.saveEditedDataFail, (state) => ({ ...state, editLoading: false })),
+
+  on(usersActions.updateRole, (state) => ({ ...state, roleLoading: true })),
+  on(usersActions.updateRoleSuccess, (state) => ({ ...state, roleLoading: false })),
+  on(usersActions.updateRoleFail, (state) => ({ ...state, roleLoading: false })),
 );
 
 export function usersReducer(state: UsersState, action: Action) {

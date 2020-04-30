@@ -1,49 +1,39 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { User } from 'firebase';
 import { of, Observable } from 'rxjs';
 
+import { roleEnum } from '@core/enums/role.enum';
+import { IUserValues } from '@core/interfaces';
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {
   let service: UsersService;
-  let firebaseAuth: AngularFireAuth;
   let db: AngularFireDatabase;
+  const userIdMock = 'userid';
 
   beforeEach(() =>
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [
         {
           provide: AngularFireDatabase,
           useValue: {
             database: {
-              ref: () => ({ once: () => of({}) }),
+              ref: () => ({ once: () => of({}), update: () => of({}) }),
             },
           },
-        },
-        {
-          provide: AngularFireAuth,
-          useValue: { currentUser: {} as Promise<User> },
         },
       ],
     }),
   );
   beforeEach(() => {
     service = TestBed.inject(UsersService);
-    firebaseAuth = TestBed.inject(AngularFireAuth);
     db = TestBed.inject(AngularFireDatabase);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });
-
-  describe('getCurrentUser method', () => {
-    it('it should return proper observable', () => {
-      firebaseAuth.currentUser = new Promise<User>(() => {});
-      expect(service.getCurrentUser() instanceof Observable).toEqual(true);
-    });
   });
 
   describe('getUsersList method', () => {
@@ -67,6 +57,22 @@ describe('UsersService', () => {
       spyOn(db.database, 'ref').and.callThrough();
       service.getUserByKey('test');
       expect(db.database.ref).toHaveBeenCalledWith('users/test');
+    });
+  });
+
+  describe('editCredentials method', () => {
+    it('should call ref method', () => {
+      spyOn(db.database, 'ref').and.callThrough();
+      service.editCredentials(userIdMock, {} as IUserValues);
+      expect(db.database.ref).toHaveBeenCalledWith(`users/${userIdMock}`);
+    });
+  });
+
+  describe('editRole method', () => {
+    it('should call ref method', () => {
+      spyOn(db.database, 'ref').and.callThrough();
+      service.editRole(userIdMock, roleEnum.admin);
+      expect(db.database.ref).toHaveBeenCalledWith(`users/${userIdMock}`);
     });
   });
 });

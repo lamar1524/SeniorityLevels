@@ -1,0 +1,39 @@
+@import '../../../../../styles/variables';
+
+.container {
+  height: 200px;
+  margin: 0;
+  padding: 24px 10px 10px;
+  text-align: center;
+  width: 350px;
+}
+
+.button__wrapper {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 30px;
+}
+
+.light {
+  background-color: #fff;
+  color: #000;
+}
+
+.dark {
+  background-color: #323232;
+  color: #fff;
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: $app-pink;
+}
+
+.accept__button {
+  &::ng-deep .mat-progress-spinner circle,
+  .mat-spinner circle {
+    stroke: $warn;
+  }
+}

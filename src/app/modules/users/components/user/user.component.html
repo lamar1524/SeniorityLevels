@@ -1,20 +1,23 @@
 <div class="container">
   <div class="profile__wrapper">
-    <div class="profile__introduction" *ngIf="userLoaded">
-      <h1>Hello {{ userDetails.email }}</h1>
+    <div class="profile__introduction" *ngIf="progress$ | async as progress">
+      <h1 *ngIf="userLoaded">Hello {{ userDetails.email }}</h1>
       <h2>You are:</h2>
       <div class="level__wrapper">
-        <h3>Junior in {{ (progress$ | async).junior }}%</h3>
-        <mat-progress-bar class="progress__bar" mode="determinate" [value]="(progress$ | async).junior"></mat-progress-bar>
+        <h3>Junior in {{ progress.junior }}%</h3>
+        <mat-progress-bar class="progress__bar" mode="determinate" [value]="progress.junior"></mat-progress-bar>
       </div>
       <div class="level__wrapper">
-        <h3>Middle in {{ (progress$ | async).middle }}%</h3>
-        <mat-progress-bar class="progress__bar" mode="determinate" [value]="(progress$ | async).middle"></mat-progress-bar>
+        <h3>Middle in {{ progress.middle }}%</h3>
+        <mat-progress-bar class="progress__bar" mode="determinate" [value]="progress.middle"></mat-progress-bar>
       </div>
       <div class="level__wrapper">
-        <h3>Senior in {{ (progress$ | async).senior }}%</h3>
-        <mat-progress-bar class="progress__bar" mode="determinate" [value]="(progress$ | async).senior"></mat-progress-bar>
+        <h3>Senior in {{ progress.senior }}%</h3>
+        <mat-progress-bar class="progress__bar" mode="determinate" [value]="progress.senior"></mat-progress-bar>
       </div>
     </div>
+    <button class="button--edit" mat-raised-button color="primary" (click)="showForm()">Edit credentials</button>
+    <button class="button--delete" mat-raised-button color="warn" (click)="showDeletePopup()">Delete account</button>
   </div>
+  <app-user-edit-form [userDetails]="userDetails" *ngIf="formVisibility$ | async"></app-user-edit-form>
 </div>

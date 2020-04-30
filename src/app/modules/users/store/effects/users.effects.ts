@@ -8,9 +8,10 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { CATEGORIES_AMOUNT } from '@constants/skills.constants';
 import { ISeniorityValues, IUser } from '@core/interfaces';
+import { AuthenticationService } from '@modules/authentication';
 import { PopupService } from '@modules/reusable';
 import { SkillsService } from '@modules/skills';
-import { UsersService } from '@modules/users';
+import { UsersService } from '../../services';
 import * as usersActions from '../actions';
 
 @Injectable()
@@ -22,6 +23,7 @@ export class UsersEffects {
     private usersService: UsersService,
     private titleService: Title,
     private popupService: PopupService,
+    private authService: AuthenticationService,
   ) {}
 
   loadTotalProgress$ = createEffect(() =>
@@ -32,7 +34,7 @@ export class UsersEffects {
           map((res: ISeniorityValues[]) => {
             return usersActions.computeTotalProgressSuccess({ values: this.skillsService.getProgressOf(res, CATEGORIES_AMOUNT.total) });
           }),
-          catchError((error) => {
+          catchError(() => {
             return of(usersActions.computeTotalProgressFail());
           }),
         ),
@@ -48,7 +50,7 @@ export class UsersEffects {
           map((res: IUser) => {
             this.titleService.setTitle(`${res.values.firstName} ${res.values.lastName}`);
             return usersActions.loadOtherUserSuccess({
-              user: { firstName: res.values.firstName, lastName: res.values.lastName, email: res.values.email },
+              user: { ...res.values },
             });
           }),
           catchError((error) => {
@@ -82,6 +84,65 @@ export class UsersEffects {
         this.usersService.getUsersList().pipe(
           map((list) => usersActions.loadUsersListSuccess({ users: list })),
           catchError(() => of(usersActions.loadUsersListFail())),
+        ),
+      ),
+    ),
+  );
+
+  deleteUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersActions.deleteUser),
+      switchMap((action) =>
+        this.usersService.deleteAccount(action.userId).pipe(
+          map(() => {
+            if (!action.isCurrent) {
+              this.popupService.success('Successfully deleted this account');
+              this.router.navigate([ROUTES_PATH.usersList]);
+              return usersActions.deleteOtherUserSuccess();
+            } else {
+              this.popupService.success('Successfully deleted your account');
+              this.router.navigate([ROUTES_PATH.home]);
+              this.authService.logout();
+              return usersActions.deleteUserSuccess();
+            }
+          }),
+          catchError(() => of(usersActions.deleteUserFail())),
+        ),
+      ),
+    ),
+  );
+
+  saveEditedData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersActions.saveEditedData),
+      switchMap((action) =>
+        this.usersService.editCredentials(action.userId, action.data).pipe(
+          map(() => {
+            this.popupService.success('Successfully updated credentials');
+            return usersActions.saveEditedDataSuccess();
+          }),
+          catchError((error) => {
+            this.popupService.error(error.message);
+            return of(usersActions.saveEditedDataFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  updateRole$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersActions.updateRole),
+      switchMap((action) =>
+        this.usersService.editRole(action.userId, action.role).pipe(
+          map(() => {
+            this.popupService.success('Successfully updated credentials');
+            return usersActions.updateRoleSuccess();
+          }),
+          catchError((error) => {
+            this.popupService.error(error.message);
+            return of(usersActions.updateRoleFail());
+          }),
         ),
       ),
     ),

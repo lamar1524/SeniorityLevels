@@ -4,12 +4,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
 import { MockModule } from 'ng-mocks';
+import { of } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { registerUser, AuthModuleState } from '@modules/authentication/store';
+import { roleEnum } from '@core/enums/role.enum';
 import { SharedUiModule } from '@modules/reusable/shared-ui.module';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { of } from 'rxjs';
+import { registerUser } from '../../store/actions';
+import { AuthModuleState } from '../../store/reducers';
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {
@@ -75,7 +77,9 @@ describe('RegisterComponent', () => {
     it('Should dispatch proper action', () => {
       spyOn(store, 'dispatch');
       component.sendCredentials();
-      expect(store.dispatch).toHaveBeenCalledWith(registerUser({ ...component.formData, password: component.password.value }));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        registerUser({ ...component.formData, password: component.password.value, role: roleEnum.user }),
+      );
     });
   });
 });

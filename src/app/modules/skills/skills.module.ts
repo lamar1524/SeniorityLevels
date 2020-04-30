@@ -4,7 +4,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { SKILLS_FEATURE } from '@constants/skills.constants';
-import { MaterialModule } from '@core/material';
 import { SharedUiModule } from '@modules/reusable';
 import { SkillsComponent, SkillComponent } from './components';
 import { SlugTextifyPipe, TextSlugifyPipe } from './pipes';
@@ -16,7 +15,6 @@ import { skillsReducer } from './store/reducers';
   declarations: [SkillsComponent, SkillComponent, TextSlugifyPipe, SlugTextifyPipe],
   imports: [
     CommonModule,
-    MaterialModule,
     SkillsRoutingModule,
     SharedUiModule,
     StoreModule.forFeature(SKILLS_FEATURE, skillsReducer),

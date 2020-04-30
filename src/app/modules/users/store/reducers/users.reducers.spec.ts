@@ -1,3 +1,4 @@
+import { roleEnum } from '@core/enums/role.enum';
 import { IUserValues } from '@core/interfaces';
 import * as usersActions from '../actions';
 import { initialState, usersReducer } from '../reducers';
@@ -51,6 +52,69 @@ describe('usersReducer reducer', () => {
     it('should change loadingUsersList when loading fail', () => {
       const expected = { ...initialState, loadingUsersList: false };
       expect(usersReducer(undefined, usersActions.loadUsersListFail)).toEqual(expected);
+    });
+  });
+
+  describe('deleteUser action', () => {
+    it('should change loadingUsersList when deleting initialized', () => {
+      const expected = { ...initialState, deletingUser: true };
+      expect(usersReducer(undefined, usersActions.deleteUser({ userId: '', isCurrent: true }))).toEqual(expected);
+    });
+
+    it('should change loadingUsersList when deleting success', () => {
+      const expected = { ...initialState, deletingUser: false };
+      expect(usersReducer(undefined, usersActions.deleteUserSuccess)).toEqual(expected);
+    });
+
+    it('should change loadingUsersList when deleting other user success', () => {
+      const expected = { ...initialState, deletingUser: false };
+      expect(usersReducer(undefined, usersActions.deleteOtherUserSuccess)).toEqual(expected);
+    });
+
+    it('should change loadingUsersList when deleting failed', () => {
+      const expected = { ...initialState, deletingUser: false };
+      expect(usersReducer(undefined, usersActions.deleteUserFail)).toEqual(expected);
+    });
+  });
+
+  describe('saveEditedData action', () => {
+    it('should change editLoading when editing initialized', () => {
+      const expected = { ...initialState, editLoading: true };
+      expect(usersReducer(undefined, usersActions.saveEditedData({ userId: '', data: {} as IUserValues }))).toEqual(expected);
+    });
+
+    it('should change editLoading when editing success', () => {
+      const expected = { ...initialState, editLoading: false };
+      expect(usersReducer(undefined, usersActions.saveEditedDataSuccess)).toEqual(expected);
+    });
+
+    it('should change editLoading when editing fail', () => {
+      const expected = { ...initialState, editLoading: false };
+      expect(usersReducer(undefined, usersActions.saveEditedDataFail)).toEqual(expected);
+    });
+  });
+
+  describe('showEditForm action', () => {
+    it('should change editingFormVisibility when called', () => {
+      const expected = { ...initialState, editingFormVisibility: true };
+      expect(usersReducer(undefined, usersActions.showEditForm)).toEqual(expected);
+    });
+  });
+
+  describe('updateRole action', () => {
+    it('should change roleLoading when editing initialized', () => {
+      const expected = { ...initialState, roleLoading: true };
+      expect(usersReducer(undefined, usersActions.updateRole({ userId: '', role: roleEnum.admin }))).toEqual(expected);
+    });
+
+    it('should change roleLoading when editing success', () => {
+      const expected = { ...initialState, roleLoading: false };
+      expect(usersReducer(undefined, usersActions.updateRoleSuccess)).toEqual(expected);
+    });
+
+    it('should change roleLoading when editing fail', () => {
+      const expected = { ...initialState, roleLoading: false };
+      expect(usersReducer(undefined, usersActions.updateRoleFail)).toEqual(expected);
     });
   });
 });

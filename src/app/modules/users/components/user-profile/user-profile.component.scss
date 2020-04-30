@@ -18,9 +18,16 @@
 
   .profile__wrapper {
     border-radius: $box-border-radius;
+    margin-top: 15px;
     padding: 10px;
-    width: 75%;
+    width: 100%;
     @include form-shadow($blur-color);
+  }
+
+  .options__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .profile__introduction {
@@ -42,6 +49,10 @@
 
   .profile__name {
     font-size: 2rem;
+  }
+
+  .profile__role {
+    font-weight: bold;
   }
 
   .seniority__header,

@@ -8,7 +8,6 @@ import { filter } from 'rxjs/operators';
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { IBasicUser, ICategoryProgress, IRoutesConst, ISeniorityValues, ISubCategoryDescription } from '@core/interfaces';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
-import { PopupService } from '@modules/reusable';
 import { seniorityEnum } from '../../enums';
 import { SlugTextifyPipe } from '../../pipes';
 import * as skillsActions from '../../store/actions';
@@ -38,7 +37,6 @@ export class SkillComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute,
     @Inject(DOCUMENT) private document: Document,
     private textifyPipe: SlugTextifyPipe,
-    private popupService: PopupService,
     private store: Store<AuthModuleState | SkillsModuleState>,
   ) {
     this.subscription = new Subscription();
@@ -77,10 +75,7 @@ export class SkillComponent implements OnDestroy {
       .subscribe(
         (user: IBasicUser) => {
           this.loadUserHandler(user, catTitle, categories.subCategories[0].title);
-        },
-        (error) => {
-          this.popupService.error(error.message);
-        },
+        }
       );
     this.subscription.add(currentUser$);
   }

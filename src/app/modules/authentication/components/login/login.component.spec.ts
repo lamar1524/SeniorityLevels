@@ -8,9 +8,10 @@ import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
-import { loginUser, AuthModuleState } from '@modules/authentication/store';
 import { SharedUiModule } from '@modules/reusable';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { loginUser } from '../../store/actions';
+import { AuthModuleState } from '../../store/reducers';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {

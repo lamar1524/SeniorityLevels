@@ -6,18 +6,18 @@ import { Store } from '@ngrx/store';
 import { MockModule } from 'ng-mocks';
 import { of } from 'rxjs';
 
+import { IBasicUser } from '@core/interfaces';
 import { MaterialModule } from '@core/material/material.module';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { SharedUiModule } from '@modules/reusable/shared-ui.module';
-import { selectTotalSkillsProgress, UsersModuleState } from '@modules/users/store';
 import { UserComponent } from '..';
-import { UsersService } from '../../services';
 import * as usersActions from '../../store/actions';
+import { UsersModuleState } from '../../store/reducers';
+import { selectTotalSkillsProgress } from '../../store/selectors';
 
 describe('UserComponent', () => {
   let component: UserComponent;
   let fixture: ComponentFixture<UserComponent>;
-  let usersService: UsersService;
   let usersStore: Store<UsersModuleState>;
   let authStore: Store<AuthModuleState>;
 
@@ -50,7 +50,6 @@ describe('UserComponent', () => {
     authStore = TestBed.inject(Store);
     spyOn(usersStore, 'dispatch');
     spyOn(usersStore, 'select').and.returnValue(of({}));
-    usersService = TestBed.inject(UsersService);
     fixture = TestBed.createComponent(UserComponent);
     component = fixture.componentInstance;
   });
@@ -64,7 +63,7 @@ describe('UserComponent', () => {
       expect(authStore.select).toHaveBeenCalledWith(selectCurrentUser);
     });
 
-    it('should select total skilsl progress', () => {
+    it('should select total skills progress', () => {
       expect(usersStore.select).toHaveBeenCalledWith(selectTotalSkillsProgress);
     });
   });
@@ -75,6 +74,27 @@ describe('UserComponent', () => {
         expect(usersStore.dispatch).toHaveBeenCalledWith(usersActions.loadTotalProgress({ userId: res.uid }));
         done();
       });
+    });
+  });
+
+  describe('loadCurrentUser method', () => {
+    it('should select prover value from store', () => {
+      component.loadCurrentUser();
+      expect(usersStore.select).toHaveBeenCalledWith(selectCurrentUser);
+    });
+  });
+
+  describe('selectCurrentUserHandler method ', () => {
+    const mockUser = { uid: '' } as IBasicUser;
+
+    it('should assign userDetails properly', () => {
+      component.selectCurrentUserHandler(mockUser);
+      expect(component.userDetails).toEqual(mockUser);
+    });
+
+    it('should dispatch proper action', () => {
+      component.selectCurrentUserHandler(mockUser);
+      expect(usersStore.dispatch).toHaveBeenCalledWith(usersActions.loadTotalProgress({ userId: mockUser.uid }));
     });
   });
 });

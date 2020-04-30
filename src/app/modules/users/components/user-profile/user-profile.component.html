@@ -1,14 +1,27 @@
 <button class="back__button" mat-icon-button [routerLink]="[routes.usersList]">Back</button>
-<div class="container" *ngIf="userDetails$ | async">
+<div class="container" *ngIf="userDetails$ | async as userDetails">
   <div class="profile__wrapper">
+    <div class="options__wrapper" *ngIf="currentUser?.role === adminRole">
+      <button mat-raised-button [disabled]="roleLoading$ | async" color="primary" (click)="setRole(userKey, userDetails.role)">
+        <span *ngIf="(roleLoading$ | async) === false; else spinner">
+          <span class="button__fill" *ngIf="userDetails.role != adminRole; else downgrade">Make admin</span>
+          <ng-template class="button__fill" #downgrade> Downgrade to user</ng-template>
+        </span>
+        <ng-template #spinner> <mat-spinner [diameter]="35" class="u-loading__button"></mat-spinner> </ng-template>
+      </button>
+      <button mat-raised-button color="warn" (click)="showDeletePopup(userKey)">Delete user</button>
+    </div>
     <div class="profile__introduction">
       <div class="profile__photo"><img class="photo__inner" alt="Profile picture" aria-label="Profile picture" [src]="imgSrc" /></div>
-      <span class="profile__name">{{ (userDetails$ | async).firstName }} {{ (userDetails$ | async).lastName }}</span>
-      <p class="profile__email">{{ (userDetails$ | async).email }}</p>
+      <span class="profile__name">{{ userDetails.firstName }} {{ userDetails.lastName }}</span>
+      <p class="profile__email">{{ userDetails.email }}</p>
+      <p class="profile__role">{{ userDetails.role }}</p>
     </div>
     <div class="profile__summary">
       <h3 class="seniority__header">Seniority levels:</h3>
-      <span class="seniority__caption">Currently displayed level: <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select></span>
+      <span class="seniority__caption"
+        >Currently displayed level: <app-level-select (chooseLevel)="chooseLevel($event)"></app-level-select
+      ></span>
       <div class="levels" *ngIf="(loading$ | async) === false; else spinner">
         <div class="seniority" *ngFor="let category of categories$ | async">
           <p>{{ category?.title }} {{ (category?.levels)[chosenLevel] }}%</p>

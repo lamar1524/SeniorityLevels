@@ -31,8 +31,8 @@ describe('SkillsService', () => {
     }),
   );
   beforeEach(() => {
-    service = TestBed.get(SkillsService);
-    db = TestBed.get(AngularFireDatabase);
+    service = TestBed.inject(SkillsService);
+    db = TestBed.inject(AngularFireDatabase);
   });
 
   it('should be created', () => {

@@ -11,3 +11,10 @@ export const selectOtherUserSkillProgress = createSelector(usersSelector, (state
 export const selectSkillsLoading = createSelector(usersSelector, (state: UsersState) => state.loadingUsersSkills);
 
 export const selectUsersList = createSelector(usersSelector, (state: UsersState) => state.usersList);
+
+export const selectDeletingUser = createSelector(usersSelector, (state: UsersState) => state.deletingUser);
+
+export const selectEditingFormVisibility = createSelector(usersSelector, (state: UsersState) => state.editingFormVisibility);
+export const selectEditLoading = createSelector(usersSelector, (state: UsersState) => state.editLoading);
+
+export const selectRoleLoading = createSelector(usersSelector, (state: UsersState) => state.roleLoading);

@@ -1,5 +1,11 @@
 @import './variables';
 
+.u-dialog {
+  .mat-dialog-container {
+    padding: 0;
+  }
+}
+
 .u-responsive-table {
   overflow-x: auto;
 }
