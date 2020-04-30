@@ -7,12 +7,18 @@ import { StoreModule } from '@ngrx/store';
 
 import { USERS_FEATURE } from '@constants/users.constants';
 import { SharedUiModule } from '@modules/reusable';
-import { CommentsComponent, UsersListComponent, UserComponent, UserEditFormComponent, UserProfileComponent } from './components';
+import {
+  CommentsCategoryChooseComponent,
+  UsersListComponent,
+  UserComponent,
+  UserEditFormComponent,
+  UserProfileComponent,
+} from './components';
 import { usersReducer, UsersEffects } from './store';
 import { UsersRoutingModule } from './users-routing.module';
 
 @NgModule({
-  declarations: [UsersListComponent, UserComponent, UserProfileComponent, UserEditFormComponent, CommentsComponent],
+  declarations: [UsersListComponent, UserComponent, UserProfileComponent, UserEditFormComponent, CommentsCategoryChooseComponent],
   imports: [
     CommonModule,
     UsersRoutingModule,

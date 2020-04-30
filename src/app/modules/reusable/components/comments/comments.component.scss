@@ -1,0 +1,16 @@
+.container {
+  padding-top: 25px;
+
+  .comment__form-group {
+    width: 100%;
+
+    .form-control__wrapper {
+      width: 100%;
+    }
+
+    .form-control {
+      min-height: 75px;
+      resize: none;
+    }
+  }
+}

@@ -7,7 +7,7 @@ import { first, map } from 'rxjs/operators';
 
 import { ENDPOINTS } from '@constants/endpoints.constants';
 import { roleEnum } from '@core/enums/role.enum';
-import { IUser, IUserValues } from '@core/interfaces';
+import { IComment, IUser, IUserValues } from '@core/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -50,5 +50,9 @@ export class UsersService {
 
   editRole(userId: string, role: roleEnum) {
     return from(this.db.database.ref(`users/${userId}`).update({ role }));
+  }
+
+  addComment(userId: string, catTitle: string, subCatTitle: string, comment: IComment) {
+    return from(this.db.database.ref(`users/${userId}/comments/${catTitle}/${subCatTitle}`).push(comment));
   }
 }

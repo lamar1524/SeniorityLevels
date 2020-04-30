@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '@core/material';
 import { SlugTextifyPipe, TextSlugifyPipe } from '@modules/reusable/pipes';
-import { LevelSelectComponent, PopupComponent, SubmitButtonComponent } from './components';
+import { CommentsComponent, LevelSelectComponent, PopupComponent, SubmitButtonComponent } from './components';
 import { DialogComponent, UserBadgeComponent } from './components';
 import { DialogService, PopupService } from './services';
 
@@ -17,8 +17,9 @@ import { DialogService, PopupService } from './services';
     UserBadgeComponent,
     TextSlugifyPipe,
     SlugTextifyPipe,
+    CommentsComponent,
   ],
-  imports: [CommonModule, FormsModule, MaterialModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MaterialModule],
   exports: [
     SubmitButtonComponent,
     LevelSelectComponent,
@@ -27,6 +28,7 @@ import { DialogService, PopupService } from './services';
     MaterialModule,
     TextSlugifyPipe,
     SlugTextifyPipe,
+    CommentsComponent,
   ],
   entryComponents: [PopupComponent],
   providers: [PopupService, DialogService],

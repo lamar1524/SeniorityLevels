@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ROUTES } from '@constants/routes.constants';
 import { AuthorizationGuard } from '@core/guards/authorization.guard';
 import { TitleResolve } from '@core/resolvers/title.resolve';
-import { CommentsComponent, UsersListComponent, UserComponent, UserProfileComponent } from './components';
+import { CommentsCategoryChooseComponent, UsersListComponent, UserComponent, UserProfileComponent } from './components';
 
 const routes: Routes = [
   { path: '', redirectTo: ROUTES.userProfile.path, pathMatch: 'full' },
@@ -23,7 +23,7 @@ const routes: Routes = [
     resolve: [TitleResolve],
   },
   { path: `${ROUTES.otherUserProfile.path}/:key`, component: UserProfileComponent, canActivate: [AuthorizationGuard] },
-  { path: `${ROUTES.comments.path}/:userId/:category`, component: CommentsComponent, canActivate: [AuthorizationGuard] },
+  { path: `${ROUTES.comments.path}/:userId/:category`, component: CommentsCategoryChooseComponent, canActivate: [AuthorizationGuard] },
 ];
 
 @NgModule({
