@@ -19,6 +19,7 @@ import { selectSubCatsDesc, selectSubCatsLoading } from '../../store/selectors';
 })
 export class CommentsCategoryChooseComponent implements OnDestroy {
   private category$: Subscription;
+  userId: string;
   category: ICategoryProgress;
   subCatsLoading$: Observable<boolean>;
   chosenSubCat: ISubCategoryDescription;
@@ -31,6 +32,7 @@ export class CommentsCategoryChooseComponent implements OnDestroy {
     private cdRef: ChangeDetectorRef,
   ) {
     const title = this.slugTextifyPipe.transform(this.activatedRoute.snapshot.paramMap.get('category'));
+    this.userId = this.activatedRoute.snapshot.paramMap.get('userId');
     this.store.dispatch(usersActions.loadSubCategoriesDesc({ title }));
     this.subCatsLoading$ = this.store.select(selectSubCatsLoading);
     this.category$ = this.store.select(selectSubCatsDesc).subscribe((category) => {

@@ -2,9 +2,9 @@
   <span>{{ description }} <br /> </span>
   <span class="u-text--link" (click)="formToggle()">Comment</span>
   <div class="form__wrapper" *ngIf="formVisible$ | async">
-    <form [formGroup]="commentForm" class="comment__form-group">
+    <form [formGroup]="commentForm" class="comment__form-group" (ngSubmit)="addComment()">
       <mat-form-field class="form-control__wrapper">
-        <label> <textarea class="form-control" matNativeControl></textarea> </label>
+        <label> <textarea class="form-control" matNativeControl formControlName="content"></textarea> </label>
       </mat-form-field>
       <app-submit-button [disabled]="commentForm.ableToSend" [loading]="commentForm.disabled">Comment</app-submit-button>
     </form>

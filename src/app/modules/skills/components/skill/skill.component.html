@@ -27,5 +27,11 @@
       ></ng-template>
     </div>
   </div>
-  <app-comments [description]="''" [level]="currentlyDisplayedLevel"></app-comments>
+  <app-comments
+    [description]="''"
+    [level]="currentlyDisplayedLevel"
+    [userId]="currentUser?.uid"
+    [catTitle]="catTitle"
+    [subCatTitle]="chosenSubCat.title"
+  ></app-comments>
 </div>

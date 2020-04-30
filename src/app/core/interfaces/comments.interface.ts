@@ -1,7 +1,7 @@
-import { IUser } from '@core/interfaces/user.interface';
+import { IBasicUser } from '@core/interfaces/user.interface';
 
 export interface IComment {
-  author: IUser;
-  dateCreated: Date;
+  author: IBasicUser;
+  dateCreated: string;
   content: string;
 }

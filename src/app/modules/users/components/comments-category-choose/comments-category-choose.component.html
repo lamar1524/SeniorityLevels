@@ -9,6 +9,12 @@
       <app-level-select class="level__select" (chooseLevel)="chooseLevel($event)"></app-level-select>
       <h1>{{ chosenSubCat.title }}</h1>
     </div>
-    <app-comments [description]="chosenSubCat.levels[chosenLevel]" [level]="chosenLevel"></app-comments>
+    <app-comments
+      [description]="chosenSubCat.levels[chosenLevel]"
+      [level]="chosenLevel"
+      [userId]="userId"
+      [catTitle]="category.title"
+      [subCatTitle]="chosenSubCat.title"
+    ></app-comments>
   </div>
 </div>

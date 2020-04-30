@@ -7,7 +7,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser } from '@core/interfaces';
-import { PopupService } from '@modules/reusable';
+import { PopupService } from '@modules/reusable/services';
 import { AuthenticationService } from '../../services';
 import * as authActions from '../actions';
 
