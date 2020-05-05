@@ -11,7 +11,9 @@ export interface ReusableState {
   commentFormVisibility: boolean;
   commentAddLoading: boolean;
   commentsLoading: boolean;
-  comments: IComment[];
+  comments: [string, IComment][];
+  commentEditingLoading: boolean;
+  deletingComment: boolean;
 }
 
 export const initialState: ReusableState = {
@@ -19,6 +21,8 @@ export const initialState: ReusableState = {
   commentAddLoading: false,
   commentsLoading: false,
   comments: [],
+  commentEditingLoading: false,
+  deletingComment: false,
 };
 
 export const REUSABLE_REDUCER = createReducer(
@@ -32,6 +36,14 @@ export const REUSABLE_REDUCER = createReducer(
   on(reusableActions.loadComments, (state) => ({ ...state, commentsLoading: true })),
   on(reusableActions.loadCommentsSuccess, (state, { comments }) => ({ ...state, commentsLoading: false, comments })),
   on(reusableActions.loadCommentsFail, (state) => ({ ...state, commentsLoading: false })),
+
+  on(reusableActions.editComment, (state) => ({ ...state, commentEditingLoading: true })),
+  on(reusableActions.editCommentSuccess, (state) => ({ ...state, commentEditingLoading: false })),
+  on(reusableActions.editCommentFail, (state) => ({ ...state, commentEditingLoading: false })),
+
+  on(reusableActions.deleteComment, (state) => ({ ...state, deletingComment: true })),
+  on(reusableActions.deleteCommentSuccess, (state) => ({ ...state, deletingComment: false })),
+  on(reusableActions.deleteCommentFail, (state) => ({ ...state, deletingComment: false })),
 );
 
 export function reusableReducer(state: ReusableState, action: Action) {

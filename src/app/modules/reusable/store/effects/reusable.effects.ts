@@ -51,4 +51,54 @@ export class ReusableEffects {
       ),
     ),
   );
+
+  editComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(reusableActions.editComment),
+      switchMap((action) =>
+        this.commentsService
+          .editComment(action.commentId, action.content, action.userId, action.catTitle, action.subCatTitle, action.level)
+          .pipe(
+            map(
+              () => reusableActions.editCommentSuccess({ ...action }),
+              catchError(() => {
+                this.popupService.error('An error occurred while editing comment');
+                return of(reusableActions.editCommentFail());
+              }),
+            ),
+          ),
+      ),
+    ),
+  );
+
+  editCommentSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(reusableActions.editCommentSuccess),
+      map((action) => reusableActions.loadComments({ ...action })),
+    ),
+  );
+
+  deleteComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(reusableActions.deleteComment),
+      switchMap((action) =>
+        this.commentsService.deleteComment(action.commentId, action.userId, action.catTitle, action.subCatTitle, action.level).pipe(
+          map(
+            () => reusableActions.deleteCommentSuccess({ ...action }),
+            catchError(() => {
+              this.popupService.error('An error occurred while editing comment');
+              return of(reusableActions.editCommentFail());
+            }),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  deleteCommentSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(reusableActions.deleteCommentSuccess),
+      map((action) => reusableActions.loadComments({ ...action })),
+    ),
+  );
 }

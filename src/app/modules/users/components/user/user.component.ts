@@ -54,7 +54,7 @@ export class UserComponent implements OnDestroy {
   }
 
   showDeletePopup() {
-    this.deleteDialogService.showDeleteDialog(
+    this.deleteDialogService.showDeleteUserDialog(
       this.userDetails.uid,
       'Deleting user',
       true,

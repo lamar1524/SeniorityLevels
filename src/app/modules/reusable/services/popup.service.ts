@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { PopupComponent } from '../components';
-import { popupStateEnum } from '../enums';
+import { PopupComponent } from '../components/popup/popup.component';
+import { popupStateEnum } from '../enums/popup-state.enum';
 
 @Injectable({
   providedIn: 'root',

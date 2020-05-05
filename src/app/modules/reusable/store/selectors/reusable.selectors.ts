@@ -10,3 +10,7 @@ export const selectCommentFormLoading = createSelector(reusableSelector, (state:
 
 export const selectCommentsLoading = createSelector(reusableSelector, (state: ReusableState) => state.commentsLoading);
 export const selectComments = createSelector(reusableSelector, (state: ReusableState) => state.comments);
+
+export const selectCommentEditing = createSelector(reusableSelector, (state: ReusableState) => state.commentEditingLoading);
+
+export const selectCommentDeleting = createSelector(reusableSelector, (state: ReusableState) => state.deletingComment);

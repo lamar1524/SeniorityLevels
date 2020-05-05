@@ -69,9 +69,9 @@ export class UserProfileComponent implements OnDestroy {
 
   showDeletePopup(id: string) {
     if (this.currentUser.uid === id) {
-      this.deleteDialogService.showDeleteDialog(id, 'Deleting user', true, 'Are you sure that you want to delete your account?');
+      this.deleteDialogService.showDeleteUserDialog(id, 'Deleting user', true, 'Are you sure that you want to delete your account?');
     } else {
-      this.deleteDialogService.showDeleteDialog(id, 'Deleting user', false, 'Are you sure that you want to delete this account?');
+      this.deleteDialogService.showDeleteUserDialog(id, 'Deleting user', false, 'Are you sure that you want to delete this account?');
     }
   }
 

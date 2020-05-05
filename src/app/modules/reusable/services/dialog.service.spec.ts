@@ -51,7 +51,7 @@ describe('DeleteDialogService', () => {
   describe('showPopup method', () => {
     it('should call .open method', () => {
       dataSharingService.getTheme.and.returnValue(of(themeEnum.light));
-      service.showDeleteDialog('', '', true, '');
+      service.showDeleteUserDialog('', '', true, '');
       expect(dialog.open).toHaveBeenCalled();
     });
   });

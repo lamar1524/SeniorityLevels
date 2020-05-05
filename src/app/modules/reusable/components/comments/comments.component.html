@@ -15,12 +15,36 @@
     <div *ngIf="(comments$ | async).length === 0">
       No comments yet
     </div>
-    <div class="comment" *ngFor="let comment of comments$ | async">
-      <div class="comment__header">
-        <div class="comment__author">{{ comment.author.email }}</div>
-        <div class="comment__date">{{ comment.dateCreated }}</div>
+    <div class="comment__wrapper" *ngFor="let comment of comments$ | async; index as i">
+      <div class="comment" *ngIf="!editingComment[i]; else form">
+        <div class="comment__header">
+          <div class="header__top">
+            <div class="comment__author">{{ comment[1].author.email }}</div>
+            <div class="options__wrapper" *ngIf="comment[1].author.uid === userId || author.role === adminRole">
+              <div class="option--edit" (click)="showEditForm(i, comment[1].content)">
+                <img src="../../../../../assets/icons/edit_dark.svg" alt="edit" class="option__icon u-theme--black-icon" />
+                <img src="../../../../../assets/icons/edit_white.svg" alt="edit" class="option__icon u-theme--white-icon" />
+              </div>
+              <div class="option--delete" (click)="deleteComment(comment[0])">
+                <img src="../../../../../assets/icons/delete_dark.svg" alt="edit" class="option__icon u-theme--black-icon" />
+                <img src="../../../../../assets/icons/delete_white.svg" alt="edit" class="option__icon u-theme--white-icon" />
+              </div>
+            </div>
+          </div>
+          <div class="comment__date">{{ comment[1].dateCreated }}</div>
+        </div>
+        <div class="comment__content">{{ comment[1].content }}</div>
       </div>
-      <div class="comment__content">{{ comment.content }}</div>
+      <ng-template #form>
+        <form [formGroup]="editCommentForm" (ngSubmit)="editComment(comment[0])" class="comment__form-group">
+          <mat-form-field class="form-control__wrapper">
+            <label>
+              <textarea class="form-control" matNativeControl formControlName="editContent"></textarea>
+            </label>
+          </mat-form-field>
+          <app-submit-button [disabled]="editCommentForm.ableToSend" [loading]="editCommentForm.disabled">Comment</app-submit-button>
+        </form>
+      </ng-template>
     </div>
   </div>
   <ng-template #spinner>

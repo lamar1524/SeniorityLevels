@@ -18,8 +18,16 @@ export class CommentsService {
   getCommentsByData(userId: string, catTitle: string, subCatTitle: string, level: string) {
     return from(this.db.database.ref(`comments/${userId}/${catTitle}/${subCatTitle}/${level}`).once('value')).pipe(
       map((element) => {
-        return element.val() === null ? [] : (Object.values(element.val()) as IComment[]);
+        return element.val() === null ? [] : (Object.entries(element.val()) as [string, IComment][]);
       }),
     );
+  }
+
+  editComment(commentId: string, content: string, userId: string, catTitle: string, subCatTitle: string, level: string) {
+    return from(this.db.database.ref(`comments/${userId}/${catTitle}/${subCatTitle}/${level}/${commentId}`).update({ content }));
+  }
+
+  deleteComment(commentId: string, userId: string, catTitle: string, subCatTitle: string, level: string) {
+    return from(this.db.database.ref(`comments/${userId}/${catTitle}/${subCatTitle}/${level}/${commentId}`).remove());
   }
 }
