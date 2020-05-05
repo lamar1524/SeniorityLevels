@@ -45,24 +45,10 @@ export class CommentsComponent implements OnChanges, OnDestroy {
   readonly adminRole: roleEnum;
 
   constructor(private store: Store<ReusableModuleState | AuthModuleState>, private router: Router, private dialogService: DialogService) {
+    this.subscription = new Subscription();
+    this.initForms();
     this.adminRole = roleEnum.admin;
     this.editingComment = {};
-    this.commentForm = new AppFormGroup({
-      content: new AppFormControl('', [Validators.required]),
-    });
-    this.editCommentForm = new AppFormGroup({
-      editContent: new AppFormControl('', Validators.required),
-    });
-    this.formVisible$ = this.store.select(selectFormVisibility);
-    const formLoading$ = this.store.select(selectCommentFormLoading).subscribe((res) => {
-      if (res === true) {
-        this.commentForm.disable();
-      } else {
-        this.commentForm.enable();
-      }
-    });
-    this.subscription = new Subscription();
-    this.subscription.add(formLoading$);
     this.comments$ = this.store.select(selectComments);
     this.commentsLoading$ = this.store.select(selectCommentsLoading);
     const toggleEditLoading = this.store.select(selectCommentEditing).subscribe((val) => {
@@ -102,6 +88,24 @@ export class CommentsComponent implements OnChanges, OnDestroy {
 
   get editContent() {
     return this.editCommentForm.get('editContent');
+  }
+
+  initForms() {
+    this.commentForm = new AppFormGroup({
+      content: new AppFormControl('', [Validators.required]),
+    });
+    this.editCommentForm = new AppFormGroup({
+      editContent: new AppFormControl('', Validators.required),
+    });
+    this.formVisible$ = this.store.select(selectFormVisibility);
+    const formLoading$ = this.store.select(selectCommentFormLoading).subscribe((res) => {
+      if (res === true) {
+        this.commentForm.disable();
+      } else {
+        this.commentForm.enable();
+      }
+    });
+    this.subscription.add(formLoading$);
   }
 
   formToggle() {
