@@ -1,15 +1,18 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
-import { IBasicUser } from '@core/interfaces';
+import { ROUTES_PATH } from '@constants/routes.constants';
+import { roleEnum } from '@core/enums/role.enum';
+import { IBasicUser, IComment } from '@core/interfaces';
 import { AuthModuleState } from '@modules/authentication/store/reducers';
 import { selectCurrentUser } from '@modules/authentication/store/selectors';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import * as reusableActions from '../../store/actions';
 import { ReusableModuleState } from '../../store/reducers';
-import { selectCommentFormLoading, selectFormVisibility } from '../../store/selectors';
+import { selectComments, selectCommentsLoading, selectCommentFormLoading, selectFormVisibility } from '../../store/selectors';
 
 @Component({
   selector: 'app-comments',
@@ -17,7 +20,7 @@ import { selectCommentFormLoading, selectFormVisibility } from '../../store/sele
   styleUrls: ['./comments.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommentsComponent implements OnInit, OnDestroy {
+export class CommentsComponent implements OnChanges, OnDestroy {
   @Input() catTitle: string;
   @Input() subCatTitle: string;
   @Input() description: string;
@@ -25,28 +28,50 @@ export class CommentsComponent implements OnInit, OnDestroy {
   @Input() userId: string;
   author: IBasicUser;
   formVisible$: Observable<boolean>;
-  formLoading$: Subscription;
+  comments$: Observable<IComment[]>;
+  commentsLoading$: Observable<boolean>;
+  subscription: Subscription;
   commentForm: AppFormGroup;
 
-  constructor(private store: Store<ReusableModuleState | AuthModuleState>) {
+  constructor(private store: Store<ReusableModuleState | AuthModuleState>, private router: Router) {
     this.commentForm = new AppFormGroup({
       content: new AppFormControl('', [Validators.required]),
     });
     this.formVisible$ = this.store.select(selectFormVisibility);
-    this.formLoading$ = this.store.select(selectCommentFormLoading).subscribe((res) => {
+    const formLoading$ = this.store.select(selectCommentFormLoading).subscribe((res) => {
       if (res === true) {
         this.commentForm.disable();
       } else {
-        this.store.dispatch(reusableActions.toggleCommentForm());
         this.commentForm.enable();
       }
     });
-    this.store.select(selectCurrentUser).subscribe((res) => {
-      this.author = res;
-    });
+    this.subscription = new Subscription();
+    this.subscription.add(formLoading$);
+    this.comments$ = this.store.select(selectComments);
+    this.commentsLoading$ = this.store.select(selectCommentsLoading);
   }
 
-  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges) {
+    const catTitle = changes.catTitle;
+    const subCatTitle = changes.subCatTitle;
+    const level = changes.level;
+    this.store.dispatch(
+      reusableActions.loadComments({
+        userId: this.userId,
+        catTitle: catTitle ? changes.catTitle.currentValue : this.catTitle,
+        subCatTitle: subCatTitle ? changes.subCatTitle.currentValue : this.subCatTitle,
+        level: level ? changes.level.currentValue : this.level,
+      }),
+    );
+
+    const currentUser = this.store.select(selectCurrentUser).subscribe((res) => {
+      this.author = res;
+      if (!(this.userId === res.uid || res.role === roleEnum.admin)) {
+        this.router.navigate([ROUTES_PATH.userList]);
+      }
+    });
+    this.subscription.add(currentUser);
+  }
 
   get content() {
     return this.commentForm.get('content');
@@ -61,6 +86,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
       userId: this.userId,
       catTitle: this.catTitle,
       subCatTitle: this.subCatTitle,
+      level: this.level,
       comment: {
         author: this.author,
         content: this.content.value,
@@ -71,6 +97,6 @@ export class CommentsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.formLoading$.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

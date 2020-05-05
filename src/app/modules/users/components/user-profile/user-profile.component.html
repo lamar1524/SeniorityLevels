@@ -25,8 +25,8 @@
       <div class="levels" *ngIf="(loading$ | async) === false; else spinner">
         <div class="seniority" *ngFor="let category of categories$ | async">
           <div class="top__wrapper">
-            <p class="seniority__title">{{ category?.title }} {{ (category?.levels)[chosenLevel] }}% </p>
-            <p class="details__wrapper">
+            <p class="seniority__title">{{ category?.title }} {{ (category?.levels)[chosenLevel] }}%</p>
+            <p class="details__wrapper" *ngIf="userKey === currentUser.uid || currentUser.role === adminRole">
               <span class="details__link" [routerLink]="routes.comments + '/' + userKey + '/' + (category?.title | slugify)">Details</span>
             </p>
           </div>

@@ -23,6 +23,7 @@
 
   .table {
     background-color: $gray;
+    border-radius: $box-border-radius;
     color: #000;
     display: grid;
     grid-template-areas: 'labels content';

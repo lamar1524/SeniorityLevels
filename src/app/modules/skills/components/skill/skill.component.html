@@ -27,10 +27,10 @@
       ></ng-template>
     </div>
   </div>
-  <app-comments
+  <app-comments *ngIf="currentUser"
     [description]="''"
     [level]="currentlyDisplayedLevel"
-    [userId]="currentUser?.uid"
+    [userId]="currentUser.uid"
     [catTitle]="catTitle"
     [subCatTitle]="chosenSubCat.title"
   ></app-comments>
