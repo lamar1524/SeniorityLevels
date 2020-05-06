@@ -31,6 +31,7 @@ export class SkillComponent implements OnDestroy {
   clickable$: Observable<boolean>;
   currentUser: IBasicUser;
   routes: IRoutesConst;
+  public: boolean;
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -39,6 +40,7 @@ export class SkillComponent implements OnDestroy {
     private textifyPipe: SlugTextifyPipe,
     private store: Store<AuthModuleState | SkillsModuleState>,
   ) {
+    this.public = true;
     this.subscription = new Subscription();
     this.routes = ROUTES_PATH;
     this.currentlyDisplayedLevel = seniorityEnum.junior;
@@ -130,5 +132,9 @@ export class SkillComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  showPublic(value: boolean) {
+    this.public = value;
   }
 }
