@@ -1,16 +1,16 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppFormControl, AppFormGroup } from '@shared/forms';
+import { Observable, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
 import { IBasicUser, IComment } from '@core/interfaces';
 import { AuthModuleState } from '@modules/authentication/store/reducers';
 import { selectCurrentUser } from '@modules/authentication/store/selectors';
-import { Store } from '@ngrx/store';
-import { AppFormControl, AppFormGroup } from '@shared/forms';
-import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import { DialogService } from '../../services/dialog.service';
 import * as reusableActions from '../../store/actions';
 import { ReusableModuleState } from '../../store/reducers';
@@ -28,7 +28,7 @@ import {
   styleUrls: ['./comments.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommentsComponent implements OnChanges, OnDestroy {
+export class CommentsComponent implements OnInit, OnChanges, OnDestroy {
   @Input() catTitle: string;
   @Input() subCatTitle: string;
   @Input() description: string;
@@ -42,14 +42,27 @@ export class CommentsComponent implements OnChanges, OnDestroy {
   commentForm: AppFormGroup;
   editingComment: { [key: number]: boolean };
   readonly adminRole: roleEnum;
+  readonly assets: string;
 
   constructor(private store: Store<ReusableModuleState | AuthModuleState>, private router: Router, private dialogService: DialogService) {
+    this.assets = '../../../../../assets';
+    this.adminRole = roleEnum.admin;
     this.subscription = new Subscription();
     this.initForms();
-    this.adminRole = roleEnum.admin;
-    this.editingComment = {};
-    this.comments$ = this.store.select(selectComments);
-    this.commentsLoading$ = this.store.select(selectCommentsLoading);
+    this.initComments();
+  }
+
+  ngOnInit() {
+    const currentUser = this.store
+      .select(selectCurrentUser)
+      .pipe(filter((res) => res !== null))
+      .subscribe((res) => {
+        this.author = res;
+        if (!(this.userId === res.uid || res.role === roleEnum.admin)) {
+          this.router.navigate([ROUTES_PATH.userList]);
+        }
+      });
+    this.subscription.add(currentUser);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -64,21 +77,20 @@ export class CommentsComponent implements OnChanges, OnDestroy {
         level: level ? changes.level.currentValue : this.level,
       }),
     );
-
-    const currentUser = this.store
-      .select(selectCurrentUser)
-      .pipe(filter((res) => res !== null))
-      .subscribe((res) => {
-        this.author = res;
-        if (!(this.userId === res.uid || res.role === roleEnum.admin)) {
-          this.router.navigate([ROUTES_PATH.userList]);
-        }
-      });
-    this.subscription.add(currentUser);
   }
 
   get content() {
     return this.commentForm.get('content');
+  }
+
+  get usersRole() {
+    return this.author?.role;
+  }
+
+  initComments() {
+    this.editingComment = {};
+    this.comments$ = this.store.select(selectComments);
+    this.commentsLoading$ = this.store.select(selectCommentsLoading);
   }
 
   initForms() {
@@ -94,7 +106,7 @@ export class CommentsComponent implements OnChanges, OnDestroy {
       }
     });
     const toggleEditLoading$ = this.store.select(selectCommentEditing).subscribe((val) => {
-      val === true ? this.commentForm.disable() : this.commentForm.enable();
+      val ? this.commentForm.disable() : this.commentForm.enable();
     });
     this.subscription.add(toggleEditLoading$);
     this.subscription.add(formLoading$);
@@ -119,10 +131,6 @@ export class CommentsComponent implements OnChanges, OnDestroy {
       },
     };
     this.store.dispatch(reusableActions.addComment(data));
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   deleteComment(commentId: string) {
@@ -155,5 +163,9 @@ export class CommentsComponent implements OnChanges, OnDestroy {
         content: this.content.value,
       }),
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
