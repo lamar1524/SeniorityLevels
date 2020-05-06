@@ -130,11 +130,11 @@ export class SkillComponent implements OnDestroy {
     this.cdRef.markForCheck();
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
   showPublic(value: boolean) {
     this.public = value;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
