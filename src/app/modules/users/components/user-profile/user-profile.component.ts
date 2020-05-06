@@ -62,6 +62,10 @@ export class UserProfileComponent implements OnDestroy {
     this.adminRole = roleEnum.admin;
   }
 
+  get ownerOrAdmin() {
+    return this.userKey === this.currentUser.uid || this.currentUser.role === this.adminRole;
+  }
+
   chooseLevel(level: seniorityEnum) {
     this.chosenLevel = level;
     this.cdRef.markForCheck();

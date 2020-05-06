@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { REUSABLE_FEATURE } from '@constants/reusable.constants';
 import { MaterialModule } from '@core/material';
 import { CommentsService } from '@modules/reusable/services/comments.service';
-import { ReusableEffects } from '@modules/reusable/store/effects';
+import { CommentsEffects } from '@modules/reusable/store/effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { CommentsComponent, LevelSelectComponent, PopupComponent, SubmitButtonComponent } from './components';
@@ -31,7 +31,7 @@ import { reusableReducer } from './store/reducers';
     ReactiveFormsModule,
     MaterialModule,
     StoreModule.forFeature(REUSABLE_FEATURE, reusableReducer),
-    EffectsModule.forFeature([ReusableEffects]),
+    EffectsModule.forFeature([CommentsEffects]),
   ],
   exports: [
     SubmitButtonComponent,

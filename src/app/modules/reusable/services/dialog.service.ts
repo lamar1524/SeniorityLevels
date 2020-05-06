@@ -9,8 +9,8 @@ import { selectDeletingUser } from '@modules/users/store/selectors';
 import { themeEnum } from '@shared/enum/theme.enum';
 import { DataSharingService } from '@shared/services';
 import { DialogComponent } from '../components/dialog/dialog.component';
-import { deleteComment } from '../store/actions/reusable.actions';
-import { selectCommentDeleting } from '../store/selectors/reusable.selectors';
+import { deleteComment } from '../store/actions/comments.actions';
+import { selectCommentDeleting } from '../store/selectors/comments.selectors';
 
 @Injectable({
   providedIn: 'root',
