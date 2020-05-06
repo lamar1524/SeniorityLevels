@@ -26,7 +26,7 @@
         <div class="seniority" *ngFor="let category of categories$ | async">
           <div class="top__wrapper">
             <p class="seniority__title">{{ category?.title }} {{ (category?.levels)[chosenLevel] }}%</p>
-            <p class="details__wrapper" *ngIf="userKey === currentUser.uid || currentUser.role === adminRole">
+            <p class="details__wrapper" *ngIf="ownerOrAdmin">
               <span class="details__link" [routerLink]="routes.comments + '/' + userKey + '/' + (category?.title | slugify)">Details</span>
             </p>
           </div>

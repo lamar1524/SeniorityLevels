@@ -83,10 +83,6 @@ export class CommentsComponent implements OnInit, OnChanges, OnDestroy {
     return this.commentForm.get('content');
   }
 
-  get usersRole() {
-    return this.author?.role;
-  }
-
   initComments() {
     this.editingComment = {};
     this.comments$ = this.store.select(selectComments);

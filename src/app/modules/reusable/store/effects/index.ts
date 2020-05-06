@@ -1,1 +1,1 @@
-export * from './reusable.effects';
+export * from './comments.effects';

@@ -2,7 +2,7 @@
   <div class="comments__wrapper">
     <div class="sub-categories__wrapper">
       <mat-form-field *ngIf="category">
-        <mat-select (selectionChange)="changeDescriptions()" [(ngModel)]="chosenSubCat">
+        <mat-select [(ngModel)]="chosenSubCat">
           <mat-option *ngFor="let subCat of category.subCategories" [value]="subCat">{{ subCat.title }}</mat-option>
         </mat-select>
       </mat-form-field>

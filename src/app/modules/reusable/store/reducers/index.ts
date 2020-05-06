@@ -1,1 +1,1 @@
-export * from './reusable.reducers';
+export * from './comments.reducers';

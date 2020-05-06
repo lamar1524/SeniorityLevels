@@ -1,1 +1,1 @@
-export * from './reusable.actions';
+export * from './comments.actions';

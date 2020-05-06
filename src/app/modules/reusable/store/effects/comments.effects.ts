@@ -7,7 +7,7 @@ import { CommentsService, PopupService } from '../../services';
 import * as reusableActions from '../../store/actions';
 
 @Injectable()
-export class ReusableEffects {
+export class CommentsEffects {
   constructor(private commentsService: CommentsService, private actions$: Actions, private popupService: PopupService) {}
 
   addComment$ = createEffect(() =>

@@ -31,6 +31,10 @@ export class CommentsCategoryChooseComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute,
     private cdRef: ChangeDetectorRef,
   ) {
+    this.initData();
+  }
+
+  initData() {
     const title = this.slugTextifyPipe.transform(this.activatedRoute.snapshot.paramMap.get('category'));
     this.userId = this.activatedRoute.snapshot.paramMap.get('userId');
     this.store.dispatch(usersActions.loadSubCategoriesDesc({ title }));
@@ -43,13 +47,11 @@ export class CommentsCategoryChooseComponent implements OnDestroy {
     this.chosenLevel = seniorityEnum.junior;
   }
 
-  ngOnDestroy(): void {
-    this.category$.unsubscribe();
-  }
-
-  changeDescriptions() {}
-
   chooseLevel(level: seniorityEnum) {
     this.chosenLevel = level;
+  }
+
+  ngOnDestroy(): void {
+    this.category$.unsubscribe();
   }
 }
