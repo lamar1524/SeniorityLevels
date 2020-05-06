@@ -1,4 +1,4 @@
-import { IBasicUser } from '@core/interfaces/user.interface';
+import { IBasicUser } from './user.interface';
 
 export interface IComment {
   author: IBasicUser;

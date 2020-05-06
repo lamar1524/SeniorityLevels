@@ -40,7 +40,6 @@ export class CommentsComponent implements OnChanges, OnDestroy {
   commentsLoading$: Observable<boolean>;
   subscription: Subscription;
   commentForm: AppFormGroup;
-  editCommentForm: AppFormGroup;
   editingComment: { [key: number]: boolean };
   readonly adminRole: roleEnum;
 
@@ -51,10 +50,6 @@ export class CommentsComponent implements OnChanges, OnDestroy {
     this.editingComment = {};
     this.comments$ = this.store.select(selectComments);
     this.commentsLoading$ = this.store.select(selectCommentsLoading);
-    const toggleEditLoading = this.store.select(selectCommentEditing).subscribe((val) => {
-      val === true ? this.editCommentForm.disable() : this.editCommentForm.enable();
-    });
-    this.subscription.add(toggleEditLoading);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -86,16 +81,9 @@ export class CommentsComponent implements OnChanges, OnDestroy {
     return this.commentForm.get('content');
   }
 
-  get editContent() {
-    return this.editCommentForm.get('editContent');
-  }
-
   initForms() {
     this.commentForm = new AppFormGroup({
       content: new AppFormControl('', [Validators.required]),
-    });
-    this.editCommentForm = new AppFormGroup({
-      editContent: new AppFormControl('', Validators.required),
     });
     this.formVisible$ = this.store.select(selectFormVisibility);
     const formLoading$ = this.store.select(selectCommentFormLoading).subscribe((res) => {
@@ -105,10 +93,16 @@ export class CommentsComponent implements OnChanges, OnDestroy {
         this.commentForm.enable();
       }
     });
+    const toggleEditLoading$ = this.store.select(selectCommentEditing).subscribe((val) => {
+      val === true ? this.commentForm.disable() : this.commentForm.enable();
+    });
+    this.subscription.add(toggleEditLoading$);
     this.subscription.add(formLoading$);
   }
 
   formToggle() {
+    this.editingComment = {};
+    this.content.setValue('');
     this.store.dispatch(reusableActions.toggleCommentForm());
   }
 
@@ -145,7 +139,7 @@ export class CommentsComponent implements OnChanges, OnDestroy {
 
   showEditForm(id: number, content: string, value = true) {
     this.editingComment = {};
-    this.editContent.setValue(content);
+    this.content.setValue(content);
     this.editingComment[id] = value;
   }
 
@@ -158,7 +152,7 @@ export class CommentsComponent implements OnChanges, OnDestroy {
         subCatTitle: this.subCatTitle,
         level: this.level,
         userId: this.userId,
-        content: this.editContent.value,
+        content: this.content.value,
       }),
     );
   }
