@@ -6,13 +6,12 @@ import { StoreModule } from '@ngrx/store';
 import { SKILLS_FEATURE } from '@constants/skills.constants';
 import { SharedUiModule } from '@modules/reusable';
 import { SkillsComponent, SkillComponent } from './components';
-import { SlugTextifyPipe, TextSlugifyPipe } from './pipes';
 import { SkillsRoutingModule } from './skills-routing.module';
 import { SkillsEffects } from './store/effects';
 import { skillsReducer } from './store/reducers';
 
 @NgModule({
-  declarations: [SkillsComponent, SkillComponent, TextSlugifyPipe, SlugTextifyPipe],
+  declarations: [SkillsComponent, SkillComponent],
   imports: [
     CommonModule,
     SkillsRoutingModule,
@@ -20,5 +19,6 @@ import { skillsReducer } from './store/reducers';
     StoreModule.forFeature(SKILLS_FEATURE, skillsReducer),
     EffectsModule.forFeature([SkillsEffects]),
   ],
+  exports: [],
 })
 export class SkillsModule {}

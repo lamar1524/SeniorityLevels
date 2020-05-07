@@ -6,8 +6,10 @@ import { filter } from 'rxjs/operators';
 import { IBasicUser, ICategoryProgress, ISeniorityCount } from '@core/interfaces';
 import { selectCurrentUser, AuthModuleState } from '@modules/authentication/store';
 import { DialogService } from '@modules/reusable';
+import { deleteUser } from '../../store/actions';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
+import { selectDeletingUser } from '../../store/selectors';
 import * as usersSelectors from '../../store/selectors';
 
 @Component({
@@ -54,11 +56,13 @@ export class UserComponent implements OnDestroy {
   }
 
   showDeletePopup() {
-    this.deleteDialogService.showDeleteDialog(
-      this.userDetails.uid,
+    this.deleteDialogService.showDialog(
       'Deleting user',
-      true,
-      'Are you sure that you want to delete your account?',
+      `Are you sure that you want to delete your account?`,
+      () => this.usersStore.select(selectDeletingUser),
+      () => {
+        this.usersStore.dispatch(deleteUser({ userId: this.userDetails.uid, isCurrent: true }));
+      },
     );
   }
 

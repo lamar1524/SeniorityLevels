@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
@@ -8,12 +11,16 @@ import { selectCurrentUser, AuthModuleState } from '@modules/authentication/stor
 import * as authActions from '@modules/authentication/store/actions';
 import { DialogService } from '@modules/reusable';
 import { seniorityEnum } from '@modules/skills';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import { deleteUser } from '../../store/actions';
 import * as usersActions from '../../store/actions';
 import { UsersModuleState } from '../../store/reducers';
-import { selectOtherUserDetails, selectOtherUserSkillProgress, selectRoleLoading, selectSkillsLoading } from '../../store/selectors';
+import {
+  selectDeletingUser,
+  selectOtherUserDetails,
+  selectOtherUserSkillProgress,
+  selectRoleLoading,
+  selectSkillsLoading,
+} from '../../store/selectors';
 
 @Component({
   selector: 'app-user-profile',
@@ -62,17 +69,26 @@ export class UserProfileComponent implements OnDestroy {
     this.adminRole = roleEnum.admin;
   }
 
+  get ownerOrAdmin() {
+    return this.userKey === this.currentUser.uid || this.currentUser.role === this.adminRole;
+  }
+
   chooseLevel(level: seniorityEnum) {
     this.chosenLevel = level;
     this.cdRef.markForCheck();
   }
 
   showDeletePopup(id: string) {
-    if (this.currentUser.uid === id) {
-      this.deleteDialogService.showDeleteDialog(id, 'Deleting user', true, 'Are you sure that you want to delete your account?');
-    } else {
-      this.deleteDialogService.showDeleteDialog(id, 'Deleting user', false, 'Are you sure that you want to delete this account?');
-    }
+    const isCurrent = this.currentUser.uid === id;
+    const whose = isCurrent ? 'your' : 'this';
+    this.deleteDialogService.showDialog(
+      'Deleting user',
+      `Are you sure that you want to delete ${whose} account?`,
+      () => this.store.select(selectDeletingUser),
+      () => {
+        this.store.dispatch(deleteUser({ userId: id, isCurrent }));
+      },
+    );
   }
 
   setRole(userId: string, role: roleEnum) {

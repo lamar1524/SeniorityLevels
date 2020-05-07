@@ -11,7 +11,7 @@
 }
 
 @mixin form-shadow($color) {
-  box-shadow: 15px 15px 25px 0 $color;
+  box-shadow: 0 0 5px 5px $color;
 }
 
 @mixin center-one-element($direction: row) {

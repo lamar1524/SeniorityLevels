@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
 
-import { ISeniorityCount, ISubCategoryValue, IUser, IUserValues } from '@core/interfaces';
+import { ICategoryProgress, ISeniorityCount, ISubCategoryValue, IUser, IUserValues } from '@core/interfaces';
 import * as usersActions from '../actions';
 
 export interface UsersModuleState {
@@ -16,6 +16,8 @@ export interface UsersState {
   editingFormVisibility: boolean;
   editLoading: boolean;
   roleLoading: boolean;
+  subCatsLoading: boolean;
+  subCatsDesc: ICategoryProgress;
   skillProgress: ISeniorityCount;
   otherUserDetails: IUserValues;
   otherUserSkillsProgress: ISubCategoryValue[];
@@ -31,6 +33,8 @@ export const initialState: UsersState = {
   editingFormVisibility: false,
   editLoading: false,
   roleLoading: false,
+  subCatsLoading: false,
+  subCatsDesc: null,
   skillProgress: {
     junior: 0,
     middle: 0,
@@ -81,6 +85,10 @@ const USERS_REDUCER = createReducer(
   on(usersActions.updateRole, (state) => ({ ...state, roleLoading: true })),
   on(usersActions.updateRoleSuccess, (state) => ({ ...state, roleLoading: false })),
   on(usersActions.updateRoleFail, (state) => ({ ...state, roleLoading: false })),
+
+  on(usersActions.loadSubCategoriesDesc, (state) => ({ ...state, subCatsLoading: true, subCatsDesc: null })),
+  on(usersActions.loadSubCategoriesDescSuccess, (state, { subCats }) => ({ ...state, subCatsLoading: false, subCatsDesc: subCats })),
+  on(usersActions.loadSubCategoriesDescFail, (state) => ({ ...state, subCatsLoading: false, subCatsDesc: null })),
 );
 
 export function usersReducer(state: UsersState, action: Action) {

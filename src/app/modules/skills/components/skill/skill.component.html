@@ -27,4 +27,24 @@
       ></ng-template>
     </div>
   </div>
+  <div class="comments__type u-text--bold">
+    <span class="comment__type" [ngClass]="{ 'u-text--to-hover u-block--underlined': public }" (click)="showPublic(true)">Public comments</span>
+    <span class="comment__type" [ngClass]="{ 'u-text--to-hover u-block--underlined': !public }" (click)="showPublic(false)">Private comments</span>
+  </div>
+  <app-comments
+    *ngIf="currentUser && !public"
+    [description]="''"
+    [level]="currentlyDisplayedLevel"
+    [userId]="currentUser.uid"
+    [catTitle]="catTitle"
+    [subCatTitle]="chosenSubCat.title"
+  ></app-comments>
+  <app-comments
+    *ngIf="currentUser && public"
+    [description]="''"
+    [level]="currentlyDisplayedLevel"
+    [userId]="'public'"
+    [catTitle]="catTitle"
+    [subCatTitle]="chosenSubCat.title"
+  ></app-comments>
 </div>

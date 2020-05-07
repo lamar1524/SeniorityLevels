@@ -1,0 +1,70 @@
+@import '../../../../../styles/mixins';
+@import '../../../../../styles/variables';
+
+.container {
+  padding-top: 25px;
+
+  .comment__form-group {
+    width: 100%;
+
+    .form-control {
+      min-height: 75px;
+      resize: none;
+    }
+
+    .form-control__wrapper {
+      width: 100%;
+    }
+  }
+
+  .comment__wrapper {
+    border-radius: $box-border-radius;
+    margin: 25px 0;
+    min-height: 80px;
+    width: 90vw;
+    @include form-shadow($blur-color);
+
+    .comment__header,
+    .comment__content {
+      padding: 5px;
+    }
+
+    .comment__header {
+      border-bottom: 1px solid #000;
+    }
+
+    .comment__date {
+      font-size: 0.8rem;
+    }
+
+    .header__top {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .option--delete,
+    .option--edit {
+      cursor: pointer;
+      display: inline-block;
+      padding: 0 5px;
+    }
+
+    .option__icon {
+      height: 15px;
+      width: 15px;
+    }
+  }
+
+  .spinner__container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    .comment__wrapper {
+      width: 100%;
+    }
+  }
+}
