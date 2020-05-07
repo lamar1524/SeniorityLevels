@@ -65,6 +65,21 @@
     }
   }
 
+  .comments__type {
+    font-size: 1.2rem;
+    padding: 15px 0;
+  }
+
+  .comment__type {
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px;
+  }
+
+  .comment__type--public {
+    margin-right: 5px;
+  }
+
   @include break(map-get($breakpoints, sm)) {
     .table__content {
       word-break: normal;

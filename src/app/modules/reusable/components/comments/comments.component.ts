@@ -17,6 +17,7 @@ import { ReusableModuleState } from '../../store/reducers';
 import {
   selectComments,
   selectCommentsLoading,
+  selectCommentDeleting,
   selectCommentEditing,
   selectCommentFormLoading,
   selectFormVisibility,
@@ -130,14 +131,21 @@ export class CommentsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   deleteComment(commentId: string) {
-    this.dialogService.showDeleteCommentUserDialog(
-      commentId,
-      this.userId,
-      this.catTitle,
-      this.subCatTitle,
-      this.level,
-      'Do you want to' + ' delete comment?',
+    this.dialogService.showDialog(
+      'Do you want to delete comment?',
       'It can not be undone',
+      () => this.store.select(selectCommentDeleting),
+      () => {
+        this.store.dispatch(
+          reusableActions.deleteComment({
+            commentId,
+            userId: this.userId,
+            catTitle: this.catTitle,
+            subCatTitle: this.subCatTitle,
+            level: this.level,
+          }),
+        );
+      },
     );
   }
 
