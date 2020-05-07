@@ -1,11 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
-
-import { IDialogData } from '@core/interfaces';
-import { UsersModuleState } from '@modules/users/store/reducers';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
+import { IDialogData } from '@core/interfaces';
 
 @Component({
   selector: 'app-dialog',
@@ -20,12 +18,11 @@ export class DialogComponent implements OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IDialogData,
-    private store: Store<UsersModuleState>,
     private cdRef: ChangeDetectorRef,
   ) {
     this.isProcessing = false;
-    this.isProcessing$ = this.store
-      .select(this.data.select)
+    this.isProcessing$ = this.data
+      .select()
       .pipe(filter((res) => res !== this.isProcessing))
       .subscribe((res) => {
         this.isProcessing = res;
@@ -36,9 +33,9 @@ export class DialogComponent implements OnDestroy {
       });
   }
 
-  onAccept(id: string) {
+  onAccept() {
     if (!this.isProcessing) {
-      this.data.onAcceptCallback(this.store, id);
+      this.data.onAcceptCallback();
     }
   }
 
