@@ -1,18 +1,10 @@
 import { browser, by, element } from 'protractor';
-import { LoginPage } from '../authentication/login.po';
+
+import { login } from '../utils/Utils';
 
 export class UserPage {
-  login() {
-    return browser.get(browser.baseUrl);
-  }
-
   async navigateTo() {
-    await this.login();
-    const page = new LoginPage();
-    page.loginInput.sendKeys('testy@e2e.pl');
-    page.passwordInput.sendKeys('elemele1');
-    page.loginButton.click();
-    await browser.driver.wait(async () => (await browser.getCurrentUrl()) !== browser.baseUrl, 5000);
+    await login();
     browser.driver.wait(() => this.header.isPresent(), 5000);
   }
 
