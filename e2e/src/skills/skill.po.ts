@@ -27,4 +27,36 @@ export class SkillPage {
   get spinner() {
     return element(by.css('.spinner__wrapper'));
   }
+
+  get commentPublic() {
+    return element(by.css('.comment--public'));
+  }
+
+  get commentPrivate() {
+    return element(by.css('.comment--private'));
+  }
+
+  get showAddFormButton() {
+    return element(by.css('.container .u-text--link'));
+  }
+
+  get addCommentForm() {
+    return element(by.css('.comment__form-group'));
+  }
+
+  get addCommentTextArea() {
+    return element(by.css('textarea.form-control'));
+  }
+
+  get addCommentButton() {
+    return element(by.css('.button__wrapper button'));
+  }
+
+  get message() {
+    return element(by.css('.message'));
+  }
+
+  get comment() {
+    return element(by.css('.comment'));
+  }
 }
