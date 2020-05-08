@@ -59,8 +59,8 @@ export class CommentsComponent implements OnInit, OnChanges, OnDestroy {
       .pipe(filter((res) => res !== null))
       .subscribe((res) => {
         this.author = res;
-        if (!(this.userId === res.uid || res.role === roleEnum.admin)) {
-          this.router.navigate([ROUTES_PATH.userList]);
+        if (this.userId !== res.uid && res.role !== roleEnum.admin && this.userId !== 'public') {
+          this.router.navigate([ROUTES_PATH.usersList]);
         }
       });
     this.subscription.add(currentUser);
