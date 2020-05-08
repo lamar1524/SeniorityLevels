@@ -59,4 +59,28 @@ export class SkillPage {
   get comment() {
     return element(by.css('.comment'));
   }
+
+  get editShowButton() {
+    return element(by.css('.edit__icon'));
+  }
+
+  get editForm() {
+    return element(by.css('.form-group--edit'));
+  }
+
+  get editTextArea() {
+    return element(by.css('.form-group--edit textarea'));
+  }
+
+  get editSaveButton() {
+    return element(by.css('.form-group--edit .form__button'));
+  }
+
+  get showDeleteButton() {
+    return element(by.css('.delete__icon'));
+  }
+
+  get dialog() {
+    return element(by.css('.u-dialog'));
+  }
 }

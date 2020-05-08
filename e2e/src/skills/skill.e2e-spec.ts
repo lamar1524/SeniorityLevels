@@ -19,9 +19,9 @@ describe('skill page', () => {
       expect(page.subCategories.count()).toEqual(8);
     });
 
-    it('should display values properly', () => {
+    it('should display values properly', async () => {
       browser.driver.wait(() => page.skillContent.isPresent(), 5000);
-      expect(page.skillContent.getText()).toContain(
+      expect(await page.skillContent.getText()).toContain(
         'Zna podstawowe metody optymalizacji zasobów (np. minifikacja kodu źródłowego,' +
           ' kompresja gzip). Rozumie jak działa "async" i "deffered".',
       );
@@ -70,7 +70,5 @@ describe('skill page', () => {
         expect(page.comment.isPresent()).toBeTruthy();
       });
     });
-
-    describe('editing comment', () => {});
   });
 });

@@ -26,8 +26,8 @@
                 <img [src]="assets + '/icons/edit_white.svg'" alt="edit" class="option__icon u-theme--white-icon" />
               </div>
               <div class="option--delete" (click)="deleteComment(comment[0])">
-                <img [src]="assets + '/icons/delete_dark.svg'" alt="edit" class="option__icon u-theme--black-icon" />
-                <img [src]="assets + '/icons/delete_white.svg'" alt="edit" class="option__icon u-theme--white-icon" />
+                <img [src]="assets + '/icons/delete_dark.svg'" alt="edit" class="option__icon edit__icon u-theme--black-icon" />
+                <img [src]="assets + '/icons/delete_white.svg'" alt="edit" class="option__icon delete__icon u-theme--white-icon" />
               </div>
             </div>
           </div>
@@ -36,7 +36,7 @@
         <div class="comment__content">{{ comment[1].content }}</div>
       </div>
       <ng-template #form>
-        <form [formGroup]="commentForm" class="comment__form-group" (ngSubmit)="editComment(comment[0])">
+        <form [formGroup]="commentForm" class="comment__form-group form-group--edit" (ngSubmit)="editComment(comment[0])">
           <mat-form-field class="form-control__wrapper">
             <label>
               <textarea class="form-control" matNativeControl formControlName="content"></textarea>

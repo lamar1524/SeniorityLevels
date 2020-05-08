@@ -16,7 +16,7 @@
     </div>
     <div class="table__column table__content" [ngClass]="{ 'content--active': levels[currentlyDisplayedLevel] }">
       <div
-        class="table__row"
+        class="table__row content__row"
         *ngIf="clickable$ | async; else spinner"
         (click)="sendSkill(currentlyDisplayedLevel, catTitle, chosenSubCat.title, levels, currentUser.uid)"
       >
