@@ -35,13 +35,7 @@ storiesOf('Dialog', module)
             caption: 'Sample text',
             classToApply: 'light',
             isCurrent: true,
-            onAcceptCallback: (id: string) => {},
-          },
-        },
-        {
-          provide: Store,
-          useValue: {
-            dispatch: () => {},
+            onAcceptCallback: () => {},
             select: () => of(false),
           },
         },
@@ -61,13 +55,7 @@ storiesOf('Dialog', module)
             caption: 'Sample text',
             classToApply: 'dark',
             isCurrent: true,
-            onAcceptCallback: (id: string) => {},
-          },
-        },
-        {
-          provide: Store,
-          useValue: {
-            dispatch: () => {},
+            onAcceptCallback: () => {},
             select: () => of(false),
           },
         },
@@ -87,13 +75,7 @@ storiesOf('Dialog', module)
             caption: 'Sample text',
             classToApply: 'light',
             isCurrent: true,
-            onAcceptCallback: (id: string) => {},
-          },
-        },
-        {
-          provide: Store,
-          useValue: {
-            dispatch: () => {},
+            onAcceptCallback: () => {},
             select: () => of(true),
           },
         },
@@ -113,13 +95,7 @@ storiesOf('Dialog', module)
             caption: 'Sample text',
             classToApply: 'dark',
             isCurrent: true,
-            onAcceptCallback: (id: string) => {},
-          },
-        },
-        {
-          provide: Store,
-          useValue: {
-            dispatch: () => {},
+            onAcceptCallback: () => {},
             select: () => of(true),
           },
         },
