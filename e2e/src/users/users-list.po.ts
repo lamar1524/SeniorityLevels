@@ -19,6 +19,10 @@ export class UsersList {
     return element(by.css('.users__header'));
   }
 
+  get table() {
+    return element(by.css('.users__list'));
+  }
+
   get tableLink() {
     return element(by.css('td .u-text--link'));
   }

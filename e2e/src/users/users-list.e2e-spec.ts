@@ -15,6 +15,7 @@ describe('users list page', () => {
     });
 
     it('should redirect to users profile header properly', async () => {
+      browser.driver.wait(() => page.table.isPresent(), 5000);
       page.tableLink.click();
       expect(await browser.getCurrentUrl()).toContain('/dashboard/users/user');
     });
