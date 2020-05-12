@@ -5,7 +5,7 @@
     </div>
     <form class="register__form" [formGroup]="registerForm" (ngSubmit)="sendCredentials()">
       <mat-form-field class="form__control form__input">
-        <input placeholder="Email" type="email" matInput formControlName="email" />
+        <input class="email__input" placeholder="Email" type="email" matInput formControlName="email" />
       </mat-form-field>
       <div *ngIf="email.invalidControl" class="form__error u-text--error mat-body">
         <div *ngIf="email.errors.required">
@@ -16,7 +16,7 @@
         </div>
       </div>
       <mat-form-field class="form__control form__input">
-        <input placeholder="First name" type="text" matInput formControlName="firstName" />
+        <input class="first-name__input" placeholder="First name" type="text" matInput formControlName="firstName" />
       </mat-form-field>
       <div *ngIf="firstName.invalidControl" class="form__error u-text--error mat-body">
         <div *ngIf="firstName.errors.required">
@@ -24,7 +24,7 @@
         </div>
       </div>
       <mat-form-field class="form__control form__input">
-        <input placeholder="Last name" type="text" matInput formControlName="lastName" />
+        <input class="last-name__input" placeholder="Last name" type="text" matInput formControlName="lastName" />
       </mat-form-field>
       <div *ngIf="lastName.invalidControl" class="form__error u-text--error mat-body">
         <div *ngIf="lastName.errors.required">
@@ -32,7 +32,7 @@
         </div>
       </div>
       <mat-form-field class="form__control form__input">
-        <input placeholder="Password" type="password" matInput formControlName="password" />
+        <input class="password__input" placeholder="Password" type="password" matInput formControlName="password" />
       </mat-form-field>
       <div *ngIf="password.invalidControl" class="form__error u-text--error mat-body">
         <div *ngIf="password.errors.required">
@@ -43,7 +43,7 @@
         </div>
       </div>
       <mat-form-field class="form__control form__input">
-        <input placeholder="Repeat password" type="password" matInput formControlName="repeatPassword" />
+        <input class="repeat-password__input" placeholder="Repeat password" type="password" matInput formControlName="repeatPassword" />
       </mat-form-field>
       <div *ngIf="repeatPassword.invalidControl" class="form__error u-text--error mat-body">
         <div *ngIf="repeatPassword.errors.required">

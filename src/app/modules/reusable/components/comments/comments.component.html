@@ -1,6 +1,6 @@
 <div class="container">
   <p>{{ description }}</p>
-  <span class="u-text--link" (click)="formToggle()">Comment</span>
+  <span class="u-text--link" (click)="formToggle()">Add comment</span>
   <div class="form__wrapper" *ngIf="formVisible$ | async">
     <form [formGroup]="commentForm" class="comment__form-group" (ngSubmit)="addComment()">
       <mat-form-field class="form-control__wrapper">
@@ -12,7 +12,7 @@
     </form>
   </div>
   <div class="comments__wrapper" *ngIf="(commentsLoading$ | async) === false; else spinner">
-    <div *ngIf="(comments$ | async).length === 0">
+    <div *ngIf="(comments$ | async).length === 0" class="message">
       No comments yet
     </div>
     <div class="comment__wrapper" *ngFor="let comment of comments$ | async; index as i">
@@ -20,14 +20,14 @@
         <div class="comment__header">
           <div class="header__top">
             <div class="comment__author">{{ comment[1].author.email }}</div>
-            <div class="options__wrapper" *ngIf="comment[1].author.uid === userId || author.role === adminRole">
+            <div class="options__wrapper" *ngIf="comment[1].author.uid === author.uid || author.role === adminRole">
               <div class="option--edit" (click)="showEditForm(i, comment[1].content)">
                 <img [src]="assets + '/icons/edit_dark.svg'" alt="edit" class="option__icon u-theme--black-icon" />
                 <img [src]="assets + '/icons/edit_white.svg'" alt="edit" class="option__icon u-theme--white-icon" />
               </div>
               <div class="option--delete" (click)="deleteComment(comment[0])">
-                <img [src]="assets + '/icons/delete_dark.svg'" alt="edit" class="option__icon u-theme--black-icon" />
-                <img [src]="assets + '/icons/delete_white.svg'" alt="edit" class="option__icon u-theme--white-icon" />
+                <img [src]="assets + '/icons/delete_dark.svg'" alt="edit" class="option__icon edit__icon u-theme--black-icon" />
+                <img [src]="assets + '/icons/delete_white.svg'" alt="edit" class="option__icon delete__icon u-theme--white-icon" />
               </div>
             </div>
           </div>
@@ -36,7 +36,7 @@
         <div class="comment__content">{{ comment[1].content }}</div>
       </div>
       <ng-template #form>
-        <form [formGroup]="commentForm" class="comment__form-group" (ngSubmit)="editComment(comment[0])">
+        <form [formGroup]="commentForm" class="comment__form-group form-group--edit" (ngSubmit)="editComment(comment[0])">
           <mat-form-field class="form-control__wrapper">
             <label>
               <textarea class="form-control" matNativeControl formControlName="content"></textarea>

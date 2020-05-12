@@ -39,7 +39,7 @@ describe('DialogComponent', () => {
             classToApply: 'classToApply',
             isCurrent: true,
             onAcceptCallback: () => {},
-            selector: selectDeletingUser,
+            select: () => of({}),
           },
         },
       ],
@@ -60,13 +60,14 @@ describe('DialogComponent', () => {
   describe('onAccept method', () => {
     it('should dispatch action if not loading', () => {
       spyOn(component.data, 'onAcceptCallback');
-      component.onAccept('userId');
+      component.isProcessing = false;
+      component.onAccept();
       expect(component.data.onAcceptCallback).toHaveBeenCalled();
     });
 
     it('should not dispatch action if loading', () => {
       component.isProcessing = true;
-      component.onAccept('userId');
+      component.onAccept();
       expect(store.dispatch).not.toHaveBeenCalled();
     });
   });

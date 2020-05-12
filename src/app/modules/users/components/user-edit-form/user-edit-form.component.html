@@ -1,7 +1,7 @@
-<form (ngSubmit)="editCredentials()" class="login__form" [formGroup]="editForm">
+<form (ngSubmit)="editCredentials()" class="edit__form" [formGroup]="editForm">
     <mat-form-field class="form__control form__input">
         <label>
-            <input placeholder="First name" formControlName="firstName" type="text" matInput />
+            <input class="first-name__field" placeholder="First name" formControlName="firstName" type="text" matInput />
         </label>
     </mat-form-field>
     <div *ngIf="firstName.invalidControl" class="form__error u-text--error mat-body">
@@ -11,7 +11,7 @@
     </div>
     <mat-form-field class="form__control form__input">
         <label>
-            <input placeholder="Last name" formControlName="lastName" type="text" matInput />
+            <input class="last-name__field" placeholder="Last name" formControlName="lastName" type="text" matInput />
         </label>
     </mat-form-field>
     <div *ngIf="lastName.invalidControl" class="form__error u-text--error mat-body">
