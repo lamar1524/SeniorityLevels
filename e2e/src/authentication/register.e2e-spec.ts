@@ -1,5 +1,3 @@
-import { browser, logging } from 'protractor';
-
 import { RegisterPage } from './register.po';
 
 describe('register page', () => {

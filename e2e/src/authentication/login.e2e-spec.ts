@@ -1,8 +1,6 @@
-import { browser, logging } from 'protractor';
-
 import { LoginPage } from './login.po';
 
-describe('homepage', () => {
+describe('login page', () => {
   let page: LoginPage;
 
   beforeEach(() => {
