@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppFormControl, AppFormGroup } from '@shared/forms';
 import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, finalize } from 'rxjs/operators';
 
 import { ROUTES_PATH } from '@constants/routes.constants';
 import { roleEnum } from '@core/enums/role.enum';
@@ -86,7 +86,11 @@ export class CommentsComponent implements OnInit, OnChanges, OnDestroy {
 
   initComments() {
     this.editingComment = {};
-    this.comments$ = this.store.select(selectComments);
+    this.comments$ = this.store.select(selectComments).pipe(
+      finalize(() => {
+        this.commentForm.reset();
+      }),
+    );
     this.commentsLoading$ = this.store.select(selectCommentsLoading);
   }
 
