@@ -18,6 +18,10 @@
   }
 }
 
+.u-block--underlined {
+  border-bottom: 2px solid $app-indigo;
+}
+
 .u-text--bold {
   font-weight: 700;
 }
@@ -99,6 +103,10 @@ input:-webkit-autofill {
     &:hover {
       color: $app-pink;
     }
+  }
+
+  .u-block--underlined {
+    border-bottom: 2px solid $app-pink;
   }
 
   .u-background-primary {

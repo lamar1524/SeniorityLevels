@@ -2,7 +2,7 @@
   <h1>{{ data.header }}</h1>
   <p>{{ data.caption }}</p>
   <div class="button__wrapper">
-    <button class="accept__button" mat-raised-button color="primary" (click)="onAccept(data.id)" [disabled]="isProcessing">
+    <button class="accept__button" mat-raised-button color="primary" (click)="onAccept()" [disabled]="isProcessing">
       <span *ngIf="!isProcessing; else spinner">Yes</span
       ><ng-template #spinner><mat-spinner [diameter]="35" color="warn"></mat-spinner></ng-template>
     </button>

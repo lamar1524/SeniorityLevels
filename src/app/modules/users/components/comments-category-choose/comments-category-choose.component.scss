@@ -1,0 +1,20 @@
+@import '../../../../../styles/mixins';
+@import '../../../../../styles/variables';
+
+.container {
+  min-height: 100vh;
+  padding: 10px;
+
+  .comments__wrapper {
+    width: 100%;
+  }
+
+  .level__select {
+    display: block;
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    margin: 0 auto;
+    width: 50vw;
+  }
+}

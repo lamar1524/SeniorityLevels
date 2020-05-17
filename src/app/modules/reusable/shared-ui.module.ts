@@ -1,17 +1,49 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { REUSABLE_FEATURE } from '@constants/reusable.constants';
 import { MaterialModule } from '@core/material';
-import { LevelSelectComponent, PopupComponent, SubmitButtonComponent } from './components';
+import { CommentsService } from '@modules/reusable/services/comments.service';
+import { CommentsEffects } from '@modules/reusable/store/effects';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { CommentsComponent, LevelSelectComponent, PopupComponent, SubmitButtonComponent } from './components';
 import { DialogComponent, UserBadgeComponent } from './components';
+import { SlugTextifyPipe, TextSlugifyPipe } from './pipes';
 import { DialogService, PopupService } from './services';
+import { reusableReducer } from './store/reducers';
 
 @NgModule({
-  declarations: [LevelSelectComponent, SubmitButtonComponent, PopupComponent, DialogComponent, UserBadgeComponent],
-  imports: [CommonModule, FormsModule, MaterialModule],
-  exports: [SubmitButtonComponent, LevelSelectComponent, PopupComponent, UserBadgeComponent, MaterialModule],
+  declarations: [
+    LevelSelectComponent,
+    SubmitButtonComponent,
+    PopupComponent,
+    DialogComponent,
+    UserBadgeComponent,
+    TextSlugifyPipe,
+    SlugTextifyPipe,
+    CommentsComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    StoreModule.forFeature(REUSABLE_FEATURE, reusableReducer),
+    EffectsModule.forFeature([CommentsEffects]),
+  ],
+  exports: [
+    SubmitButtonComponent,
+    LevelSelectComponent,
+    PopupComponent,
+    UserBadgeComponent,
+    MaterialModule,
+    TextSlugifyPipe,
+    SlugTextifyPipe,
+    CommentsComponent,
+  ],
   entryComponents: [PopupComponent],
-  providers: [PopupService, DialogService],
+  providers: [PopupService, DialogService, CommentsService],
 })
 export class SharedUiModule {}

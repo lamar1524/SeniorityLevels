@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { deleteUser } from '@modules/users/store/actions';
-import { UsersModuleState } from '@modules/users/store/reducers';
-import { selectDeletingUser } from '@modules/users/store/selectors';
 import { themeEnum } from '@shared/enum/theme.enum';
 import { DataSharingService } from '@shared/services';
-import { DialogComponent } from '../components';
+import { DialogComponent } from '../components/dialog/dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +13,7 @@ import { DialogComponent } from '../components';
 export class DialogService {
   constructor(private matDialog: MatDialog, private dataSharingService: DataSharingService) {}
 
-  showDeleteDialog(userId: string, header: string, isCurrent: boolean, caption: string) {
+  showDialog(header: string, caption: string, select: () => Observable<any>, onAcceptCallback: () => void) {
     this.dataSharingService
       .getTheme()
       .pipe(first())
@@ -26,15 +23,11 @@ export class DialogService {
           width: '350px',
           height: '200px',
           data: {
-            id: userId,
             header,
             caption,
             classToApply,
-            isCurrent,
-            onAcceptCallback: (store: Store<UsersModuleState>, id: string): void => {
-              store.dispatch(deleteUser({ userId: id, isCurrent }));
-            },
-            select: selectDeletingUser,
+            onAcceptCallback,
+            select,
           },
           panelClass: 'u-dialog',
         });
