@@ -1,27 +1,59 @@
 # SeniorityLevels
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
+## Description
 
-## Development server
+Application that makes management of employed frontend developers easy. It also has social media aspect that might help to integrate users.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Live example
+<p>Live example is available <a href="https://amazing-sinoussi-05e335.netlify.app">here</a></p>
+<p>Example credentials for admin account:</p>
+<p>E: admin@demo.com</p>
+<p>P: testPassword</p>
 
-## Code scaffolding
+## Functionalities
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+<ul>
+<li>
+Authentication
+  <ul>
+    <li>Login</li>
+    <li>Registration</li>
+    <li>Two user roles: Admin and user.</li>
+  </ul>
+</li>
+<li>
+Skills
+  <ul>
+    <li>Marking skills as achieved on one of three levels(Junior, Mid, Senior)</li>
+    <li>Viewing progress of any other user</li>
+    <li>Two types of comments: Private and public ones. Private can be viewed only by user or admin. Public ones can be viewed by anyone.</li>
+    <li>Managing these comments according to user role</li>
+  </ul> 
+</li>
+<li>
+Users
+  <ul>
+    <li>Viewing summed up progress of logged user</li>
+    <li>Editing user's credentials</li>
+    <li>Deleting account by logged user</li>
+    <li>Deleting any user by admin</li>
+    <li>Managing any user role by admin</li>
+    <li>Viewing users list</li>
+    <li>Watching other users profiles and their progress</li>
+  </ul>
+</li>
+Theming
+  <ul>
+    <li>Switching theme light/dark</li>
+  </ul>
+</ul>
 
-## Build
+## Technology stack
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+<ul>
+  <li>Angular 9</li>
+  <li>Angular material</li>
+  <li>Ngrx</li>
+  <li>Sass</li>
+  <li>Jasmine, Protractor</li>
+</ul>
